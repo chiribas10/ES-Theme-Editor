@@ -1,0 +1,9 @@
+﻿<Window x:Class="es_theme_editor.view_tamlate_window"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="howto_wpf_resize_rectangle"
+    Height="403" Width="712" KeyDown="Window_KeyDown_1" Closing="Window_Closing_1" Icon="ES_theme_editor.ico">
+    <Canvas Name="canvas1" Background="#FF838181"
+        MouseDown="canvas1_MouseDown" MouseMove="canvas1_MouseMove" MouseUp="canvas1_MouseUp" MouseLeave="canvas1_MouseLeave">
+    </Canvas>
+</Window>
