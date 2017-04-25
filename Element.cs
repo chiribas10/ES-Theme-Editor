@@ -104,6 +104,11 @@ namespace es_theme_editor
                 _origin_w = double.Parse(substrings[0].Trim().Replace(".", ","));
                 _origin_h = double.Parse(substrings[1].Trim().Replace(".", ","));
             }
+            else 
+            {
+                _origin_w = 0;
+                _origin_h = 0;
+            }
             val = Properties.FirstOrDefault(x => x.Key == "maxSize").Value;
             if (val != null)
             {
@@ -205,7 +210,7 @@ namespace es_theme_editor
                             _properties.Add("pos", (pos_x_NORMALIZED + " " + pos_y_NORMALIZED).Replace(",", "."));
                         if (size_width_NORMALIZED != 0 && size_height_NORMALIZED != 0)
                             _properties.Add("maxSize", (size_width_NORMALIZED + " " + size_height_NORMALIZED).Replace(",", "."));
-                        if (_origin_w != 0 && _origin_h != 0)
+                        //if (_origin_w != 0 && _origin_h != 0)
                             _properties.Add("origin", (_origin_w + " " + _origin_h).Replace(",", "."));
                         break;
                     case types.rating:// only one indicator is used to determine the size (in this case we use only the height)

@@ -263,7 +263,7 @@ namespace es_theme_editor
                 relativePath = relativePath.Replace(System.IO.Path.AltDirectorySeparatorChar, System.IO.Path.DirectorySeparatorChar);
             }
 
-            return relativePath;
+            return "./" + relativePath.Replace("\\", "/");
         }
         #endregion work with Absolute and Relative path
     }
