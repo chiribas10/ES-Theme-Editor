@@ -132,6 +132,7 @@ namespace es_theme_editor
                 if (MessageBox.Show("Do you want delete this item?", "Question", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     _viewtmplatewindow.RemoveRect(str.Replace("cb_", ""));
+                    cb_SelectCreatedelement.Items.Remove(str.Replace("cb_", ""));
                 }
         }
         #endregion StandartItemWorking
@@ -168,6 +169,7 @@ namespace es_theme_editor
                 {
                     _viewtmplatewindow.RemoveRect(tb_customelementName.Text);
                     cb_CustomeItem.Items.Remove(tb_customelementName.Text);
+                    cb_SelectCreatedelement.Items.Remove(tb_customelementName.Text);
                 }
         }
         #endregion CustomItemWorking
@@ -196,8 +198,8 @@ namespace es_theme_editor
             XmlDocument doc = new XmlDocument();
             //int x;
             XmlNode viewNode, itemNode, themeNode;
-            SortedList<string, string> Properties = new SortedList<string, string>();
-            Char delimiter = ',';
+            
+            
             String[] elementNames;
             try
             {
@@ -228,118 +230,134 @@ namespace es_theme_editor
             if (themeNode.Name != "theme")
                 return;
 
-            View curentWorkingView = null;
+            
 
             for (int i = 0; i < themeNode.ChildNodes.Count; i++)
             {
+                viewNode = themeNode.ChildNodes[i];
+
                 if (themeNode.ChildNodes[i].Name == "include")
                     include = themeNode.ChildNodes[i].InnerText;
                 // Get all the children of the main element. 
                 // Check that the type of this Node was view
                 if (themeNode.ChildNodes[i].Name == "view")
                 {
-                    viewNode = themeNode.ChildNodes[i];
+                    ReadVeiwFromXML(viewNode);
+                }
+                if (themeNode.ChildNodes[i].Name == "feature")
+                {
+                    for (int y = 0; y < viewNode.ChildNodes.Count; y++ )
+                        if (viewNode.ChildNodes[y].Name == "view")
+                            ReadVeiwFromXML(viewNode.ChildNodes[y]);
+                }
+            }
+        }
 
-                    String[] substrings = viewNode.Attributes["name"].InnerText.Split(delimiter);
-                    string path = "";
-                    //We go through all the names listed in the Name attribute
-                    foreach (var substring in substrings)
+        private void ReadVeiwFromXML(XmlNode viewNode)
+        {
+            SortedList<string, string> Properties = new SortedList<string, string>();
+            String[] elementNames;
+            XmlNode itemNode;
+            View curentWorkingView = null;
+            Char delimiter = ',';
+            String[] substrings = viewNode.Attributes["name"].InnerText.Split(delimiter);
+            string path = "";
+            //We go through all the names listed in the Name attribute
+            foreach (var substring in substrings)
+            {
+                //string viewname = substring.Trim();
+                // if the name of the received item contains the word "system", then this is the settings for the system selection window
+                // Fill out the form fields
+                if (substring.Trim().Contains("system"))
+                {
+                    for (int y = 0; y < viewNode.ChildNodes.Count; y++)
                     {
-                        //string viewname = substring.Trim();
-                        // if the name of the received item contains the word "system", then this is the settings for the system selection window
-                        // Fill out the form fields
-                        if (substring.Trim().Contains("system"))
+                        //Find the child element named "path" and take its value
+                        foreach (XmlNode childNodes in viewNode.ChildNodes[y].ChildNodes)
                         {
-                            for (int y = 0; y < viewNode.ChildNodes.Count; y++)
-                            {
-                                //Find the child element named "path" and take its value
-                                foreach (XmlNode childNodes in viewNode.ChildNodes[y].ChildNodes)
-                                {
-                                    if (childNodes.Name == "path")
-                                        path = childNodes.InnerText;
-                                }
-
-                                switch (viewNode.ChildNodes[y].Attributes["name"].InnerText)
-                                {
-                                    case "bgsound":
-                                        tb_bgsound_system.Text = path;
-                                        break;
-                                    case "background":
-                                        tb_background_system.Text = path;
-                                        break;
-                                    case "logo":
-                                        tb_logo_system.Text = path;
-                                        break;
-                                }
-                            }
+                            if (childNodes.Name == "path")
+                                path = childNodes.InnerText;
                         }
-                        else
-                        {
-                            //We check whether we have already created a view, if not created, create, if yes, take the existing
-                            if (views.Keys.IndexOf(substring.Trim()) > -1)
-                                curentWorkingView = views[substring.Trim()];
-                            else
-                                curentWorkingView = new View(substring.Trim(), parentCanvasWidth, parentCanvasHeight);
-                            //We start filling in the elements for the current view
-                            for (int y = 0; y < viewNode.ChildNodes.Count; y++)
-                            {
-                                itemNode = viewNode.ChildNodes[y];
-                                //Fill the properties for each element.
-                                Properties.Clear();
 
-                                for (int z = 0; z < itemNode.ChildNodes.Count; z++)
-                                {
-                                    Properties.Add(itemNode.ChildNodes[z].Name, itemNode.ChildNodes[z].InnerText);
-                                }
-                                //Fill the element with the properties obtained from the file or create a new element with the specified properties
-                                elementNames = itemNode.Attributes["name"].InnerText.Split(delimiter);
-                                foreach (var elementName in elementNames)
-                                {
-                                    if (elementName.Trim() == "background")
-                                    {
-                                        foreach (XmlNode childNodes in itemNode.ChildNodes)
-                                        {
-                                            if (childNodes.Name == "path")
-                                                tb_background_system_for_window_system.Text = childNodes.InnerText;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        Element.types type;
-                                        try
-                                        {
-                                            type = (Element.types)Enum.Parse(typeof(Element.types), itemNode.Name, true);
-                                        }
-                                        catch (Exception err)
-                                        {
-                                            Logger.Write(err);
-                                            continue;
-                                        }
-                                        Rectangle foundRectangle = SomeUtilities.FindChild<Rectangle>(grid1, "rctngl_" + elementName.Trim());
-                                        Brush brush;
-                                        if (foundRectangle != null)
-                                            brush = foundRectangle.Fill;
-                                        else
-                                        {
-                                            brush = Element.GetRandomColor();
-                                        }
-                                        if (!curentWorkingView.elements.ContainsKey(elementName.Trim()))
-                                            curentWorkingView.elements.Add(elementName.Trim(), new Element(elementName.Trim(), type, Properties, parentCanvasWidth, parentCanvasHeight, brush));
-                                        else
-                                            curentWorkingView.elements[elementName.Trim()].filligFromProperties(Properties, parentCanvasWidth, parentCanvasHeight, brush);
-                                    }
-                                }
-                                //If this is a background image to save in textbox
-
-                            }
-                        }
-                        //If the resulting view is not null, we save it
-                        if (curentWorkingView != null)
+                        switch (viewNode.ChildNodes[y].Attributes["name"].InnerText)
                         {
-                            views.Remove(curentWorkingView.name);
-                            views.Add(curentWorkingView.name, curentWorkingView);
+                            case "bgsound":
+                                tb_bgsound_system.Text = path;
+                                break;
+                            case "background":
+                                tb_background_system.Text = path;
+                                break;
+                            case "logo":
+                                tb_logo_system.Text = path;
+                                break;
                         }
                     }
+                }
+                else
+                {
+                    //We check whether we have already created a view, if not created, create, if yes, take the existing
+                    if (views.Keys.IndexOf(substring.Trim()) > -1)
+                        curentWorkingView = views[substring.Trim()];
+                    else
+                        curentWorkingView = new View(substring.Trim(), parentCanvasWidth, parentCanvasHeight);
+                    //We start filling in the elements for the current view
+                    for (int y = 0; y < viewNode.ChildNodes.Count; y++)
+                    {
+                        itemNode = viewNode.ChildNodes[y];
+                        //Fill the properties for each element.
+                        Properties.Clear();
+
+                        for (int z = 0; z < itemNode.ChildNodes.Count; z++)
+                        {
+                            Properties.Add(itemNode.ChildNodes[z].Name, itemNode.ChildNodes[z].InnerText);
+                        }
+                        //Fill the element with the properties obtained from the file or create a new element with the specified properties
+                        elementNames = itemNode.Attributes["name"].InnerText.Split(delimiter);
+                        foreach (var elementName in elementNames)
+                        {
+                            if (elementName.Trim() == "background")
+                            {
+                                foreach (XmlNode childNodes in itemNode.ChildNodes)
+                                {
+                                    if (childNodes.Name == "path")
+                                        tb_background_system_for_window_system.Text = childNodes.InnerText;
+                                }
+                            }
+                            else
+                            {
+                                Element.types type;
+                                try
+                                {
+                                    type = (Element.types)Enum.Parse(typeof(Element.types), itemNode.Name, true);
+                                }
+                                catch (Exception err)
+                                {
+                                    Logger.Write(err);
+                                    continue;
+                                }
+                                Rectangle foundRectangle = SomeUtilities.FindChild<Rectangle>(grid1, "rctngl_" + elementName.Trim());
+                                Brush brush;
+                                if (foundRectangle != null)
+                                    brush = foundRectangle.Fill;
+                                else
+                                {
+                                    brush = Element.GetRandomColor();
+                                }
+                                if (!curentWorkingView.elements.ContainsKey(elementName.Trim()))
+                                    curentWorkingView.elements.Add(elementName.Trim(), new Element(elementName.Trim(), type, Properties, parentCanvasWidth, parentCanvasHeight, brush));
+                                else
+                                    curentWorkingView.elements[elementName.Trim()].filligFromProperties(Properties, parentCanvasWidth, parentCanvasHeight, brush);
+                            }
+                        }
+                        //If this is a background image to save in textbox
+
+                    }
+                }
+                //If the resulting view is not null, we save it
+                if (curentWorkingView != null)
+                {
+                    views.Remove(curentWorkingView.name);
+                    views.Add(curentWorkingView.name, curentWorkingView);
                 }
             }
         }
@@ -567,6 +585,8 @@ namespace es_theme_editor
                 else
                     _viewtmplatewindow.CreateRect(name, typeOfElement, fill, opacity, 30, 30);
 
+                cb_SelectCreatedelement.Items.Add(name);
+
                 switch (_viewtmplatewindow.view.elements[name].typeOfElement.ToString())
                 {
                     case "text":
@@ -707,6 +727,10 @@ namespace es_theme_editor
                 {
 
                     _viewtmplatewindow = new view_tamlate_window(this, comboBoxItemvalue, currview);
+
+                    for (int i = 0; i < currview.elements.Count; i++ )
+                        cb_SelectCreatedelement.Items.Add(currview.elements.Values[i].name);
+                    
                     //It is unforgettable to subscribe to the change of the selected rectengl and resizing
                     _viewtmplatewindow.OnSelectinChanged += new NotifySelectRectangleChanging(rectangleSelectChanget);
                     _viewtmplatewindow.OnPositionChanged += new NotifyPositionRectangleChanging(rectanglePositionChanget);
@@ -949,6 +973,19 @@ namespace es_theme_editor
             string filename = SomeUtilities.openFileDialog("Image files(*.png;*.jpg;*.svg)|*.png;*.jpg;*.svg" + "|Все файлы (*.*)|*.* ", foundTextBox.Text, themeFilename);
             if (filename != null)
                 foundTextBox.Text = filename;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            view_tamlate_window.BringToFront(_viewtmplatewindow.canvas1, _viewtmplatewindow.GetSelectedRectengleName);
+        }
+
+        private void cb_SelectCreatedelement_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+             //sender
+            string si = ((ComboBox)sender).SelectedItem.ToString();
+            if (((ComboBox)sender).SelectedItem != null && ((ComboBox)sender).SelectedItem.ToString() != "")
+                _viewtmplatewindow.SelectRect(((ComboBox)sender).SelectedItem.ToString());
         }
     }
 }

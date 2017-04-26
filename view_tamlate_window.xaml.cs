@@ -429,7 +429,20 @@ namespace es_theme_editor
             RectangleNamedMouseLeave = false;
         }
         #endregion drag region
-        
+
+        static public void BringToFront(Canvas pParent, string pToMoveName)
+        {
+            try
+            {
+                RectangleNamed pToMove = SomeUtilities.FindChild<RectangleNamed>(pParent, pToMoveName);
+                pParent.Children.Remove(pToMove);
+                pParent.Children.Add(pToMove);
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
         #region Rectangle work
         public void CreateRect(Element item)
         {
@@ -512,6 +525,15 @@ namespace es_theme_editor
 
                 }
             }
+        }
+
+        public void SelectRect(string rectname)
+        {
+            selected_rectangle.Unselect();
+            NotifySelectinChanged(selected_rectangle.description, selected_rectangle.isSelected);
+            selected_rectangle = SomeUtilities.FindChild<RectangleNamed>(canvas1, rectname);
+            selected_rectangle.Select();
+            NotifySelectinChanged(selected_rectangle.Name, selected_rectangle.isSelected);
         }
         #endregion Rectangle work
     }

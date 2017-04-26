@@ -93,7 +93,15 @@ namespace es_theme_editor
                 byte R = Convert.ToByte(colorhex.Substring(1, 2), 16);
                 byte G = Convert.ToByte(colorhex.Substring(3, 2), 16);
                 byte B = Convert.ToByte(colorhex.Substring(5, 2), 16);
-                byte A = Convert.ToByte(colorhex.Substring(7, 2), 16);
+                byte A;
+                try
+                {
+                    A = Convert.ToByte(colorhex.Substring(7, 2), 16);
+                }
+                catch(Exception)
+                {
+                    A = Convert.ToByte("FF", 16);
+                }
                 Color color = Color.FromRgb(R, G, B);
                 color.A = A;
 

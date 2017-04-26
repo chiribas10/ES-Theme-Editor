@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="ES Theme Edithor" Height="725.375" Width="805" Closing="Window_Closing_1"
-        xmlns:local="clr-namespace:es_theme_editor" Closed="Window_Closed_1">
+        xmlns:local="clr-namespace:es_theme_editor" Closed="Window_Closed_1" Icon="ES_theme_editor.ico">
     <Grid x:Name="grid1" Margin="0,0,2,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -13,22 +13,22 @@
         <Rectangle x:Name="rctngl_gamelist" HorizontalAlignment="Left" Height="19" Margin="13.025,231.925,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FF58C54D"/>
         <Label x:Name="lbl_gamelist" Content="gamelist" HorizontalAlignment="Left" Margin="96.45,228.925,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="55.927"/>
         <CheckBox x:Name="cb_gamelist" Content="" HorizontalAlignment="Left" Margin="228.025,233.826,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Unchecked="cbLogo_Unchecked" Height="15.098" Width="19.975"/>
-        <TextBox x:Name="tbwidth" HorizontalAlignment="Left" Height="23" Margin="15.025,23,0,0" TextWrapping="Wrap" Text="1280" VerticalAlignment="Top" Width="72" PreviewTextInput="NumberValidationTextBox"/>
-        <TextBox x:Name="tbheight" HorizontalAlignment="Left" Height="23" Margin="106.025,23,0,0" TextWrapping="Wrap" Text="720" VerticalAlignment="Top" Width="72" RenderTransformOrigin="1.75,0.565" PreviewTextInput="NumberValidationTextBox"/>
-        <Label Content="X" HorizontalAlignment="Left" Margin="86.753,21.52,0,0" VerticalAlignment="Top" Height="25.96" Width="17.077"/>
-        <Button x:Name="btn_ApplyResolution" Content="Apply" HorizontalAlignment="Left" Margin="180,23,0,0" VerticalAlignment="Top" Width="68" Height="23" Click="btn_ApplyResolution_Click"/>
+        <TextBox x:Name="tbwidth" HorizontalAlignment="Left" Height="23" Margin="267.025,33,0,0" TextWrapping="Wrap" Text="1280" VerticalAlignment="Top" Width="72" PreviewTextInput="NumberValidationTextBox"/>
+        <TextBox x:Name="tbheight" HorizontalAlignment="Left" Height="23" Margin="358.025,33,0,0" TextWrapping="Wrap" Text="720" VerticalAlignment="Top" Width="72" RenderTransformOrigin="1.75,0.565" PreviewTextInput="NumberValidationTextBox"/>
+        <Label Content="X" HorizontalAlignment="Left" Margin="338.753,31.52,0,0" VerticalAlignment="Top" Height="25.96" Width="17.077"/>
+        <Button x:Name="btn_ApplyResolution" Content="Apply" HorizontalAlignment="Left" Margin="432,33,0,0" VerticalAlignment="Top" Width="68" Height="23" Click="btn_ApplyResolution_Click"/>
         <Rectangle x:Name="rctngl_md_image" HorizontalAlignment="Left" Height="19" Margin="13.025,252.023,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FF9B80E2"/>
         <Label x:Name="lbl_md_image" Content="md__image" HorizontalAlignment="Left" Margin="92.502,249.023,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="63.823"/>
         <CheckBox x:Name="cb_md_image" Content="" HorizontalAlignment="Left" Margin="228.025,253.924,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Unchecked="cbLogo_Unchecked" Height="15.098" Width="19.975"/>
         <Rectangle x:Name="rctngl_md_description" HorizontalAlignment="Left" Height="19" Margin="13.025,272.121,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FFF3FB51"/>
         <Label x:Name="lbl_md_description" Content="md__description" HorizontalAlignment="Left" Margin="79.395,269.121,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="90.037"/>
         <CheckBox x:Name="cb_md_description" Content="" HorizontalAlignment="Left" Margin="228.025,274.022,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Unchecked="cbLogo_Unchecked" Height="15.098" Width="19.975"/>
-        <ComboBox x:Name="cbViewSelector" HorizontalAlignment="Left" Margin="13.025,71.492,0,0" VerticalAlignment="Top" Width="231.198" SelectionChanged="cbViewSelector_SelectionChanged" Height="21.96">
+        <ComboBox x:Name="cbViewSelector" HorizontalAlignment="Left" Margin="13.025,25.96,0,0" VerticalAlignment="Top" Width="231.198" SelectionChanged="cbViewSelector_SelectionChanged" Height="21.96">
             <ComboBoxItem  Name="cbiBasic">basic</ComboBoxItem>
             <ComboBoxItem  Name="cbiDetailed">detailed</ComboBoxItem>
             <ComboBoxItem  Name="cbiVideo">video</ComboBoxItem>
         </ComboBox>
-        <Label Content="View selector" HorizontalAlignment="Left" Margin="13.025,45.532,0,0" VerticalAlignment="Top" Height="25.96" Width="79.963"/>
+        <Label Content="View selector" HorizontalAlignment="Left" Margin="13.025,0,0,0" VerticalAlignment="Top" Height="25.96" Width="79.963"/>
         <Button x:Name="btnOpenViewEditor" Content="Open view editor" HorizontalAlignment="Left" Margin="47.753,664.415,0,0" VerticalAlignment="Top" Width="134.963" Click="btnOpenViewEditor_Click" Height="19.96"/>
         <Rectangle x:Name="rctngl_logoText" Fill="#FFCB5555" HorizontalAlignment="Left" Height="19" Margin="13.025,211.827,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5"/>
         <Label x:Name="Logo_text" Content="logoText" HorizontalAlignment="Left" Margin="92.395,208.827,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="64.037"/>
@@ -37,8 +37,8 @@
         <Label x:Name="tb_md_video" Content="md__video" HorizontalAlignment="Left" Margin="93.395,309.22,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="62.037"/>
         <CheckBox x:Name="cb_md_video" Content="" HorizontalAlignment="Left" Margin="228.025,315.219,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Height="15.098" Width="19.975" Unchecked="cbLogo_Unchecked"/>
         <Button x:Name="btn_generate_xml_file" Content="Generate XML file" HorizontalAlignment="Left" Margin="534.332,664.415,0,0" VerticalAlignment="Top" Width="119.963" Click="btn_generate_xml_file_Click" Height="19.96"/>
-        <TextBox x:Name="tb_log" HorizontalAlignment="Left" Height="579.022" Margin="534.332,76.492,0,0" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" AcceptsReturn="True" VerticalAlignment="Top" Width="250.668"/>
-        <Label Content="Alt+F4 - fullscreen mode" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25.96" Width="141.137" Margin="11.24,0,0,0"/>
+        <TextBox x:Name="tb_log" HorizontalAlignment="Left" Height="506.982" Margin="534.332,148.532,0,0" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" AcceptsReturn="True" VerticalAlignment="Top" Width="250.668"/>
+        <Label Content="Alt+F4 - fullscreen mode" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25.96" Width="141.137" Margin="263.24,10,0,0"/>
         <Rectangle x:Name="rctngl_help" Fill="#FFF4F6F9" HorizontalAlignment="Left" Height="19" Margin="13.025,171.631,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5"/>
         <Label x:Name="lblhelp" Content="help" HorizontalAlignment="Left" Margin="106.025,168.631,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="36.777"/>
         <CheckBox x:Name="cb_help" Content="" HorizontalAlignment="Left" Margin="228.025,173.532,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Unchecked="cbLogo_Unchecked" Height="15.098" Width="19.975"/>
@@ -146,10 +146,10 @@
             <!--</Grid>-->
         </GroupBox>
         <Button x:Name="btn_read_XML" Content="Read XML file" HorizontalAlignment="Left" Margin="668.037,664.415,0,0" VerticalAlignment="Top" Width="116.963" Click="btn_read_XML_Click" Height="19.96"/>
-        <TextBox x:Name="tb_themefolder" HorizontalAlignment="Left" Height="23" Margin="265.668,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="490.332" TextChanged="tb_themefolder_TextChanged"/>
-        <Button Content="..." HorizontalAlignment="Left" Margin="761,23,0,0" VerticalAlignment="Top" Width="24" Height="23" Click="Button_Click"/>
-        <Label Content="Theme folder" HorizontalAlignment="Left" Margin="265.668,0,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cbx_gameplatformtheme" HorizontalAlignment="Left" Margin="265.668,49.532,0,0" VerticalAlignment="Top" Width="519.332" SelectionChanged="cbx_gameplatformtheme_SelectionChanged"/>
+        <TextBox x:Name="tb_themefolder" HorizontalAlignment="Left" Height="23" Margin="534.332,40.96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="222.668" TextChanged="tb_themefolder_TextChanged"/>
+        <Button Content="..." HorizontalAlignment="Left" Margin="761,40.96,0,0" VerticalAlignment="Top" Width="24" Height="23" Click="Button_Click"/>
+        <Label Content="Theme folder" HorizontalAlignment="Left" Margin="534.332,10,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cbx_gameplatformtheme" HorizontalAlignment="Left" Margin="534.332,68.96,0,0" VerticalAlignment="Top" Width="250.668" SelectionChanged="cbx_gameplatformtheme_SelectionChanged"/>
         <Rectangle x:Name="rctngl_md_marquee" HorizontalAlignment="Left" Height="19" Margin="13.025,292.219,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FF95B6C5"/>
         <Label x:Name="lbl_md_marquee" Content="md__marquee" HorizontalAlignment="Left" Margin="79.395,289.219,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="90.037"/>
         <CheckBox x:Name="cb_md_marquee" Content="" HorizontalAlignment="Left" Margin="228.025,294.12,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Unchecked="cbLogo_Unchecked" Height="15.098" Width="19.975"/>
@@ -169,5 +169,8 @@
             <ComboBoxItem  Name="cbi_rating">rating</ComboBoxItem>
             <ComboBoxItem  Name="cbi_video">video</ComboBoxItem>
         </ComboBox>
+        <Button Content="Bring to front" HorizontalAlignment="Left" Margin="322.037,635.554,0,0" VerticalAlignment="Top" Width="116.963" Click="Button_Click_1"/>
+        <ComboBox x:Name="cb_SelectCreatedelement" HorizontalAlignment="Left" Margin="13.025,68.96,0,0" VerticalAlignment="Top" Width="231.198" SelectedValuePath="Content" SelectionChanged="cb_SelectCreatedelement_SelectionChanged"/>
+        <Label Content="Select Element" HorizontalAlignment="Left" Margin="11.24,43,0,0" VerticalAlignment="Top" Height="25.96" Width="232.983"/>
     </Grid>
 </Window>
