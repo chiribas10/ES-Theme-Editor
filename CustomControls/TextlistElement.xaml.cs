@@ -32,10 +32,10 @@ namespace es_theme_editor
             tb_scrollSound.Text = "./../SomeArt/scrollsound.ogg";
             tb_fontSize.Text = "0.03";
             cb_forceUppercase.IsChecked = false;
-            btn_secondaryColor.Foreground = SomeUtilities.GetHexFromBrush("#777777FF");
-            btn_selectedColor.Foreground = SomeUtilities.GetHexFromBrush("#777777FF");
-            btn_selectorColor.Foreground = SomeUtilities.GetHexFromBrush("#777777FF");
-            btn_primaryColor.Foreground = SomeUtilities.GetHexFromBrush("#777777FF");
+            btn_secondaryColor.Foreground = SomeUtilities.GetBrushFromHex("#777777FF");
+            btn_selectedColor.Foreground = SomeUtilities.GetBrushFromHex("#777777FF");
+            btn_selectorColor.Foreground = SomeUtilities.GetBrushFromHex("#777777FF");
+            btn_primaryColor.Foreground = SomeUtilities.GetBrushFromHex("#777777FF");
             tb_lineSpacing.Text = "1.5";
             cbx_alignment.SelectedValue = "center";
         }
@@ -73,16 +73,16 @@ namespace es_theme_editor
 
                     val = value.FirstOrDefault(x => x.Key == btn_secondaryColor.Name.Replace("btn_", "")).Value;
                     if (val != null)
-                        btn_secondaryColor.Foreground = SomeUtilities.GetHexFromBrush(val);
+                        btn_secondaryColor.Foreground = SomeUtilities.GetBrushFromHex(val);
                     val = value.FirstOrDefault(x => x.Key == btn_selectedColor.Name.Replace("btn_", "")).Value;
                     if (val != null)
-                        btn_selectedColor.Foreground = SomeUtilities.GetHexFromBrush(val);
+                        btn_selectedColor.Foreground = SomeUtilities.GetBrushFromHex(val);
                     val = value.FirstOrDefault(x => x.Key == btn_selectorColor.Name.Replace("btn_", "")).Value;
                     if (val != null)
-                        btn_selectorColor.Foreground = SomeUtilities.GetHexFromBrush(val);
+                        btn_selectorColor.Foreground = SomeUtilities.GetBrushFromHex(val);
                     val = value.FirstOrDefault(x => x.Key == btn_primaryColor.Name.Replace("btn_", "")).Value;
                     if (val != null)
-                        btn_primaryColor.Foreground = SomeUtilities.GetHexFromBrush(val);
+                        btn_primaryColor.Foreground = SomeUtilities.GetBrushFromHex(val);
                     val = value.FirstOrDefault(x => x.Key == tb_fontPath.Name.Replace("tb_", "")).Value;
                     if (val != null)
                         tb_fontPath.Text = val;

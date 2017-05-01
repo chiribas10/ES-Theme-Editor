@@ -91,6 +91,12 @@
     <Compile Include="ColorPickerDialog.xaml.cs">
       <DependentUpon>ColorPickerDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\PropertiesBox.xaml.cs">
+      <DependentUpon>PropertiesBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\ToolBox.xaml.cs">
+      <DependentUpon>ToolBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\DatetimeElement.xaml.cs">
       <DependentUpon>DatetimeElement.xaml</DependentUpon>
     </Compile>
@@ -107,6 +113,14 @@
     <Page Include="ColorPickerDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\PropertiesBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CustomControls\ToolBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="CustomControls\DatetimeElement.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -216,6 +230,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="ES_theme_editor.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="toolbox.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="PropertiesBox.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bringToFront.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

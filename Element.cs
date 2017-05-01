@@ -135,8 +135,8 @@ namespace es_theme_editor
             }
             set
             {
-                if (_item_fill == value)
-                    return;
+                //if (_item_fill == value)
+                //    return;
                 _item_fill = value;
             }
         }
@@ -144,12 +144,30 @@ namespace es_theme_editor
         //We get random color
         public static Brush GetRandomColor() 
         {
-            string[] brushArray = typeof(Brushes).GetProperties().
-                            Select(c => c.Name).ToArray();
+            ////string[] brushArray = typeof(Brushes).GetProperties().
+            ////                Select(c => c.Name).ToArray();
 
-            Random randomGen = new Random();
-            string randomColorName = brushArray[randomGen.Next(brushArray.Length)];
-            return (SolidColorBrush)new BrushConverter().ConvertFromString(randomColorName);
+            ////Random randomGen = new Random();
+            ////string randomColorName = brushArray[randomGen.Next(brushArray.Length)];
+            ////return (SolidColorBrush)new BrushConverter().ConvertFromString(randomColorName);
+
+            ////int numColors = 10;
+            ////var colors = new List<string>();
+            //var random = new Random(); // Make sure this is out of the loop!
+            ////for (int i = 0; i < numColors; i++)
+            ////{
+            ////    colors.Add(String.Format("#{0:X6}", random.Next(0x1000000)));
+            ////}
+            //return SomeUtilities.GetBrushFromHex(String.Format("#{0:X6}", random.Next(0x1000000)));
+
+            Random random = new Random();
+            byte[] buffer = new byte[8 / 2];
+            random.NextBytes(buffer);
+            string result = String.Concat(buffer.Select(x => x.ToString("X2")).ToArray());
+            if (8 % 2 == 0)
+                return SomeUtilities.GetBrushFromHex("#" + result);
+            return SomeUtilities.GetBrushFromHex(result + random.Next(16).ToString("X"));
+
         }
 
 

@@ -19,7 +19,6 @@ namespace es_theme_editor
 {
     class SomeUtilities
     {
-
         public static string getComboBoxValue(ComboBox cb)
         {
             //Get the value from the ComboBox and check if such view exists
@@ -80,30 +79,34 @@ namespace es_theme_editor
 
         public static string GetHexFromBrush(Brush brush) 
         {
-            Color btn_iconColor_mycolor = ((System.Windows.Media.SolidColorBrush)(brush)).Color;
-            string theHexColor = "#" + btn_iconColor_mycolor.R.ToString("X2") + btn_iconColor_mycolor.G.ToString("X2") + btn_iconColor_mycolor.B.ToString("X2") + btn_iconColor_mycolor.A.ToString("X2");
+            return ((System.Windows.Media.SolidColorBrush)(brush)).Color.ToString();
+            //Color btn_iconColor_mycolor = ((System.Windows.Media.SolidColorBrush)(brush)).Color;
+            //string theHexColor = "#" + btn_iconColor_mycolor.R.ToString("X2") + btn_iconColor_mycolor.G.ToString("X2") + btn_iconColor_mycolor.B.ToString("X2") + btn_iconColor_mycolor.A.ToString("X2");
 
-            return theHexColor;
+            //return theHexColor;
         }
 
-        public static Brush GetHexFromBrush(string colorhex)
+        public static Brush GetBrushFromHex(string colorhex)
         {
             if (colorhex != null)
             {
-                byte R = Convert.ToByte(colorhex.Substring(1, 2), 16);
-                byte G = Convert.ToByte(colorhex.Substring(3, 2), 16);
-                byte B = Convert.ToByte(colorhex.Substring(5, 2), 16);
-                byte A;
-                try
-                {
-                    A = Convert.ToByte(colorhex.Substring(7, 2), 16);
-                }
-                catch(Exception)
-                {
-                    A = Convert.ToByte("FF", 16);
-                }
-                Color color = Color.FromRgb(R, G, B);
-                color.A = A;
+                //if (!colorhex.Contains("#"))
+                //    colorhex = "#" + colorhex;
+                Color color = (Color)ColorConverter.ConvertFromString(colorhex);
+                //byte R = Convert.ToByte(colorhex.Substring(1, 2), 16);
+                //byte G = Convert.ToByte(colorhex.Substring(3, 2), 16);
+                //byte B = Convert.ToByte(colorhex.Substring(5, 2), 16);
+                //byte A;
+                //try
+                //{
+                //    A = Convert.ToByte(colorhex.Substring(7, 2), 16);
+                //}
+                //catch(Exception)
+                //{
+                //    A = Convert.ToByte("FF", 16);
+                //}
+                //Color color = Color.FromRgb(R, G, B);
+                //color.A = A;
 
                 SolidColorBrush scb = new SolidColorBrush(color);
                 return scb;

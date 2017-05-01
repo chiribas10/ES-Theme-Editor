@@ -30,8 +30,8 @@ namespace es_theme_editor
         {
             tb_fontPath.Text = "./../SomeArt/font.ttf";
             tb_fontSize.Text = "0.003";
-            btn_iconColor.Foreground = SomeUtilities.GetHexFromBrush("#777777FF");
-            btn_textColor.Foreground = SomeUtilities.GetHexFromBrush("#777777FF");
+            btn_iconColor.Foreground = SomeUtilities.GetBrushFromHex("#777777FF");
+            btn_textColor.Foreground = SomeUtilities.GetBrushFromHex("#777777FF");
         }
 
         //We fill in the properties indicated here. Then they will be assigned to the element for which they were filled.
@@ -57,10 +57,10 @@ namespace es_theme_editor
                     Clear();
                     val = value.FirstOrDefault(x => x.Key == btn_iconColor.Name.Replace("btn_", "")).Value;
                     if (val != null)
-                        btn_iconColor.Foreground = SomeUtilities.GetHexFromBrush(val);
+                        btn_iconColor.Foreground = SomeUtilities.GetBrushFromHex(val);
                     val = value.FirstOrDefault(x => x.Key == btn_textColor.Name.Replace("btn_", "")).Value;
                     if (val != null)
-                        btn_textColor.Foreground = SomeUtilities.GetHexFromBrush(val);
+                        btn_textColor.Foreground = SomeUtilities.GetBrushFromHex(val);
                     val = value.FirstOrDefault(x => x.Key == tb_fontPath.Name.Replace("tb_", "")).Value;
                     if (val != null)
                         tb_fontPath.Text = val;

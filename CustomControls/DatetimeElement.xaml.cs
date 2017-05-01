@@ -28,7 +28,7 @@ namespace es_theme_editor
 
         public void Clear()
         {
-            btn_color.Foreground = SomeUtilities.GetHexFromBrush("#777777FF");
+            btn_color.Foreground = SomeUtilities.GetBrushFromHex("#777777FF");
             tb_fontPath.Text = "./../SomeArt/font.ttf";
             tb_fontSize.Text = "0.03";
             tb_lineSpacing.Text = "1.5";
@@ -58,7 +58,7 @@ namespace es_theme_editor
 
                     val = value.FirstOrDefault(x => x.Key == btn_color.Name.Replace("btn_", "")).Value;
                     if (val != null)
-                        btn_color.Foreground = SomeUtilities.GetHexFromBrush(val);
+                        btn_color.Foreground = SomeUtilities.GetBrushFromHex(val);
                     val = value.FirstOrDefault(x => x.Key == tb_fontPath.Name.Replace("tb_", "")).Value;
                     if (val != null)
                         tb_fontPath.Text = val;

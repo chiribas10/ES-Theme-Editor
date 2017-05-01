@@ -30,19 +30,18 @@ namespace es_theme_editor
         {
             
             cb_tile.IsChecked = false;
-            btn_color.Foreground = SomeUtilities.GetHexFromBrush("#000000FF");
+            btn_color.Background = SomeUtilities.GetBrushFromHex("#000000FF");
             tb_path.Text = defaultimage;
         }
 
         //We fill in the properties indicated here. Then they will be assigned to the element for which they were filled.
         public SortedList<string, string> Properties
         {
-
             get
             {
                 SortedList<string, string> _properties = new SortedList<string, string>();
 
-                _properties.Add(btn_color.Name.Replace("btn_", ""), SomeUtilities.GetHexFromBrush(btn_color.Foreground));
+                _properties.Add(btn_color.Name.Replace("btn_", ""), SomeUtilities.GetHexFromBrush(btn_color.Background));
                 _properties.Add(tb_path.Name.Replace("tb_", ""), tb_path.Text.ToString());
                 if (cb_tile.IsChecked == true)
                     _properties.Add(cb_tile.Name.Replace("cb_", ""), "1");
@@ -59,7 +58,7 @@ namespace es_theme_editor
 
                     val = value.FirstOrDefault(x => x.Key == btn_color.Name.Replace("btn_", "")).Value;
                     if (val != null)
-                        btn_color.Foreground = SomeUtilities.GetHexFromBrush(val);
+                        btn_color.Background = SomeUtilities.GetBrushFromHex(val);
                     val = value.FirstOrDefault(x => x.Key == tb_path.Name.Replace("tb_", "")).Value;
                     if (val != null)
                         tb_path.Text = val;

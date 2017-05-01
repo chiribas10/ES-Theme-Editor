@@ -25,10 +25,12 @@ namespace es_theme_editor
         public bool isOpened = false;
 
         //To tell the parent window that the selected object has changed
-        public event NotifySelectRectangleChanging OnSelectinChanged;
-        public event NotifyPositionRectangleChanging OnPositionChanged;
+        //public event NotifySelectRectangleChanging OnSelectinChanged;
+        //public event NotifyPositionRectangleChanging OnPositionChanged;
         public bool RectangleNamedMouseLeave = true;
-        public View view;
+        //public View view;
+        //On/off transparency for Rectangle
+        private bool transperentRectangle = false;
 
         //Inicialize window
         //public view_tamlate_window()
@@ -40,11 +42,97 @@ namespace es_theme_editor
         {
             InitializeComponent();
             isOpened = true;
-            this.view = view;
+            //this.view = view;
+
+            toolbox.setCurrentView(view);
+            toolbox.onElementCreate += this.CreateRect;
+            toolbox.onElementRemove += this.RemoveRect;
+            toolbox.onElementSelect += this.SelectRect;
+            //toolbox.onCurrentElementChanget += propertiesbox.setElementProperties;
             this.Title = name;
             fillItem();
             _parent = parent;
             SetCanvasResolution(view.width, view.height);
+        }
+
+        //private void RemoveRect(string name)
+        //{
+        //    RemoveRect(name);
+        //}
+
+        //private void SelectRect(string name)
+        //{
+        //    SelectRect(name);
+        //}
+
+        //We pass the view_tamlate_window task to create a new rectengl
+        private void CreateRect(string name, Element.types typeOfElement, Brush fill, double opacity)
+        {
+            if (!transperentRectangle)
+                opacity = 1;
+
+            //if (_viewtmplatewindow != null)
+            //{
+            //For rating stars, we set the template size smaller than the rest
+            if (name != "md_rating" && name != "help")
+                CreateRect(name, typeOfElement, fill, opacity, 200, 200);
+            else if (name == "help")
+                CreateRect(name, typeOfElement, fill, opacity, canvas1.ActualWidth, 75, 0, canvas1.ActualHeight - 75);
+            else
+                CreateRect(name, typeOfElement, fill, opacity, 30, 30);
+
+            toolbox.addCreatedelement(name);
+            if (toolbox.currentView.elements.ContainsKey(name))
+            switch (toolbox.currentView.elements[name].typeOfElement.ToString())
+            {
+                case "text":
+                    if (toolbox.currentView.elements[name].Properties.Count == 0)
+                        toolbox.currentView.elements[name].Properties = propertiesbox.text.Properties;
+                    else
+                        propertiesbox.text.Properties = toolbox.currentView.elements[name].Properties;
+                    break;
+                case "image":
+                    if (toolbox.currentView.elements[name].Properties.Count == 0)
+                        toolbox.currentView.elements[name].Properties = propertiesbox.image.Properties;
+                    else
+                        propertiesbox.image.Properties = toolbox.currentView.elements[name].Properties;
+                    break;
+                case "textlist":
+                    if (toolbox.currentView.elements[name].Properties.Count == 0)
+                        toolbox.currentView.elements[name].Properties = propertiesbox.textlist.Properties;
+                    else
+                        propertiesbox.textlist.Properties = toolbox.currentView.elements[name].Properties;
+                    break;
+                case "rating":
+                    if (toolbox.currentView.elements[name].Properties.Count == 0)
+                        toolbox.currentView.elements[name].Properties = propertiesbox.rating.Properties;
+                    else
+                        propertiesbox.rating.Properties = toolbox.currentView.elements[name].Properties;
+                    break;
+                case "datetime":
+                    if (toolbox.currentView.elements[name].Properties.Count == 0)
+                        toolbox.currentView.elements[name].Properties = propertiesbox.datetime.Properties;
+                    else
+                        propertiesbox.datetime.Properties = toolbox.currentView.elements[name].Properties;
+                    break;
+                case "helpsystem":
+                    if (toolbox.currentView.elements[name].Properties.Count == 0)
+                        toolbox.currentView.elements[name].Properties = propertiesbox.helpsystem.Properties;
+                    else
+                        propertiesbox.helpsystem.Properties = toolbox.currentView.elements[name].Properties;
+                    break;
+            }
+            //}
+            //else
+            //{
+            //    //Turn on the manual switch mode CheckBox so that the program does not react to changing their states
+            //    //Enable or disable CheckBox if they have already been marked previously for the selected view
+            //    toolBox.cbManualChangeState = true;
+
+            //    uncheckAllCheckboxes();
+
+            //    toolBox.cbManualChangeState = false;
+            //}
         }
 
         //Closing window
@@ -56,7 +144,7 @@ namespace es_theme_editor
                 NotifySelectinChanged(selected_rectangle.description, selected_rectangle.isSelected);
             }
 
-            _parent.currentItem = view;
+            _parent.currentItem = toolbox.currentView;
             isOpened = false;
         }
 
@@ -72,33 +160,232 @@ namespace es_theme_editor
         //We notify the parent window about changing the selected Rectangle
         public void NotifySelectinChanged(string name, bool isSelected)
         {
-            if (OnSelectinChanged != null)
-            {               
-                //Raise Event. All the listeners of this event will get a call.               
-                OnSelectinChanged(name, isSelected);
-            }
+            rectangleSelectChanget(name, isSelected);
+            //if (OnSelectinChanged != null)
+            //{               
+            //    //Raise Event. All the listeners of this event will get a call.               
+            //    OnSelectinChanged(name, isSelected);
+            //}
         }
 
         //We notify the parent window about changing the location of the selected Rectangle
         public void NotifyPositionChanged(string name)
         {
-            if (OnPositionChanged != null)
+            rectanglePositionChanget(name);
+            //if (OnPositionChanged != null)
+            //{
+            //    //Raise Event. All the listeners of this event will get a call.               
+            //    OnPositionChanged(name);
+            //}
+        }
+
+        //When changing the position of the current Renctengl (it's our Element)
+        void rectanglePositionChanget(string name)
+        {
+            //Canvas.SetLeft(rectangle, new_x);
+            //Canvas.SetTop(rectangle, new_y);
+            try
             {
-                //Raise Event. All the listeners of this event will get a call.               
-                OnPositionChanged(name);
+                switch (toolbox.currentView.elements[name].typeOfElement.ToString())
+                {
+                    case "text":
+                        propertiesbox.text.tb_pos_h.Text = Canvas.GetTop(selected_rectangle).ToString();
+                        propertiesbox.text.tb_pos_w.Text = Canvas.GetLeft(selected_rectangle).ToString();
+                        if (name == "md_description")
+                        {
+                            propertiesbox.text.tb_size_h.Text = selected_rectangle.ActualHeight.ToString();
+                            propertiesbox.text.tb_size_w.Text = selected_rectangle.ActualWidth.ToString();
+                        }
+                        break;
+                    case "image":
+                        propertiesbox.image.tb_pos_h.Text = Canvas.GetTop(selected_rectangle).ToString();
+                        propertiesbox.image.tb_pos_w.Text = Canvas.GetLeft(selected_rectangle).ToString();
+                        propertiesbox.image.tb_size_h.Text = selected_rectangle.ActualHeight.ToString();
+                        propertiesbox.image.tb_size_w.Text = selected_rectangle.ActualWidth.ToString();
+                        propertiesbox.image.tb_origin_w.Text = "0";
+                        propertiesbox.image.tb_origin_h.Text = "0";
+                        break;
+                    case "textlist":
+                        propertiesbox.textlist.tb_pos_h.Text = Canvas.GetTop(selected_rectangle).ToString();
+                        propertiesbox.textlist.tb_pos_w.Text = Canvas.GetLeft(selected_rectangle).ToString();
+                        propertiesbox.textlist.tb_size_h.Text = selected_rectangle.ActualHeight.ToString();
+                        propertiesbox.textlist.tb_size_w.Text = selected_rectangle.ActualWidth.ToString();
+                        break;
+                    case "video":
+                        propertiesbox.video.tb_pos_h.Text = Canvas.GetTop(selected_rectangle).ToString();
+                        propertiesbox.video.tb_pos_w.Text = Canvas.GetLeft(selected_rectangle).ToString();
+                        propertiesbox.video.tb_size_h.Text = selected_rectangle.ActualHeight.ToString();
+                        propertiesbox.video.tb_size_w.Text = selected_rectangle.ActualWidth.ToString();
+                        propertiesbox.video.tb_origin_w.Text = "0";
+                        propertiesbox.video.tb_origin_h.Text = "0";
+                        break;
+                    case "rating":
+                        propertiesbox.rating.tb_pos_h.Text = Canvas.GetTop(selected_rectangle).ToString();
+                        propertiesbox.rating.tb_pos_w.Text = Canvas.GetLeft(selected_rectangle).ToString();
+                        propertiesbox.rating.tb_size_h.Text = selected_rectangle.ActualHeight.ToString();
+                        break;
+                    case "datetime":
+                        propertiesbox.datetime.tb_pos_h.Text = Canvas.GetTop(selected_rectangle).ToString();;
+                        propertiesbox.datetime.tb_pos_w.Text = Canvas.GetLeft(selected_rectangle).ToString();;
+                        break;
+                    case "helpsystem":
+                        propertiesbox.helpsystem.tb_pos_h.Text = Canvas.GetTop(selected_rectangle).ToString();;
+                        propertiesbox.helpsystem.tb_pos_w.Text = Canvas.GetLeft(selected_rectangle).ToString();;
+                        break;
+                }
             }
+            catch (Exception err)
+            {
+                Logger.Write(err);
+            }
+        }
+
+        private void hiddenAllGroupBox()
+        {
+            List<GroupBox> groupboxes = SomeUtilities.GetLogicalChildCollection<GroupBox>(propertiesbox);
+
+            for (int i = 0; i < groupboxes.Count; i++)
+            {
+                groupboxes[i].Visibility = System.Windows.Visibility.Hidden;
+            }
+        }
+
+        //When the selection in Rectengl changes
+        void rectangleSelectChanget(string name, bool isSelected)
+        {
+            //Before changing the rectengl, we process the fields if they are filled.
+            //string comboBoxItemvalue;
+            //comboBoxItemvalue = getComboBoxValue((ComboBoxItem)cbViewSelector.SelectedItem);
+            hiddenAllGroupBox();
+            //Save the values in the fields to the current view opened in the viewtmplatewindow window
+            if (!isSelected)
+            {
+                if (name != "None")
+                    try
+                    {
+                        addPropertiesToElement(name);
+                    }
+                    catch (Exception err)
+                    {
+                        Logger.Write(err);
+                    }
+
+                GroupBox foundGroupBox = SomeUtilities.FindChild<GroupBox>(propertiesbox, "gb_base");
+                foundGroupBox.Visibility = System.Windows.Visibility.Visible;
+                //tb_log.Text = name.ToString();
+                return;
+            }
+
+            //Save the values in the fields from the current view opened in the viewtmplatewindow window
+            if (isSelected)
+            {
+                //Save view to global variable
+                string elementType = toolbox.currentView.elements[name].typeOfElement.ToString();
+                if (isSelected)
+                {
+                    GroupBox foundGrid = SomeUtilities.FindChild<GroupBox>(propertiesbox, "gb_" + elementType);
+                    foundGrid.Visibility = System.Windows.Visibility.Visible;
+                    //tb_log.Text = name.ToString();
+                }
+                getPropertiesFromElement(name);
+            }
+        }
+
+        public void save() 
+        {
+            if (isOpened)
+            {
+                addPropertiesToElement(GetSelectedRectengleName);
+                _parent.currentItem = toolbox.currentView;
+            }
+        }
+
+        //Get Properties at the modified Rectangle
+        private void getPropertiesFromElement(string name)
+        {
+            if ((toolbox.currentView != null) && (toolbox.currentView.elements != null) && (toolbox.currentView.elements.Keys.Contains(name)))
+            {
+                string elementType = toolbox.currentView.elements[name].typeOfElement.ToString();
+
+                if (elementType != Element.types.notexistsname.ToString())
+                    switch (elementType)
+                    {
+                        case "text":
+                            propertiesbox.text.Properties = toolbox.currentView.elements[name].Properties;
+                            break;
+                        case "image":
+                            propertiesbox.image.Properties = toolbox.currentView.elements[name].Properties;
+                            //if (name == "logo")
+                            //    propertiesbox.image.Clear(propertiesbox.tb_logo_system.Text);
+                            //else
+                                //propertiesbox.image.Clear("");
+                            break;
+                        case "textlist":
+                            propertiesbox.textlist.Properties = toolbox.currentView.elements[name].Properties;
+                            break;
+                        case "rating":
+                            propertiesbox.rating.Properties = toolbox.currentView.elements[name].Properties;
+                            break;
+                        case "datetime":
+                            propertiesbox.datetime.Properties = toolbox.currentView.elements[name].Properties;
+                            break;
+                        case "helpsystem":
+                            propertiesbox.helpsystem.Properties = toolbox.currentView.elements[name].Properties;
+                            break;
+                    }
+            }
+        }
+
+        //Transfer Protectis Rectangle
+        private void addPropertiesToElement(string name)
+        {
+            if ((toolbox.currentView != null) && (toolbox.currentView.elements != null) && (toolbox.currentView.elements.Keys.Contains(name)))
+                switch (toolbox.currentView.elements[name].typeOfElement.ToString())
+                {
+                    case "text":
+                        toolbox.currentView.elements[name].Properties = propertiesbox.text.Properties;
+                        propertiesbox.text.Clear();
+                        break;
+                    case "image":
+                        toolbox.currentView.elements[name].Properties = propertiesbox.image.Properties;
+                        propertiesbox.image.Clear("");
+                        break;
+                    case "textlist":
+                        toolbox.currentView.elements[name].Properties = propertiesbox.textlist.Properties;
+                        propertiesbox.textlist.Clear();
+                        break;
+                    case "rating":
+                        toolbox.currentView.elements[name].Properties = propertiesbox.rating.Properties;
+                        propertiesbox.rating.Clear();
+                        break;
+                    case "datetime":
+                        toolbox.currentView.elements[name].Properties = propertiesbox.datetime.Properties;
+                        propertiesbox.datetime.Clear();
+                        break;
+                    case "helpsystem":
+                        toolbox.currentView.elements[name].Properties = propertiesbox.helpsystem.Properties;
+                        propertiesbox.helpsystem.Clear();
+                        break;
+                }
         }
 
         private void fillItem() 
         {
-            for (int i = 0; i < view.elements.Count; i++)
-                CreateRect(view.elements.Values[i]);
+            for (int i = 0; i < toolbox.currentView.elements.Count; i++)
+                CreateRect(toolbox.currentView.elements.Values[i]);
         }
 
         public void SetCanvasResolution(int width, int height) 
         {
+            
+            double left = (canvas.ActualWidth - canvas1.ActualWidth) / 2;
+            Canvas.SetLeft(canvas1, left);
+
+            double top = (canvas.ActualHeight - canvas1.ActualHeight) / 2;
+            Canvas.SetTop(canvas1, top);
             canvas1.Width = width;
             canvas1.Height = height;
+            canvas.UpdateLayout();
         }
 
         private void Window_KeyDown_1(object sender, KeyEventArgs e)
@@ -219,7 +506,7 @@ namespace es_theme_editor
         }
 
         // Start dragging.
-        private void canvas1_MouseDown(object sender, MouseButtonEventArgs e)
+        public void canvas1_MouseDown(object sender, MouseButtonEventArgs e)
         {
             MouseHitType = SetHitType(rectangle, Mouse.GetPosition(canvas1));
             SetMouseCursor();
@@ -231,7 +518,15 @@ namespace es_theme_editor
                 selected_rectangle = null;
                 return;
             }
-            if (MouseHitType == HitType.None) return;
+            if (MouseHitType == HitType.None)
+            {
+                if (selected_rectangle != null)
+                {
+                    selected_rectangle.Unselect();
+                    NotifySelectinChanged(selected_rectangle.description, selected_rectangle.isSelected);
+                }
+                return;
+            }
 
             LastPoint = Mouse.GetPosition(canvas1);
             DragInProgress = true;
@@ -250,6 +545,7 @@ namespace es_theme_editor
                 if (e.OriginalSource is TextBlock)
                     selected_rectangle = (RectangleNamed)((TextBlock)e.OriginalSource).Parent;
                 selected_rectangle.Select();
+                toolbox.cb_SelectCreatedelement.SelectedItem = selected_rectangle.Name;
                 NotifySelectinChanged(selected_rectangle.Name, selected_rectangle.isSelected);
             }
             catch (Exception err) 
@@ -339,20 +635,20 @@ namespace es_theme_editor
 
                     //Check that the new coordinates do not go beyond our Canvas.
                     double xc = Canvas.GetLeft(canvas1);
-                    if (double.IsNaN(Canvas.GetLeft(canvas1)))
-                    {
+                    //if (double.IsNaN(Canvas.GetLeft(canvas1)))
+                    //{
                         xc = 0;
-                    }
-                    else
-                        xc = Canvas.GetLeft(canvas1);
+                    //}
+                    //else
+                    //    xc = Canvas.GetLeft(canvas1);
 
                     double yc = Canvas.GetTop(canvas1);
-                    if (double.IsNaN(Canvas.GetTop(canvas1)))
-                    {
+                    //if (double.IsNaN(Canvas.GetTop(canvas1)))
+                    //{
                         yc = 0;
-                    }
-                    else
-                        yc = Canvas.GetTop(canvas1);
+                    //}
+                    //else
+                    //    yc = Canvas.GetTop(canvas1);
 
                     if (new_x < xc)
                         new_x = xc;
@@ -365,6 +661,7 @@ namespace es_theme_editor
 
                     Canvas.SetLeft(rectangle, new_x);
                     Canvas.SetTop(rectangle, new_y);
+                    NotifyPositionChanged(selected_rectangle.description);
                     if (new_width > canvas1.ActualWidth)
                         rectangle.Width = canvas1.ActualWidth;
                     else
@@ -396,6 +693,7 @@ namespace es_theme_editor
                     if (e.OriginalSource is TextBlock)
                         selected_rectangle = (RectangleNamed)((TextBlock)e.OriginalSource).Parent;
                     selected_rectangle.Select();
+                    toolbox.cb_SelectCreatedelement.SelectedItem = selected_rectangle.Name;
                     NotifySelectinChanged(selected_rectangle.Name, selected_rectangle.isSelected);
                 }
                 else 
@@ -430,18 +728,18 @@ namespace es_theme_editor
         }
         #endregion drag region
 
-        static public void BringToFront(Canvas pParent, string pToMoveName)
-        {
-            try
-            {
-                RectangleNamed pToMove = SomeUtilities.FindChild<RectangleNamed>(pParent, pToMoveName);
-                pParent.Children.Remove(pToMove);
-                pParent.Children.Add(pToMove);
-            }
-            catch (Exception ex)
-            {
-            }
-        }
+        //static public void BringToFront(Canvas pParent, string pToMoveName)
+        //{
+        //    try
+        //    {
+        //        RectangleNamed pToMove = SomeUtilities.FindChild<RectangleNamed>(pParent, pToMoveName);
+        //        pParent.Children.Remove(pToMove);
+        //        pParent.Children.Add(pToMove);
+        //    }
+        //    catch (Exception)
+        //    {
+        //    }
+        //}
 
         #region Rectangle work
         public void CreateRect(Element item)
@@ -474,18 +772,38 @@ namespace es_theme_editor
             rect.Opacity = rectopacity;
             Canvas.SetLeft(rect, x);
             Canvas.SetTop(rect, y);
+            Panel.SetZIndex(rect, 1);
             canvas1.Children.Add(rect);
             SaveItem(rect, typeOfElement);
-        }        
+        }
+
+        //public static void BringToFront(FrameworkElement element)
+        //{
+        //    if (element == null) return;
+
+        //    Canvas parent = element.Parent as Canvas;
+        //    if (parent == null) return;
+
+        //    var maxZ = parent.Children.OfType<UIElement>()
+        //      .Where(x => x != element)
+        //      .Select(x => Panel.GetZIndex(x))
+        //      .Max();
+        //    Panel.SetZIndex(element, maxZ + 1);
+        //}
+
+        //private int GetMaxZindex() 
+        //{
+        //    return  canvas1.Children.OfType<UIElement>().Select(x => Panel.GetZIndex(x)).Max();
+        //}
 
          private void SaveItem(RectangleNamed rect) 
         {
-            if (view.elements.IndexOfKey(rect.description) >= 0)
-                SaveItem(rect, view.elements[rect.description].typeOfElement);
+            if (toolbox.currentView.elements.IndexOfKey(rect.description) >= 0)
+                SaveItem(rect, toolbox.currentView.elements[rect.description].typeOfElement);
         }
         private void SaveItem(RectangleNamed rect, Element.types typeOfElement) 
         {
-            Element item = view.getItem(rect.description);
+            Element item = toolbox.currentView.getItem(rect.description);
 
             if (selected_rectangle != null)
             {
@@ -505,7 +823,7 @@ namespace es_theme_editor
                     item.size_width_NORMALIZED = rect.Width / canvas1.Width;
                 }
             }
-            view.addItem = item;
+            toolbox.currentView.addItem = item;
         }
 
         public void RemoveRect(string rectname)
@@ -521,7 +839,7 @@ namespace es_theme_editor
                         NotifySelectinChanged(rctngl[i].Name, rctngl[i].isSelected);
                     }
                     canvas1.Children.Remove(rctngl[i]);
-                    view.removeItem(rectname);
+                    toolbox.currentView.removeItem(rectname);
 
                 }
             }
@@ -529,12 +847,56 @@ namespace es_theme_editor
 
         public void SelectRect(string rectname)
         {
-            selected_rectangle.Unselect();
-            NotifySelectinChanged(selected_rectangle.description, selected_rectangle.isSelected);
+            if (selected_rectangle != null)
+            {
+                selected_rectangle.Unselect();
+                NotifySelectinChanged(selected_rectangle.description, selected_rectangle.isSelected);
+            }
             selected_rectangle = SomeUtilities.FindChild<RectangleNamed>(canvas1, rectname);
             selected_rectangle.Select();
+            toolbox.cb_SelectCreatedelement.SelectedItem = selected_rectangle.Name;
             NotifySelectinChanged(selected_rectangle.Name, selected_rectangle.isSelected);
         }
         #endregion Rectangle work
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (dp_toolbox.Visibility != System.Windows.Visibility.Visible)
+                dp_toolbox.Visibility = System.Windows.Visibility.Visible;
+            else
+                dp_toolbox.Visibility = System.Windows.Visibility.Hidden;
+        }
+        
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            if (dp_propertiesbox.Visibility != System.Windows.Visibility.Visible)
+                dp_propertiesbox.Visibility = System.Windows.Visibility.Visible;
+            else
+                dp_propertiesbox.Visibility = System.Windows.Visibility.Hidden;
+        }
+        private void Grid_SizeChanged_1(object sender, SizeChangedEventArgs e)
+        {
+            double left = (canvas.ActualWidth - canvas1.ActualWidth) / 2;
+            Canvas.SetLeft(canvas1, left);
+
+            double top = (canvas.ActualHeight - canvas1.ActualHeight) / 2;
+            Canvas.SetTop(canvas1, top);
+        }
+
+        private void btn_BringToFront_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (selected_rectangle != null)
+                {
+                    RectangleNamed pToMove = SomeUtilities.FindChild<RectangleNamed>(canvas1, selected_rectangle.Name);
+                    canvas1.Children.Remove(pToMove);
+                    canvas1.Children.Add(pToMove);
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
     }
 }

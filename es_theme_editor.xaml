@@ -1,176 +1,31 @@
 ﻿<Window x:Class="es_theme_editor.Es_theme_editor"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ES Theme Edithor" Height="725.375" Width="805" Closing="Window_Closing_1"
+        Title="ES Theme Edithor" Height="725.375" Width="557" Closing="Window_Closing_1"
         xmlns:local="clr-namespace:es_theme_editor" Closed="Window_Closed_1" Icon="ES_theme_editor.ico">
     <Grid x:Name="grid1" Margin="0,0,2,0">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Rectangle x:Name="rctngl_logo" Fill="#FF3FA2E6" HorizontalAlignment="Left" Height="19" Margin="13.025,191.729,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5"/>
-        <Label x:Name="Logo" Content="logo" HorizontalAlignment="Left" Margin="106.025,188.729,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="36.777"/>
-        <CheckBox x:Name="cb_logo" Content="" HorizontalAlignment="Left" Margin="228.025,193.63,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Unchecked="cbLogo_Unchecked" Height="15.098" Width="19.975"/>
-        <Rectangle x:Name="rctngl_gamelist" HorizontalAlignment="Left" Height="19" Margin="13.025,231.925,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FF58C54D"/>
-        <Label x:Name="lbl_gamelist" Content="gamelist" HorizontalAlignment="Left" Margin="96.45,228.925,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="55.927"/>
-        <CheckBox x:Name="cb_gamelist" Content="" HorizontalAlignment="Left" Margin="228.025,233.826,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Unchecked="cbLogo_Unchecked" Height="15.098" Width="19.975"/>
-        <TextBox x:Name="tbwidth" HorizontalAlignment="Left" Height="23" Margin="267.025,33,0,0" TextWrapping="Wrap" Text="1280" VerticalAlignment="Top" Width="72" PreviewTextInput="NumberValidationTextBox"/>
-        <TextBox x:Name="tbheight" HorizontalAlignment="Left" Height="23" Margin="358.025,33,0,0" TextWrapping="Wrap" Text="720" VerticalAlignment="Top" Width="72" RenderTransformOrigin="1.75,0.565" PreviewTextInput="NumberValidationTextBox"/>
-        <Label Content="X" HorizontalAlignment="Left" Margin="338.753,31.52,0,0" VerticalAlignment="Top" Height="25.96" Width="17.077"/>
-        <Button x:Name="btn_ApplyResolution" Content="Apply" HorizontalAlignment="Left" Margin="432,33,0,0" VerticalAlignment="Top" Width="68" Height="23" Click="btn_ApplyResolution_Click"/>
-        <Rectangle x:Name="rctngl_md_image" HorizontalAlignment="Left" Height="19" Margin="13.025,252.023,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FF9B80E2"/>
-        <Label x:Name="lbl_md_image" Content="md__image" HorizontalAlignment="Left" Margin="92.502,249.023,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="63.823"/>
-        <CheckBox x:Name="cb_md_image" Content="" HorizontalAlignment="Left" Margin="228.025,253.924,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Unchecked="cbLogo_Unchecked" Height="15.098" Width="19.975"/>
-        <Rectangle x:Name="rctngl_md_description" HorizontalAlignment="Left" Height="19" Margin="13.025,272.121,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FFF3FB51"/>
-        <Label x:Name="lbl_md_description" Content="md__description" HorizontalAlignment="Left" Margin="79.395,269.121,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="90.037"/>
-        <CheckBox x:Name="cb_md_description" Content="" HorizontalAlignment="Left" Margin="228.025,274.022,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Unchecked="cbLogo_Unchecked" Height="15.098" Width="19.975"/>
-        <ComboBox x:Name="cbViewSelector" HorizontalAlignment="Left" Margin="13.025,25.96,0,0" VerticalAlignment="Top" Width="231.198" SelectionChanged="cbViewSelector_SelectionChanged" Height="21.96">
+        <!--<local:ToolBox x:Name="toolBox"  Height="613.923" Margin="0,47.92,535.332,0" VerticalAlignment="Top" Width="259.668" Visibility="Visible"/>-->
+        <!--<local:PropertiesBox x:Name="propertiesBox"  Height="613.923" Margin="16.424,76.452,518.908,0" VerticalAlignment="Top" Width="259.668" Visibility="Visible"/>-->
+        <TextBox x:Name="tbwidth" HorizontalAlignment="Left" Height="23" Margin="284.877,23,0,0" TextWrapping="Wrap" Text="1280" VerticalAlignment="Top" Width="72" PreviewTextInput="NumberValidationTextBox"/>
+        <TextBox x:Name="tbheight" HorizontalAlignment="Left" Height="23" Margin="375.877,23,0,0" TextWrapping="Wrap" Text="720" VerticalAlignment="Top" Width="72" RenderTransformOrigin="1.75,0.565" PreviewTextInput="NumberValidationTextBox"/>
+        <Label Content="X" HorizontalAlignment="Left" Margin="356.605,21.52,0,0" VerticalAlignment="Top" Height="25.96" Width="17.077"/>
+        <Button x:Name="btn_ApplyResolution" Content="Apply" HorizontalAlignment="Left" Margin="449.852,23,0,0" VerticalAlignment="Top" Width="68" Height="23" Click="btn_ApplyResolution_Click"/>
+        <ComboBox x:Name="cbViewSelector" HorizontalAlignment="Left" Margin="16.424,23,0,0" VerticalAlignment="Top" Width="259.668" SelectionChanged="cbViewSelector_SelectionChanged" Height="21.96">
             <ComboBoxItem  Name="cbiBasic">basic</ComboBoxItem>
             <ComboBoxItem  Name="cbiDetailed">detailed</ComboBoxItem>
             <ComboBoxItem  Name="cbiVideo">video</ComboBoxItem>
         </ComboBox>
-        <Label Content="View selector" HorizontalAlignment="Left" Margin="13.025,0,0,0" VerticalAlignment="Top" Height="25.96" Width="79.963"/>
-        <Button x:Name="btnOpenViewEditor" Content="Open view editor" HorizontalAlignment="Left" Margin="47.753,664.415,0,0" VerticalAlignment="Top" Width="134.963" Click="btnOpenViewEditor_Click" Height="19.96"/>
-        <Rectangle x:Name="rctngl_logoText" Fill="#FFCB5555" HorizontalAlignment="Left" Height="19" Margin="13.025,211.827,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5"/>
-        <Label x:Name="Logo_text" Content="logoText" HorizontalAlignment="Left" Margin="92.395,208.827,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="64.037"/>
-        <CheckBox x:Name="cb_logoText" Content="" HorizontalAlignment="Left" Margin="228.025,213.728,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Unchecked="cbLogo_Unchecked" Height="15.098" Width="19.975"/>
-        <Rectangle x:Name="rctngl_md_video" HorizontalAlignment="Left" Height="19" Margin="13.025,313.318,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FFFBBD51"/>
-        <Label x:Name="tb_md_video" Content="md__video" HorizontalAlignment="Left" Margin="93.395,309.22,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="62.037"/>
-        <CheckBox x:Name="cb_md_video" Content="" HorizontalAlignment="Left" Margin="228.025,315.219,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Height="15.098" Width="19.975" Unchecked="cbLogo_Unchecked"/>
-        <Button x:Name="btn_generate_xml_file" Content="Generate XML file" HorizontalAlignment="Left" Margin="534.332,664.415,0,0" VerticalAlignment="Top" Width="119.963" Click="btn_generate_xml_file_Click" Height="19.96"/>
-        <TextBox x:Name="tb_log" HorizontalAlignment="Left" Height="506.982" Margin="534.332,148.532,0,0" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" AcceptsReturn="True" VerticalAlignment="Top" Width="250.668"/>
-        <Label Content="Alt+F4 - fullscreen mode" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25.96" Width="141.137" Margin="263.24,10,0,0"/>
-        <Rectangle x:Name="rctngl_help" Fill="#FFF4F6F9" HorizontalAlignment="Left" Height="19" Margin="13.025,171.631,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5"/>
-        <Label x:Name="lblhelp" Content="help" HorizontalAlignment="Left" Margin="106.025,168.631,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="36.777"/>
-        <CheckBox x:Name="cb_help" Content="" HorizontalAlignment="Left" Margin="228.025,173.532,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Unchecked="cbLogo_Unchecked" Height="15.098" Width="19.975"/>
-        <Rectangle x:Name="rctngl_md_lbl_rating" HorizontalAlignment="Left" Height="19" Margin="13.025,333.416,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FF73FFF2"/>
-        <Label x:Name="tb_md_video_Copy" Content="md__lbl__rating" HorizontalAlignment="Left" Margin="84.111,329.554,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="80.605"/>
-        <CheckBox x:Name="cb_md_lbl_rating" Content="" HorizontalAlignment="Left" Margin="228.025,335.317,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Height="15.098" Width="19.975" Unchecked="cbLogo_Unchecked"/>
-        <Rectangle x:Name="rctngl_md_rating" HorizontalAlignment="Left" Height="19" Margin="13.025,353.514,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FF00FFE7"/>
-        <Label x:Name="tb_md_video_Copy1" Content="md__rating" HorizontalAlignment="Left" Margin="87.808,349.416,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="73.21"/>
-        <CheckBox x:Name="cb_md_rating" Content="" HorizontalAlignment="Left" Margin="228.025,355.415,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Height="15.098" Width="19.975" Unchecked="cbLogo_Unchecked"/>
-        <Rectangle x:Name="rctngl_md_lbl_releasedate" HorizontalAlignment="Left" Height="19" Margin="13.025,373.416,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FFD973FF"/>
-        <Label x:Name="tb_md_lbl_releasedate" Content="md__lbl__releasedate" HorizontalAlignment="Left" Margin="66.111,369.554,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="116.605"/>
-        <CheckBox x:Name="cb_md_lbl_releasedate" Content="" HorizontalAlignment="Left" Margin="228.025,375.317,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Height="15.098" Width="19.975" Unchecked="cbLogo_Unchecked"/>
-        <Rectangle x:Name="rctngl_md_releasedate" HorizontalAlignment="Left" Height="19" Margin="13.025,393.514,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FFB918F5"/>
-        <Label x:Name="tb_md_releasedate" Content="md__releasedate" HorizontalAlignment="Left" Margin="76.241,389.416,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="96.345"/>
-        <CheckBox x:Name="cb_md_releasedate" Content="" HorizontalAlignment="Left" Margin="228.025,395.415,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Height="15.098" Width="19.975" Unchecked="cbLogo_Unchecked"/>
-        <Rectangle x:Name="rctngl_md_lbl_developer" HorizontalAlignment="Left" Height="19" Margin="13.025,413.416,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FF93FF73"/>
-        <Label x:Name="tb_md_lbl_developer" Content="md__lbl__developer" HorizontalAlignment="Left" Margin="75.111,409.554,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="98.605"/>
-        <CheckBox x:Name="cb_md_lbl_developer" Content="" HorizontalAlignment="Left" Margin="228.025,415.317,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Height="15.098" Width="19.975" Unchecked="cbLogo_Unchecked"/>
-        <Rectangle x:Name="rctngl_md_developer" HorizontalAlignment="Left" Height="19" Margin="13.025,433.514,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FF3AFF00"/>
-        <Label x:Name="tb_md_developer" Content="md__developer" HorizontalAlignment="Left" Margin="81.753,429.554,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="85.321"/>
-        <CheckBox x:Name="cb_md_developer" Content="" HorizontalAlignment="Left" Margin="228.025,435.415,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Height="15.098" Width="19.975" Unchecked="cbLogo_Unchecked"/>
-        <Rectangle x:Name="rctngl_md_lbl_publisher" HorizontalAlignment="Left" Height="19" Margin="13.025,453.416,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FFFF7373"/>
-        <Label x:Name="tb_md_lbl_publisher" Content="md__lbl__publisher" HorizontalAlignment="Left" Margin="75.111,449.554,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="98.605"/>
-        <CheckBox x:Name="cb_md_lbl_publisher" Content="" HorizontalAlignment="Left" Margin="228.025,455.317,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Height="15.098" Width="19.975" Unchecked="cbLogo_Unchecked"/>
-        <Rectangle x:Name="rctngl_md_publisher" HorizontalAlignment="Left" Height="19" Margin="13.025,473.514,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="Red"/>
-        <Label x:Name="tb_md_publisher" Content="md__publisher" HorizontalAlignment="Left" Margin="81.753,469.554,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="85.321"/>
-        <CheckBox x:Name="cb_md_publisher" Content="" HorizontalAlignment="Left" Margin="228.025,475.415,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Height="15.098" Width="19.975" Unchecked="cbLogo_Unchecked"/>
-        <Rectangle x:Name="rctngl_md_lbl_genre" HorizontalAlignment="Left" Height="19" Margin="13.025,493.416,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FF7380FF"/>
-        <Label x:Name="tb_md_lbl_genre" Content="md__lbl__genre" HorizontalAlignment="Left" Margin="75.111,489.554,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="82.266"/>
-        <CheckBox x:Name="cb_md_lbl_genre" Content="" HorizontalAlignment="Left" Margin="228.025,495.317,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Height="15.098" Width="19.975" Unchecked="cbLogo_Unchecked"/>
-        <Rectangle x:Name="rctngl_md_genre" HorizontalAlignment="Left" Height="19" Margin="13.025,513.514,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FF0017FB"/>
-        <Label x:Name="tb_md_genre" Content="md__genre" HorizontalAlignment="Left" Margin="88.753,509.554,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="70.624"/>
-        <CheckBox x:Name="cb_md_genre" Content="" HorizontalAlignment="Left" Margin="228.025,515.415,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Height="15.098" Width="19.975" Unchecked="cbLogo_Unchecked"/>
-        <Rectangle x:Name="rctngl_md_lbl_players" HorizontalAlignment="Left" Height="19" Margin="13.025,533.416,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FFFFA073"/>
-        <Label x:Name="tb_md_lbl_players" Content="md__lbl__players" HorizontalAlignment="Left" Margin="75.111,529.554,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="89.605"/>
-        <CheckBox x:Name="cb_md_lbl_players" Content="" HorizontalAlignment="Left" Margin="228.025,535.317,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Height="15.098" Width="19.975" Unchecked="cbLogo_Unchecked"/>
-        <Rectangle x:Name="rctngl_md_players" HorizontalAlignment="Left" Height="19" Margin="13.025,553.514,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FFFF5200"/>
-        <Label x:Name="tb_md_players" Content="md__players" HorizontalAlignment="Left" Margin="86.753,549.554,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="70.624"/>
-        <CheckBox x:Name="cb_md_players" Content="" HorizontalAlignment="Left" Margin="228.025,555.415,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Height="15.098" Width="19.975" Unchecked="cbLogo_Unchecked"/>
-        <Rectangle x:Name="rctngl_md_lbl_lastplayed" HorizontalAlignment="Left" Height="19" Margin="13.025,573.416,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FFD1D1D1"/>
-        <Label x:Name="tb_md_lbl_lastplayed" Content="md__lbl__lastplayed" HorizontalAlignment="Left" Margin="69.598,569.554,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="109.63"/>
-        <CheckBox x:Name="cb_md_lbl_lastplayed" Content="" HorizontalAlignment="Left" Margin="228.025,575.317,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Height="15.098" Width="19.975" Unchecked="cbLogo_Unchecked"/>
-        <Rectangle x:Name="rctngl_md_lastplayed" HorizontalAlignment="Left" Height="19" Margin="13.025,593.514,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FF7A7A7A"/>
-        <Label x:Name="tb_md_lastplayed" Content="md__lastplayed" HorizontalAlignment="Left" Margin="81.753,589.554,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="85.321"/>
-        <CheckBox x:Name="cb_md_lastplayed" Content="" HorizontalAlignment="Left" Margin="228.025,595.415,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Height="15.098" Width="19.975" Unchecked="cbLogo_Unchecked"/>
-        <Rectangle x:Name="rctngl_md_lbl_playcount" HorizontalAlignment="Left" Height="19" Margin="13.025,613.416,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FF8D6374"/>
-        <Label x:Name="tb_md_lbl_playcount" Content="md__lbl__playcount" HorizontalAlignment="Left" Margin="75.111,609.554,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="104.117"/>
-        <CheckBox x:Name="cb_md_lbl_playcount" Content="" HorizontalAlignment="Left" Margin="228.025,615.317,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Height="15.098" Width="19.975" Unchecked="cbLogo_Unchecked"/>
-        <Rectangle x:Name="rctngl_md_playcount" HorizontalAlignment="Left" Height="19" Margin="13.025,633.514,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FF64203C"/>
-        <Label x:Name="tb_md_playcount" Content="md__playcount" HorizontalAlignment="Left" Margin="81.753,629.554,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="85.321"/>
-        <CheckBox x:Name="cb_md_playcount" Content="" HorizontalAlignment="Left" Margin="228.025,635.415,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Height="15.098" Width="19.975" Unchecked="cbLogo_Unchecked"/>
-        <GroupBox x:Name="gb_base" Header="System view. Elements" Height="576.793" Margin="253,82.582,265.668,0" VerticalAlignment="Top" Visibility="Visible">
-            <Grid HorizontalAlignment="Left" Height="528.963" VerticalAlignment="Top" Width="249.332" Margin="2,0,0,0">
-                <Label x:Name="lbl_bgsound_system" Content="Background sound path" HorizontalAlignment="Left" Margin="0,-1,0,504"/>
-                <TextBox x:Name="tb_bgsound_system" Height="23" Margin="0,24.963,42,481" Text ="./sounds/system.ogg"/>
-                <Button x:Name="btn_bgsound_system" Content="..." HorizontalAlignment="Left" Margin="211,24.981,0,0" VerticalAlignment="Top" Width="27" Height="23" Click="btn_bgsound_system_Click"/>
-                <Label x:Name="lbl_background_system" Content="Background image path" HorizontalAlignment="Left" Margin="0,47.963,0,450.963"/>
-                <TextBox x:Name="tb_background_system" Height="23" Margin="0.332,77,41.365,428.963" Text ="./art/art_blur.png"/>
-                <Button x:Name="btn_background_system" Content="..." HorizontalAlignment="Left" Margin="211.303,77,0,0" VerticalAlignment="Top" Width="27" Height="23" Click="btn_getimagefile_Click" />
-                <Label x:Name="lbl_logo_system" Content="Logo path" HorizontalAlignment="Left" Margin="1.139,154,0,343.889"/>
-                <TextBox x:Name="tb_logo_system" Height="23" Margin="1.139,179.074,40.255,326.889" Text ="./art/logo.png" />
-                <Button x:Name="btn_logo_system" Content="..." HorizontalAlignment="Left" Margin="211.475,179.074,0,0" VerticalAlignment="Top" Width="27" Height="23" Click="btn_getimagefile_Click"/>
-                <Button x:Name="btn_textColor_system" Content="Help text color" HorizontalAlignment="Left" Margin="1.139,235.074,0,0" VerticalAlignment="Top" Width="236.529" Height="23" Click="btn_image_color_Click" Background="#FF777777" BorderBrush="Black" ClickMode="Press"/>
-                <Button x:Name="btn_iconColor_system" Content="Help Icon color" HorizontalAlignment="Left" Margin="1.139,207.074,0,0" VerticalAlignment="Top" Width="236.529" Height="23" Click="btn_image_color_Click" Background="#FF777777" BorderBrush="Black" ClickMode="Press" AllowDrop="True"/>
-                <Label x:Name="lbl_background_system_for_window_system" Content="Background image path (for widow system)" HorizontalAlignment="Left" Margin="0,100,0,398.926"/>
-                <TextBox x:Name="tb_background_system_for_window_system" Height="23" Margin="-0.303,130.037,42,375.926" Text ="./art/art_blur_whiten.png"/>
-                <Button x:Name="btn_background_system_for_window_system" Content="..." HorizontalAlignment="Left" Margin="211.475,130.037,0,0" VerticalAlignment="Top" Width="27" Height="23" Click="btn_getimagefile_Click"/>
-                <Button Content="Button" HorizontalAlignment="Left" Margin="10,263.074,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_2" Visibility="Hidden"/>
-            </Grid>
-        </GroupBox>
-        <GroupBox x:Name="gb_image" Header="Type image. Properties" Height="576.793" Margin="253,82.582,265.668,0" VerticalAlignment="Top" Visibility="Hidden">
-            <!--<Grid HorizontalAlignment="Left" Height="528.963" VerticalAlignment="Top" Width="247.668" Margin="2,0,-2,0">-->
-            <local:ImageElement x:Name="image"  Height="554.923" Margin="0,0,-12,-25.96" VerticalAlignment="Top" Width="259.668" Visibility="Visible"/>
-            <!--</Grid>-->
-        </GroupBox>
-
-        <GroupBox x:Name="gb_text" Header="Type text. Properties" Height="576.793" Margin="253,82.582,265.668,0" VerticalAlignment="Top" Visibility="Hidden">
-            <!--<Grid HorizontalAlignment="Left" Height="528.963" VerticalAlignment="Top" Width="247.668" Margin="2,0,-2,0">-->
-            <local:TextElement x:Name="text"  Height="554.923" Margin="0,0,-12,-25.96" VerticalAlignment="Top" Width="259.668" Visibility="Visible"/>
-            <!--</Grid>-->
-        </GroupBox>
-        <GroupBox x:Name="gb_helpsystem" Header="Type helpsystem. Properties" Height="576.793" Margin="253,82.582,265.668,0" VerticalAlignment="Top" Visibility="Hidden">
-            <!--<Grid HorizontalAlignment="Left" Height="528.963" VerticalAlignment="Top" Width="247.668" Margin="2,0,-2,0">-->
-            <local:HelpSystemElement x:Name="helpsystem"  Height="554.923" Margin="0,0,-12,-25.96" VerticalAlignment="Top" Width="259.668" Visibility="Visible"/>
-            <!--</Grid>-->
-        </GroupBox>
-        <GroupBox x:Name="gb_textlist" Header="Type textlist. Properties" Height="576.793" Margin="253,82.582,265.668,0" VerticalAlignment="Top"  Visibility="Hidden">
-            <!--<Grid HorizontalAlignment="Left" Height="528.963" VerticalAlignment="Top" Width="247.668" Margin="2,0,-2,0">-->
-            <local:TextlistElement x:Name="textlist"  Height="554.923" Margin="0,0,-12,-25.96" VerticalAlignment="Top" Width="259.668" Visibility="Visible"/>
-            <!--</Grid>-->
-        </GroupBox>
-        <GroupBox x:Name="gb_datetime" Header="Type datetime. Properties" Height="576.793" Margin="253,82.582,265.668,0" VerticalAlignment="Top"  Visibility="Hidden">
-            <!--<Grid HorizontalAlignment="Left" Height="528.963" VerticalAlignment="Top" Width="247.668" Margin="2,0,-2,0">-->
-            <local:DatetimeElement x:Name="datetime"  Height="554.923" Margin="0,0,-12,-25.96" VerticalAlignment="Top" Width="259.668" Visibility="Visible"/>
-            <!--</Grid>-->
-        </GroupBox>
-        <GroupBox x:Name="gb_rating" Header="Type rating. Properties" Height="576.793" Margin="253,82.582,265.668,0" VerticalAlignment="Top"  Visibility="Hidden">
-            <!--<Grid HorizontalAlignment="Left" Height="528.963" VerticalAlignment="Top" Width="247.668" Margin="2,0,-2,0">-->
-            <local:RatingElement x:Name="rating"  Height="554.923" Margin="0,0,-12,-25.96" VerticalAlignment="Top" Width="259.668" Visibility="Visible"/>
-            <!--</Grid>-->
-        </GroupBox>
-        <GroupBox x:Name="gb_video" Header="Type video. Properties" Height="576.793" Margin="253,82.582,265.668,0" VerticalAlignment="Top" Visibility="Hidden">
-            <!--<Grid HorizontalAlignment="Left" Height="528.963" VerticalAlignment="Top" Width="247.668" Margin="2,0,-2,0">-->
-            <local:VideoElement x:Name="video"  Height="554.923" Margin="0,0,-12,-25.96" VerticalAlignment="Top" Width="259.668" Visibility="Visible"/>
-            <!--</Grid>-->
-        </GroupBox>
-        <Button x:Name="btn_read_XML" Content="Read XML file" HorizontalAlignment="Left" Margin="668.037,664.415,0,0" VerticalAlignment="Top" Width="116.963" Click="btn_read_XML_Click" Height="19.96"/>
-        <TextBox x:Name="tb_themefolder" HorizontalAlignment="Left" Height="23" Margin="534.332,40.96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="222.668" TextChanged="tb_themefolder_TextChanged"/>
-        <Button Content="..." HorizontalAlignment="Left" Margin="761,40.96,0,0" VerticalAlignment="Top" Width="24" Height="23" Click="Button_Click"/>
-        <Label Content="Theme folder" HorizontalAlignment="Left" Margin="534.332,10,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cbx_gameplatformtheme" HorizontalAlignment="Left" Margin="534.332,68.96,0,0" VerticalAlignment="Top" Width="250.668" SelectionChanged="cbx_gameplatformtheme_SelectionChanged"/>
-        <Rectangle x:Name="rctngl_md_marquee" HorizontalAlignment="Left" Height="19" Margin="13.025,292.219,0,0" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FF95B6C5"/>
-        <Label x:Name="lbl_md_marquee" Content="md__marquee" HorizontalAlignment="Left" Margin="79.395,289.219,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="90.037"/>
-        <CheckBox x:Name="cb_md_marquee" Content="" HorizontalAlignment="Left" Margin="228.025,294.12,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Unchecked="cbLogo_Unchecked" Height="15.098" Width="19.975"/>
-        <Label Content="Custom element" HorizontalAlignment="Left" Margin="11.24,87.452,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btn_addCustomelement" Content="+" HorizontalAlignment="Left" Margin="211.409,122.751,0,0" VerticalAlignment="Top" Width="32.814" Click="btn_addCustomelement_Click"/>
-        <Button x:Name="delCustomelement" Content="-" HorizontalAlignment="Left" Margin="212.834,148.532,0,0" VerticalAlignment="Top" Width="31.389" Click="delCustomelement_Click"/>
-        <ComboBox x:Name="cb_CustomeItem" HorizontalAlignment="Left" Margin="15.025,146.671,0,0" VerticalAlignment="Top" Width="191.384" Height="19.96" SelectedValuePath="Content" SelectionChanged="cb_CustomeItem_SelectionChanged"/>
-        <TextBox x:Name="tb_customelementName" HorizontalAlignment="Left" Height="23" Margin="15.025,121.711,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="93.178"/>
-        <Label Content="Name" HorizontalAlignment="Left" Margin="10.24,102.452,0,0" VerticalAlignment="Top"/>
-        <Label Content="Type" HorizontalAlignment="Left" Margin="106.025,102.452,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cb_customelementType" HorizontalAlignment="Left" Margin="113.203,122.751,0,0" VerticalAlignment="Top" Width="93.206" SelectedValuePath="Content">
-            <ComboBoxItem  Name="cbi_helpsystem">helpsystem</ComboBoxItem>
-            <ComboBoxItem  Name="cbi_image">image</ComboBoxItem>
-            <ComboBoxItem  Name="cbi_text">text</ComboBoxItem>
-            <ComboBoxItem  Name="cbi_textlist">textlist</ComboBoxItem>
-            <ComboBoxItem  Name="cbi_datetime">datetime</ComboBoxItem>
-            <ComboBoxItem  Name="cbi_rating">rating</ComboBoxItem>
-            <ComboBoxItem  Name="cbi_video">video</ComboBoxItem>
-        </ComboBox>
-        <Button Content="Bring to front" HorizontalAlignment="Left" Margin="322.037,635.554,0,0" VerticalAlignment="Top" Width="116.963" Click="Button_Click_1"/>
-        <ComboBox x:Name="cb_SelectCreatedelement" HorizontalAlignment="Left" Margin="13.025,68.96,0,0" VerticalAlignment="Top" Width="231.198" SelectedValuePath="Content" SelectionChanged="cb_SelectCreatedelement_SelectionChanged"/>
-        <Label Content="Select Element" HorizontalAlignment="Left" Margin="11.24,43,0,0" VerticalAlignment="Top" Height="25.96" Width="232.983"/>
+        <Label Content="View selector" HorizontalAlignment="Left" Margin="16.424,-0.44,0,0" VerticalAlignment="Top" Height="25.96" Width="79.963"/>
+        <Button x:Name="btnOpenViewEditor" Content="Open view editor" HorizontalAlignment="Left" Margin="16.424,49.96,0,0" VerticalAlignment="Top" Width="124.299" Click="btnOpenViewEditor_Click" Height="19.96"/>
+        <Button x:Name="btn_generate_xml_file" Content="Generate XML file" HorizontalAlignment="Left" Margin="281.092,660.415,0,0" VerticalAlignment="Top" Width="119.963" Click="btn_generate_xml_file_Click" Height="19.96"/>
+        <TextBox x:Name="tb_log" HorizontalAlignment="Left" Height="502.594" Margin="10,148.92,0,0" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" AcceptsReturn="True" VerticalAlignment="Top" Width="521.76"/>
+        <Label Content="Alt+F4 - fullscreen mode for view editor" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25.96" Width="255.908" Margin="281.092,0,0,0"/>
+        <Button x:Name="btn_read_XML" Content="Read XML file" HorizontalAlignment="Left" Margin="414.797,660.415,0,0" VerticalAlignment="Top" Width="116.963" Click="btn_read_XML_Click" Height="19.96"/>
+        <TextBox x:Name="tb_themefolder" HorizontalAlignment="Left" Height="23" Margin="281.092,76.452,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="222.668" TextChanged="tb_themefolder_TextChanged"/>
+        <Button Content="..." HorizontalAlignment="Left" Margin="507.76,76.452,0,0" VerticalAlignment="Top" Width="24" Height="23" Click="Button_Click"/>
+        <Label Content="Theme folder" HorizontalAlignment="Left" Margin="281.092,45.492,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cbx_gameplatformtheme" HorizontalAlignment="Left" Margin="281.092,104.452,0,0" VerticalAlignment="Top" Width="250.668" SelectionChanged="cbx_gameplatformtheme_SelectionChanged"/>
+        <!--<Button Content="Bring to front" HorizontalAlignment="Left" Margin="145.369,635.455,0,0" VerticalAlignment="Top" Width="116.963" Click="Button_Click_1"/>-->
+        <!--<Button Content="Button" HorizontalAlignment="Left" Margin="145.723,631.554,0,0" VerticalAlignment="Top" Width="130.369" Click="Button_Click_2" Visibility="Visible" Height="19.96"/>-->
     </Grid>
 </Window>

@@ -1,9 +1,41 @@
-﻿<Window x:Class="es_theme_editor.view_tamlate_window"
+﻿<Window
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:es_theme_editor" x:Class="es_theme_editor.view_tamlate_window"
     Title="howto_wpf_resize_rectangle"
-    Height="403" Width="712" KeyDown="Window_KeyDown_1" Closing="Window_Closing_1" Icon="ES_theme_editor.ico">
-    <Canvas Name="canvas1" Background="#FF838181"
-        MouseDown="canvas1_MouseDown" MouseMove="canvas1_MouseMove" MouseUp="canvas1_MouseUp" MouseLeave="canvas1_MouseLeave">
+    Height="574" Width="986" KeyDown="Window_KeyDown_1" Closing="Window_Closing_1" Icon="ES_theme_editor.ico">
+    <Canvas x:Name="canvas" SizeChanged="Grid_SizeChanged_1" >
+        <Canvas x:Name="canvas1" Background="#FF838181"
+			MouseDown="canvas1_MouseDown" MouseMove="canvas1_MouseMove" MouseUp="canvas1_MouseUp" MouseLeave="canvas1_MouseLeave" Height="543" Width="978"/>
+        <Button Content="" Width="53" Height="53" Opacity="0.5" Click="Button_Click_1" Visibility="Visible" Margin="0,0,925,490">
+            <Button.BindingGroup>
+                <BindingGroup/>
+            </Button.BindingGroup>
+            <Button.Background>
+                <ImageBrush ImageSource="toolbox.ico" Stretch="Uniform"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="btn_BringToFront" Content="" Width="53" Height="53" Opacity="0.5" Visibility="Visible" Canvas.Left="53" Click="btn_BringToFront_Click">
+            <Button.BindingGroup>
+                <BindingGroup/>
+            </Button.BindingGroup>
+            <Button.Background>
+                <ImageBrush ImageSource="bringToFront.ico" Stretch="Uniform"/>
+            </Button.Background>
+        </Button>
+        <DockPanel x:Name="dp_toolbox" Height="614.115" LastChildFill="False" Canvas.Top="53" Width="259" Visibility="Hidden">
+            <local:ToolBox x:Name="toolbox"  Height="613.923" Margin="0,0,-12,0" VerticalAlignment="Top" Width="259.668" Visibility="Visible"/>
+        </DockPanel>
+        <Button Content="" Canvas.Right="0" Width="53" Height="53" Opacity="0.5" Click="Button_Click_2">
+            <Button.BindingGroup>
+                <BindingGroup/>
+            </Button.BindingGroup>
+            <Button.Background>
+                <ImageBrush ImageSource="PropertiesBox.ico" Stretch="Uniform"/>
+            </Button.Background>
+        </Button>
+        <DockPanel x:Name="dp_propertiesbox" Height="614.115" LastChildFill="False" Canvas.Top="53" Width="259" Visibility="Hidden" Canvas.Right="0">
+            <local:PropertiesBox x:Name="propertiesbox"  Height="613.923" Margin="0,0,-12,0" VerticalAlignment="Top" Width="259.668" Visibility="Visible"/>
+        </DockPanel>
     </Canvas>
 </Window>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+
 namespace es_theme_editor
 {
     public class View
@@ -21,6 +22,13 @@ namespace es_theme_editor
         private string _name;
         private int _width;
         private int _height;
+
+
+
+        public View(string name, types typeOfView)
+        {
+
+        }
 
         public View(types type, int width, int height)
         {
@@ -102,9 +110,12 @@ namespace es_theme_editor
         {
             set
             {
-                if (_elements.IndexOfKey(value.name)>=0)
-                    _elements.Remove(value.name);
-                _elements.Add(value.name, value);
+                if (value != null)
+                {
+                    if (_elements.IndexOfKey(value.name) >= 0)
+                        _elements.Remove(value.name);
+                    _elements.Add(value.name, value);
+                }
             }
         }
 
