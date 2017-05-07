@@ -177,10 +177,6 @@ namespace es_theme_editor
         {
             get 
             {
-                return _properties; 
-            }
-            set
-            {
                 _properties.Remove("pos");
                 _properties.Remove("size");
                 _properties.Remove("maxSize");
@@ -229,6 +225,12 @@ namespace es_theme_editor
                         //size - Only one value is actually used. The other value should be zero. (e.g. specify width OR height, but not both. This is done to maintain the aspect ratio.)
                         break;
                 }
+
+                return _properties; 
+            }
+            set
+            {
+
                 //Filling the values from the properties
                 _properties = value;
             }

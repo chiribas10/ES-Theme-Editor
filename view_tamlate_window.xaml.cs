@@ -198,6 +198,7 @@ namespace es_theme_editor
                     try
                     {
                         addPropertiesToElement(name);
+                        SaveItem(selected_rectangle);
                     }
                     catch (Exception err)
                     {
