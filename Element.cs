@@ -67,6 +67,16 @@ namespace es_theme_editor
                 filligFromProperties(Properties, Width, Height, item_fill);
         }
 
+        public void addPropertie(string name, string value)
+        {
+            if (name == "")
+                return;
+            if (_properties.IndexOfKey(name) >= 0)
+                _properties.Remove(name);
+            _properties.Add(name, value);
+
+        }
+
         //We will fill values from Properties
         public void filligFromProperties(SortedList<string, string> Properties, double Width, double Height, Brush item_fill)
         {
