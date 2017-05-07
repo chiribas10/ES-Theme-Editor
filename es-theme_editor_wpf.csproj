@@ -94,18 +94,24 @@
     <Compile Include="CustomControls\PropertiesBox.xaml.cs">
       <DependentUpon>PropertiesBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\ImageControl.xaml.cs">
+      <DependentUpon>ImageControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\TextListControl.xaml.cs">
+      <DependentUpon>TextListControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\ToolBox.xaml.cs">
       <DependentUpon>ToolBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomControls\DatetimeElement.xaml.cs">
-      <DependentUpon>DatetimeElement.xaml</DependentUpon>
+    <Compile Include="CustomControls\DatetimePropertiesControl.xaml.cs">
+      <DependentUpon>DatetimePropertiesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Logger.cs" />
-    <Compile Include="CustomControls\TextlistElement.xaml.cs">
-      <DependentUpon>TextlistElement.xaml</DependentUpon>
+    <Compile Include="CustomControls\TextlistPropertiesControl.xaml.cs">
+      <DependentUpon>TextlistPropertiesControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomControls\RatingElement.xaml.cs">
-      <DependentUpon>RatingElement.xaml</DependentUpon>
+    <Compile Include="CustomControls\RatingPropertiesControl.xaml.cs">
+      <DependentUpon>RatingPropertiesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="es_theme_editor.xaml.cs">
       <DependentUpon>es_theme_editor.xaml</DependentUpon>
@@ -118,35 +124,43 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="CustomControls\ImageControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CustomControls\TextListControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="CustomControls\ToolBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CustomControls\DatetimeElement.xaml">
+    <Page Include="CustomControls\DatetimePropertiesControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CustomControls\TextlistElement.xaml">
+    <Page Include="CustomControls\TextlistPropertiesControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CustomControls\RatingElement.xaml">
+    <Page Include="CustomControls\RatingPropertiesControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CustomControls\VideoElement.xaml">
+    <Page Include="CustomControls\VideoPropertiesControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CustomControls\HelpSystemElement.xaml">
+    <Page Include="CustomControls\HelpSystemPropertiesControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CustomControls\ImageElement.xaml">
+    <Page Include="CustomControls\ImagePropertiesControl..xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CustomControls\TextElement.xaml">
+    <Page Include="CustomControls\TextPropertiesControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -164,17 +178,17 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CustomControls\VideoElement.xaml.cs">
-      <DependentUpon>VideoElement.xaml</DependentUpon>
+    <Compile Include="CustomControls\VideoPropertiesControl.xaml.cs">
+      <DependentUpon>VideoPropertiesControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomControls\HelpSystemElement.xaml.cs">
-      <DependentUpon>HelpSystemElement.xaml</DependentUpon>
+    <Compile Include="CustomControls\HelpSystemPropertiesControl.xaml.cs">
+      <DependentUpon>HelpSystemPropertiesControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomControls\ImageElement.xaml.cs">
-      <DependentUpon>ImageElement.xaml</DependentUpon>
+    <Compile Include="CustomControls\ImagePropertiesControl..xaml.cs">
+      <DependentUpon>ImagePropertiesControl..xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomControls\TextElement.xaml.cs">
-      <DependentUpon>TextElement.xaml</DependentUpon>
+    <Compile Include="CustomControls\TextPropertiesControl.xaml.cs">
+      <DependentUpon>TextPropertiesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="CustomControls\RectangleNamed.xaml.cs">
       <DependentUpon>RectangleNamed.xaml</DependentUpon>
@@ -239,6 +253,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="bringToFront.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Set_background.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

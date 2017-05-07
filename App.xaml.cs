@@ -22,5 +22,7 @@ namespace es_theme_editor
         public string logoPath;
         public Brush helpIconColor;
         public Brush helpTextColor;
+        public double Width;
+        public double Height;
     }
 }

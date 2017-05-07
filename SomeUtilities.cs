@@ -80,45 +80,40 @@ namespace es_theme_editor
         public static string GetHexFromBrush(Brush brush) 
         {
             return ((System.Windows.Media.SolidColorBrush)(brush)).Color.ToString();
-            //Color btn_iconColor_mycolor = ((System.Windows.Media.SolidColorBrush)(brush)).Color;
-            //string theHexColor = "#" + btn_iconColor_mycolor.R.ToString("X2") + btn_iconColor_mycolor.G.ToString("X2") + btn_iconColor_mycolor.B.ToString("X2") + btn_iconColor_mycolor.A.ToString("X2");
-
-            //return theHexColor;
         }
 
         public static Brush GetBrushFromHex(string colorhex)
         {
             if (colorhex != null)
             {
-                //if (!colorhex.Contains("#"))
-                //    colorhex = "#" + colorhex;
+                if (colorhex.IndexOf("#") < 0)
+                    colorhex = "#" + colorhex;
                 Color color = (Color)ColorConverter.ConvertFromString(colorhex);
-                //byte R = Convert.ToByte(colorhex.Substring(1, 2), 16);
-                //byte G = Convert.ToByte(colorhex.Substring(3, 2), 16);
-                //byte B = Convert.ToByte(colorhex.Substring(5, 2), 16);
-                //byte A;
-                //try
-                //{
-                //    A = Convert.ToByte(colorhex.Substring(7, 2), 16);
-                //}
-                //catch(Exception)
-                //{
-                //    A = Convert.ToByte("FF", 16);
-                //}
-                //Color color = Color.FromRgb(R, G, B);
-                //color.A = A;
 
                 SolidColorBrush scb = new SolidColorBrush(color);
                 return scb;
             }
             return new SolidColorBrush();
-            //applying the brush to the background of the existing Button btn:
-            //btn.Background = scb;
-
-
-            //return (SolidColorBrush)(new BrushConverter().ConvertFrom(theHexColor));
         }
 
+        public static double getOpacityFromHex(string hexString)
+        {
+            Brush br = SomeUtilities.GetBrushFromHex(hexString);
+            double a = ((Color)br.GetValue(SolidColorBrush.ColorProperty)).A;
+            double max = 255;
+            double opacityval = (a / max);
+
+            return opacityval;
+        }
+
+        public static double getOpacityFromBrush(Brush color)
+        {
+            double a = ((Color)color.GetValue(SolidColorBrush.ColorProperty)).A;
+            double max = 255;
+            double opacityval = (a / max);
+
+            return opacityval;
+        }
         public static List<T> GetLogicalChildCollection<T>(object parent) where T : DependencyObject
         {
             List<T> logicalCollection = new List<T>();
@@ -239,8 +234,8 @@ namespace es_theme_editor
         /// <exception cref="InvalidOperationException"></exception>
         public static String MakeAbsolutePath(String basePath, String relativePath)
         {
-            if (String.IsNullOrEmpty(basePath)) throw new ArgumentNullException("basePath");
-            if (String.IsNullOrEmpty(relativePath)) throw new ArgumentNullException("relativePath");
+            if (String.IsNullOrEmpty(basePath)) return "";// throw new ArgumentNullException("basePath");
+            if (String.IsNullOrEmpty(relativePath)) return "";// throw new ArgumentNullException("relativePath");
 
             var uri = new Uri(new Uri(basePath), relativePath);
             string fullPath = uri.LocalPath;
@@ -258,8 +253,8 @@ namespace es_theme_editor
         /// <exception cref="InvalidOperationException"></exception>
         public static String MakeRelativePath(String basePath, String toRelativePath)
         {
-            if (String.IsNullOrEmpty(basePath)) throw new ArgumentNullException("basePath");
-            if (String.IsNullOrEmpty(toRelativePath)) throw new ArgumentNullException("toRelativePath");
+            if (String.IsNullOrEmpty(basePath)) return "";//throw new ArgumentNullException("basePath");
+            if (String.IsNullOrEmpty(toRelativePath)) return "";//throw new ArgumentNullException("toRelativePath");
 
             Uri fromUri = new Uri(basePath);
             Uri toUri = new Uri(toRelativePath);

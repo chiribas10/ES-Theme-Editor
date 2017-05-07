@@ -28,56 +28,13 @@ namespace es_theme_editor
     {
         //This is a collection of all our views, which we will pass as a parameter to the opened theme editor
         SortedList<string, View> views = new SortedList<string, View>();
-        //SortedList<string, string> viewsToElements = new SortedList<string, string>();
-        //On/off transparency for Rectangle
-        //private bool transperentRectangle = false;
         view_tamlate_window _viewtmplatewindow;
-        //Flag to ensure that the program does not react to changing the checkboxes when we do not need it
-        //bool cbManualChangeState = false;
-
-        public Es_theme_editor()
-        {
-            //try
-            //{
-                InitializeComponent();
-                //toolBox.onElementCreate += this.CreateRect;
-                //toolBox.onElementRemove += this.RemoveRect;
-                //toolBox.onElementSelect += this.SelectRect;
-                String path = AppDomain.CurrentDomain.BaseDirectory;
-                if (Directory.Exists(path + "themes\\SomeTemlateTheme\\"))
-                    tb_themefolder.Text = path + "themes\\SomeTemlateTheme\\";
-                if (Directory.Exists(path + "themes\\SomeTemlateTheme\\" + "SomeTemplateSystem"))
-                    cbx_gameplatformtheme.SelectedValue = "SomeTemplateSystem";
-                Logger.WriteMessage("Es_theme_editor InitializeComponent completed");
-            //}
-            //catch (Exception err)
-            //{
-            //    Logger.Write(err);
-            //}
-        }
-
-        //Closing the window
-        private void Window_Closing_1(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (MessageBox.Show("Do you want close application?", "Question", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                //There is something you can do if the user really decided to close the application
-            }
-            else e.Cancel = true;
-        }
-
-        //Close all child windows
-        private void Window_Closed_1(object sender, EventArgs e)
-        {
-            foreach (Window w in App.Current.Windows)
-                w.Close();
-        }
 
         #region getters and setters
         //We check that the width parameter are entered correct digits
-        public int parentCanvasWidth 
+        public int parentCanvasWidth
         {
-            get 
+            get
             {
                 int res;
                 bool isInt = Int32.TryParse(tbwidth.Text, out res);
@@ -102,80 +59,54 @@ namespace es_theme_editor
             }
         }
 
-        public View currentItem
+        public void addView(View view)
         {
-            set
-            {
-                views.Remove(value.name);
-                views.Add(value.name, value);
-            }
+            if (view != null)
+                {
+                    if (views.IndexOfKey(view.name) >= 0)
+                        views.Remove(view.name);
+                    views.Add(view.name, view);
+                }
         }
         #endregion getters and setters
 
-        #region StandartItemWorking
-        //Universal metod for item add/delete checkboxes
-        //private void CheckBox_Checked_1(object sender, RoutedEventArgs e)
-        //{
-        //    Element.types typeOfElement;
-        //    string str = ((CheckBox)sender).Name;
-        //    Rectangle foundRectangle = SomeUtilities.FindChild<Rectangle>(grid1, str.Replace("cb", "rctngl"));
-        //    if (!cbManualChangeState)
-        //    {
-        //        openViewEditor();
-        //        typeOfElement = Element.GetType(str.Replace("cb_", ""));
-        //        CreateRect(str.Replace("cb_", ""), typeOfElement, foundRectangle.Fill, 0.5);
-        //    }
-        //}
+        public Es_theme_editor()
+        {
+                InitializeComponent();
 
-        ////Universal metod for item add/delete checkboxes 
-        //private void cbLogo_Unchecked(object sender, RoutedEventArgs e)
-        //{
-        //    string str = ((CheckBox)sender).Name;
-        //    if (!cbManualChangeState && _viewtmplatewindow != null)
-        //        if (MessageBox.Show("Do you want delete this item?", "Question", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-        //        {
-        //            _viewtmplatewindow.RemoveRect(str.Replace("cb_", ""));
-        //            cb_SelectCreatedelement.Items.Remove(str.Replace("cb_", ""));
-        //        }
-        //}
-        #endregion StandartItemWorking
+                ((App)Application.Current).Width = parentCanvasWidth;
+                ((App)Application.Current).Height = parentCanvasHeight;
+                String path = AppDomain.CurrentDomain.BaseDirectory;
+                if (Directory.Exists(path + "themes\\SomeTemlateTheme\\"))
+                    tb_themefolder.Text = path + "themes\\SomeTemlateTheme\\";
+                if (Directory.Exists(path + "themes\\SomeTemlateTheme\\" + "SomeTemplateSystem"))
+                    cbx_gameplatformtheme.SelectedValue = "SomeTemplateSystem";
+                Logger.WriteMessage("Es_theme_editor InitializeComponent completed");
+        }
 
-        #region CustomItemWorking
-        //private void cb_CustomeItem_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    if (cb_CustomeItem.SelectedItem != null)
-        //    {
-        //        //string comboBoxItemvalue = getComboBoxValue((ComboBoxItem)cb_CustomeItem.SelectedItem);
-        //        View currview = views.Values[views.IndexOfKey(getComboBoxValue((ComboBoxItem)cbViewSelector.SelectedItem))];
-        //        Element currelement = currview.elements.Values[currview.elements.IndexOfKey(cb_CustomeItem.SelectedValue.ToString())];
-        //        tb_customelementName.Text = currelement.name;
-        //        cb_customelementType.SelectedValue = currelement.typeOfElement.ToString();
-        //    }
-        //    //tb_customelementName
-        //}
+        //Closing the window
+        private void Window_Closing_1(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (MessageBox.Show("Do you want close application?", "Question", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+            }
+            else e.Cancel = true;
+        }
 
-        //private void btn_addCustomelement_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (getComboBoxValue((ComboBoxItem)cbViewSelector.SelectedItem) != "")
-        //    {
-        //        openViewEditor();
-        //        CreateRect(tb_customelementName.Text, (Element.types)System.Enum.Parse(typeof(Element.types), cb_customelementType.SelectedValue.ToString()), Element.GetRandomColor(), 1);
-        //        cb_CustomeItem.Items.Add(tb_customelementName.Text);
-        //    }
-        //}
-
-        //private void delCustomelement_Click(object sender, RoutedEventArgs e)
-        //{
-        //    string comboBoxItemvalue = getComboBoxValue((ComboBoxItem)cbViewSelector.SelectedItem);
-        //    if (_viewtmplatewindow != null && _viewtmplatewindow.isOpened && _viewtmplatewindow.Title == comboBoxItemvalue)
-        //        if (MessageBox.Show("Do you want delete this item?", "Question", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-        //        {
-        //            _viewtmplatewindow.RemoveRect(tb_customelementName.Text);
-        //            cb_CustomeItem.Items.Remove(tb_customelementName.Text);
-        //            cb_SelectCreatedelement.Items.Remove(tb_customelementName.Text);
-        //        }
-        //}
-        #endregion CustomItemWorking
+        //Close all child windows
+        private void Window_Closed_1(object sender, EventArgs e)
+        {
+            try
+            {
+                foreach (Window w in App.Current.Windows)
+                    w.Close();
+            }
+            catch(Exception err)
+            {
+                Logger.Write(err);
+                return;
+            }
+        }
 
         #region xmlWorker
         string include = "";
@@ -189,10 +120,15 @@ namespace es_theme_editor
                 string filename = SomeUtilities.MakeAbsolutePath(tb_themefolder.Text + "\\" + cbx_gameplatformtheme.SelectedItem.ToString() + "\\theme.xml", include);
                 if (File.Exists(filename))
                     tb_log.Text = File.ReadAllText(filename);
-                readXML();
-                //tb_log.Text = MakeRelativePath(tb_themefolder.Text + "\\" + "SomeTemplateSystem" + "\\theme.xml", tb_themefolder.Text + "\\SomeTemplateSystem\\art\\art_blur_whiten.png");
-                //var uri = new Uri(new Uri(tb_themefolder.Text + "\\" + "SomeTemplateSystem" + "\\theme.xml"), tb_log.Text.ToString());
-                //tb_log.Text += "\n\n\n" + MakeAbsolutePath(tb_themefolder.Text + "\\" + "SomeTemplateSystem" + "\\theme.xml", tb_log.Text.ToString());
+                try
+                {
+                    readXML();
+                }
+                catch(Exception err)
+                {
+                    Logger.Write(err);
+                    return;
+                }
             }
         }
 
@@ -381,7 +317,7 @@ namespace es_theme_editor
 
         private void generateXML()
         {
-            if (_viewtmplatewindow != null)
+            if (_viewtmplatewindow != null && _viewtmplatewindow.isOpened)
                 _viewtmplatewindow.save(); //_viewtmplatewindow.addPropertiesToElement(_viewtmplatewindow.GetSelectedRectengleName); //saveLastChangedProp();
             if (views.Values.Count > 0)
             {
@@ -453,7 +389,7 @@ namespace es_theme_editor
                         selectedview.Add(views.Values[i].elements.Values[j].name);
                         type = views.Values[i].elements.Values[j].typeOfElement.ToString();
 
-                        itemNode = createXMLNode(doc, type, "name", views.Values[i].elements.Values[j].name.ToLower(), "");
+                        itemNode = createXMLNode(doc, type, "name", views.Values[i].elements.Values[j].name, "");
                         if (views.Values[i].elements.Values[j].name.ToLower() == "logo" && views.Values[i].elements.Values[j].path == "")
                             continue;
                         else
@@ -467,6 +403,9 @@ namespace es_theme_editor
 
                     for (int y = 0; y < Element.novisibleelement.Count; y++)
                     {
+                        //for basic view hide only help view.
+                        if (views.Values[i].name == View.types.basic.ToString() && y >= 1)
+                            break;
                         if (!selectedview.Contains(Element.novisibleelement[y]))
                         {
                             itemNode = createXMLNode(doc, (Element.GetType(Element.novisibleelement[y])).ToString(), "name", Element.novisibleelement[y], "");
@@ -558,9 +497,6 @@ namespace es_theme_editor
 
         private void tb_themefolder_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //tb_log.Text = MakeRelativePath(tb_themefolder.Text + "\\" + "SomeTemplateSystem" + "\\theme.xml", tb_themefolder.Text + "\\SomeTemplateSystem\\art\\art_blur_whiten.png");
-            //var uri = new Uri(new Uri(tb_themefolder.Text + "\\" + "SomeTemplateSystem" + "\\theme.xml"), tb_log.Text.ToString());
-            //tb_log.Text += "\n\n\n" + MakeAbsolutePath(tb_themefolder.Text + "\\" + "SomeTemplateSystem" + "\\theme.xml", tb_log.Text.ToString());
             fillgameplatformtheme();
             ((App)Application.Current).themefolder = tb_themefolder.Text;
         }
@@ -576,87 +512,6 @@ namespace es_theme_editor
             return comboBoxItemvalue;
         }
 
-        //private void RemoveRect(string name)
-        //{
-        //    _viewtmplatewindow.RemoveRect(name);
-        //}
-
-        //private void SelectRect(string name)
-        //{
-        //    _viewtmplatewindow.SelectRect(name);
-        //}
-
-        //We pass the view_tamlate_window task to create a new rectengl
-        //private void CreateRect(string name, Element.types typeOfElement, Brush fill, double opacity)
-        //{
-        //    openViewEditor();
-        //    if (!transperentRectangle)
-        //        opacity = 1;
-
-        //    //if (_viewtmplatewindow != null)
-        //    //{
-        //        //For rating stars, we set the template size smaller than the rest
-        //        if (name != "md_rating" && name != "help")
-        //            _viewtmplatewindow.CreateRect(name, typeOfElement, fill, opacity, 200, 200);
-        //        else if (name == "help")
-        //            _viewtmplatewindow.CreateRect(name, typeOfElement, fill, opacity, parentCanvasWidth, 75, 0, parentCanvasHeight - 75);
-        //        else
-        //            _viewtmplatewindow.CreateRect(name, typeOfElement, fill, opacity, 30, 30);
-
-        //        toolBox.addCreatedelement(name);
-
-        //        switch (_viewtmplatewindow.view.elements[name].typeOfElement.ToString())
-        //        {
-        //            case "text":
-        //                if (_viewtmplatewindow.view.elements[name].Properties.Count == 0)
-        //                    _viewtmplatewindow.view.elements[name].Properties = propertiesBox.text.Properties;
-        //                else
-        //                    propertiesBox.text.Properties = _viewtmplatewindow.view.elements[name].Properties;
-        //                break;
-        //            case "image":
-        //                if (_viewtmplatewindow.view.elements[name].Properties.Count == 0)
-        //                    _viewtmplatewindow.view.elements[name].Properties = propertiesBox.image.Properties;
-        //                else
-        //                    propertiesBox.image.Properties = _viewtmplatewindow.view.elements[name].Properties;
-        //                break;
-        //            case "textlist":
-        //                if (_viewtmplatewindow.view.elements[name].Properties.Count == 0)
-        //                    _viewtmplatewindow.view.elements[name].Properties = propertiesBox.textlist.Properties;
-        //                else
-        //                    propertiesBox.textlist.Properties = _viewtmplatewindow.view.elements[name].Properties;
-        //                break;
-        //            case "rating":
-        //                if (_viewtmplatewindow.view.elements[name].Properties.Count == 0)
-        //                    _viewtmplatewindow.view.elements[name].Properties = propertiesBox.rating.Properties;
-        //                else
-        //                    propertiesBox.rating.Properties = _viewtmplatewindow.view.elements[name].Properties;
-        //                break;
-        //            case "datetime":
-        //                if (_viewtmplatewindow.view.elements[name].Properties.Count == 0)
-        //                    _viewtmplatewindow.view.elements[name].Properties = propertiesBox.datetime.Properties;
-        //                else
-        //                    propertiesBox.datetime.Properties = _viewtmplatewindow.view.elements[name].Properties;
-        //                break;
-        //            case "helpsystem":
-        //                if (_viewtmplatewindow.view.elements[name].Properties.Count == 0)
-        //                    _viewtmplatewindow.view.elements[name].Properties = propertiesBox.helpsystem.Properties;
-        //                else
-        //                    propertiesBox.helpsystem.Properties = _viewtmplatewindow.view.elements[name].Properties;
-        //                break;
-        //        }
-        //    //}
-        //    //else
-        //    //{
-        //    //    //Turn on the manual switch mode CheckBox so that the program does not react to changing their states
-        //    //    //Enable or disable CheckBox if they have already been marked previously for the selected view
-        //    //    toolBox.cbManualChangeState = true;
-
-        //    //    uncheckAllCheckboxes();
-
-        //    //    toolBox.cbManualChangeState = false;
-        //    //}
-        //}
-
         //Checking the input parameters for compliance with the necessary conditions
         //Used in XML for our TextBox
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -664,29 +519,6 @@ namespace es_theme_editor
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
-
-        //All CheckBox set the state of uncheck
-        //private void uncheckAllCheckboxes() 
-        //{
-        //    List<CheckBox> checkboxes = SomeUtilities.GetLogicalChildCollection<CheckBox>(toolBox);
-
-        //    for (int i = 0; i < checkboxes.Count; i++)
-        //    {
-        //        if (checkboxes[i].Content.ToString() == "")
-        //            checkboxes[i].IsChecked = false;
-        //    }
-        //}
-
-        //All GroupBox set the state of Hidden
-        //private void hiddenAllGroupBox()
-        //{
-        //    List<GroupBox> groupboxes = SomeUtilities.GetLogicalChildCollection<GroupBox>(grid1);
-
-        //    for (int i = 0; i < groupboxes.Count; i++)
-        //    {
-        //        groupboxes[i].Visibility = System.Windows.Visibility.Hidden;
-        //    }
-        //}
 
         //Response to state change ComboBox selection view
         private void cbViewSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -706,33 +538,10 @@ namespace es_theme_editor
 
             if (views.IndexOfKey(comboBoxItemvalue) < 0)
                 views.Add(comboBoxItemvalue, new View((View.types)System.Enum.Parse(typeof(View.types), comboBoxItemvalue), parentCanvasWidth, parentCanvasHeight));
-            //Get all items for the selected view
-            //View currview = views.Values[views.IndexOfKey(comboBoxItemvalue)];
-            //toolBox.setCurrentView(views.Values[views.IndexOfKey(comboBoxItemvalue)]);
-            ////Turn on the manual switch mode CheckBox so that the program does not react to changing their states
-            ////Enable or disable CheckBox if they have already been marked previously for the selected view
-            //toolBox.cbManualChangeState = true;
-
-            //uncheckAllCheckboxes();
-
-            //CheckBox foundCheckBox;
-            //for (int i = 0; i < currview.elements.Count; i++)
-            //{
-            //    foundCheckBox = SomeUtilities.FindChild<CheckBox>(grid1, "cb_" + currview.elements.Values[i].name);
-            //    if (foundCheckBox != null)
-            //        foundCheckBox.IsChecked = true;
-            //    else
-            //    {
-            //        if (toolBox.cb_CustomeItem.Items.IndexOf(currview.elements.Values[i].name) < 0)
-            //            toolBox.cb_CustomeItem.Items.Add(currview.elements.Values[i].name);
-            //    }
-            //}
-            ////Turn off the manual switch mode CheckBox
-            //toolBox.cbManualChangeState = false;
         }
 
         //Open view_tamlate_window
-        private bool openViewEditor() 
+        private bool openViewEditor()
         {
             string comboBoxItemvalue = getComboBoxValue((ComboBoxItem)cbViewSelector.SelectedItem);
             if (comboBoxItemvalue != "")
@@ -746,27 +555,36 @@ namespace es_theme_editor
 
                     _viewtmplatewindow = new view_tamlate_window(this, comboBoxItemvalue, currview);
 
-                    //for (int i = 0; i < currview.elements.Count; i++)
-                    //    toolbox.addCreatedelement(currview.elements.Values[i].name);
-                    
-                    //It is unforgettable to subscribe to the change of the selected rectengl and resizing
-                    //_viewtmplatewindow.OnSelectinChanged += new NotifySelectRectangleChanging(rectangleSelectChanget);
-                    //_viewtmplatewindow.OnPositionChanged += new NotifyPositionRectangleChanging(rectanglePositionChanget);
                     _viewtmplatewindow.Show();
+                    tbheight.IsEnabled = false;
+                    tbwidth.IsEnabled = false;
+                    btn_ApplyResolution.IsEnabled = false;
                     return true;
                 }
                 _viewtmplatewindow.Show();
-                return false;
+                tbheight.IsEnabled = false;
+                tbwidth.IsEnabled = false;
+                btn_ApplyResolution.IsEnabled = false;
+
+
+                //return false;
             }
             return false;
         }
 
-
-
         //Set the size of the workspace in the _viewtmplatewindow
         private void btn_ApplyResolution_Click(object sender, RoutedEventArgs e)
         {
-            _viewtmplatewindow.SetCanvasResolution(parentCanvasWidth, parentCanvasHeight);
+            if (this.views.Count > 0)
+            {
+                tbheight.IsEnabled = false;
+                tbwidth.IsEnabled = false;
+                btn_ApplyResolution.IsEnabled = false;
+                return;
+            }
+            ((App)Application.Current).Width = parentCanvasWidth;
+            ((App)Application.Current).Height = parentCanvasHeight;
+            //_viewtmplatewindow.SetCanvasResolution(parentCanvasWidth, parentCanvasHeight);
         }
 
         //Open view_tamlate_window
@@ -774,72 +592,5 @@ namespace es_theme_editor
         {
             openViewEditor();
         }
-
-        //For element image, the color property sets only the alpha channel, and the other parameters 255
-        //private void btn_image_color_Click(object sender, RoutedEventArgs e)
-        //{
-        //    ColorPickerDialog cpd = new ColorPickerDialog();
-        //    if (cpd.ShowDialog() == true)
-        //    {
-        //        ((Button)sender).Background = cpd.SelectedColor;
-        //        Color myColor = ((System.Windows.Media.SolidColorBrush)(cpd.SelectedColor)).Color;
-        //        myColor.B = 255;
-        //        myColor.G = 255;
-        //        myColor.R = 255;
-        //        System.Windows.Media.SolidColorBrush scb = new SolidColorBrush(myColor);
-
-        //        //string theHexColor = "#" + myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2") + myColor.A.ToString("X2");
-        //    }
-        //}
-
-        //Some hidden button, some not realised function
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            string filename = SomeUtilities.MakeAbsolutePath(tb_themefolder.Text + "\\" + cbx_gameplatformtheme.SelectedItem.ToString() + "\\theme.xml", ((App)Application.Current).backgroundSystemImagePath);
-            BitmapImage bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.UriSource = new Uri(filename);
-            bitmap.EndInit();
-
-            Image image = new Image();
-            image.Source = bitmap;
-            image.Width = _viewtmplatewindow.canvas1.Width;
-            image.Height = _viewtmplatewindow.canvas1.Height;
-            image.MouseDown += _viewtmplatewindow.canvas1_MouseDown;
-            Panel.SetZIndex(image, 0);
-            _viewtmplatewindow.canvas1.Children.Add(image);
-        }
-
-        //private void btn_bgsound_system_Click(object sender, RoutedEventArgs e)
-        //{
-        //    string themeFilename = tb_themefolder.Text + cbx_gameplatformtheme.SelectedItem.ToString() + "\\theme.xml";
-        //    string filename = SomeUtilities.openFileDialog("Sound files(*.wav;*.ogg)|*.wav;*.ogg" + "|Все файлы (*.*)|*.* ", propertiesBox.backgroundSoundPath, themeFilename);
-        //    if (filename != null)
-        //        propertiesBox.backgroundSoundPath = filename;
-        //}
-
-        //private void btn_getimagefile_Click(object sender, RoutedEventArgs e)
-        //{
-        //    string toollName = ((Button)sender).Name;
-        //    toollName = toollName.Replace("btn", "tb");
-        //    string themeFilename = tb_themefolder.Text + cbx_gameplatformtheme.SelectedItem.ToString() + "\\theme.xml";
-        //    TextBox foundTextBox = SomeUtilities.FindChild<TextBox>(grid1, toollName);
-        //    string filename = SomeUtilities.openFileDialog("Image files(*.png;*.jpg;*.svg)|*.png;*.jpg;*.svg" + "|Все файлы (*.*)|*.* ", foundTextBox.Text, themeFilename);
-        //    if (filename != null)
-        //        foundTextBox.Text = filename;
-        //}
-
-        //private void Button_Click_1(object sender, RoutedEventArgs e)
-        //{
-        //    view_tamlate_window.BringToFront(_viewtmplatewindow.canvas1, _viewtmplatewindow.GetSelectedRectengleName);
-        //}
-
-        //private void cb_SelectCreatedelement_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //     //sender
-        //    string si = ((ComboBox)sender).SelectedItem.ToString();
-        //    if (((ComboBox)sender).SelectedItem != null && ((ComboBox)sender).SelectedItem.ToString() != "")
-        //        _viewtmplatewindow.SelectRect(((ComboBox)sender).SelectedItem.ToString());
-        //}
     }
 }

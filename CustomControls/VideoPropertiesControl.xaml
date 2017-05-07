@@ -1,0 +1,27 @@
+﻿<Grid x:Class="es_theme_editor.VideoPropertiesControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d"
+             Name="canvas" Height="554.923" Width="259.668" OpacityMask="Black">
+    <Label x:Name="lbl_pos_w" Content="pos__w" HorizontalAlignment="Left" Margin="10,10,0,520.724"/>
+    <TextBox x:Name="tb_pos_w" Height="23" TextWrapping="Wrap" Margin="10,34.391,139.668,497.531" IsEnabled="False"/>
+    <Label x:Name="lbl_pos_h" Content="pos__h" HorizontalAlignment="Left" Margin="116,10,0,520.647"/>
+    <TextBox x:Name="tb_pos_h" Height="23" TextWrapping="Wrap" Margin="124.668,34.468,22.807,497.454" IsEnabled="False"/>
+    <Label x:Name="lbl_size_w" Content="size__w" HorizontalAlignment="Left" Margin="10,67.963,0,462.761"/>
+    <TextBox x:Name="tb_size_w" Height="23" TextWrapping="Wrap" Margin="9.193,92.239,139.811,439.684" IsEnabled="False"/>
+    <Label x:Name="lbl_size_h" Content="size__h" HorizontalAlignment="Left" Margin="116,67.963,0,462.684"/>
+    <TextBox x:Name="tb_size_h" Height="23" TextWrapping="Wrap" Margin="124.668,92.316,22.807,439.607" IsEnabled="False"/>
+    <Label x:Name="lbl_maxSize_w" Content="maxSize__w" HorizontalAlignment="Left" Margin="10,120.278,0,409.252"/>
+    <TextBox x:Name="tb_maxSize_w" Height="23" TextWrapping="Wrap" Margin="10,145.748,139.004,386.175" IsEnabled="False"/>
+    <Label x:Name="lbl_maxSize_h" Content="maxSize__h" HorizontalAlignment="Left" Margin="116.193,120.278,0,409.175"/>
+    <TextBox x:Name="tb_maxSize_h" Height="23" TextWrapping="Wrap" Margin="124.668,145.825,22.475,386.098" IsEnabled="False"/>
+    <Label x:Name="lbl_origin_w" Content="origin__w" HorizontalAlignment="Left" Margin="10,173.864,0,352.643"/>
+    <TextBox x:Name="tb_origin_w" Height="23" TextWrapping="Wrap" Margin="10,199.867,138.34,332.056" IsEnabled="False"/>
+    <Label x:Name="lbl_origin_h" Content="origin__h" HorizontalAlignment="Left" Margin="116.193,173.864,0,355.133"/>
+    <TextBox x:Name="tb_origin_h" Height="23" TextWrapping="Wrap" Margin="126.66,199.905,20.151,332.017" IsEnabled="False"/>
+    <CheckBox x:Name="cb_tile" Content="Tile" HorizontalAlignment="Left" Margin="10,227.905,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
+    <Button x:Name="btn_color" Content="color" HorizontalAlignment="Left" Margin="10,273.865,0,0" VerticalAlignment="Top" Width="227.668" Height="23" Background="#FFB8B8B8" BorderBrush="Black" ClickMode="Press" Visibility="Hidden"/>
+    <Label Content="Only the alpha channel is used" HorizontalAlignment="Left" Margin="9.193,247.905,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
+</Grid>

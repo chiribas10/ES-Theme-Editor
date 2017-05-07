@@ -18,14 +18,12 @@
         <Label Content="View selector" HorizontalAlignment="Left" Margin="16.424,-0.44,0,0" VerticalAlignment="Top" Height="25.96" Width="79.963"/>
         <Button x:Name="btnOpenViewEditor" Content="Open view editor" HorizontalAlignment="Left" Margin="16.424,49.96,0,0" VerticalAlignment="Top" Width="124.299" Click="btnOpenViewEditor_Click" Height="19.96"/>
         <Button x:Name="btn_generate_xml_file" Content="Generate XML file" HorizontalAlignment="Left" Margin="281.092,660.415,0,0" VerticalAlignment="Top" Width="119.963" Click="btn_generate_xml_file_Click" Height="19.96"/>
-        <TextBox x:Name="tb_log" HorizontalAlignment="Left" Height="502.594" Margin="10,148.92,0,0" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" AcceptsReturn="True" VerticalAlignment="Top" Width="521.76"/>
+        <TextBox x:Name="tb_log" HorizontalAlignment="Left" Height="523.963" Margin="10,131.452,0,0" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" AcceptsReturn="True" VerticalAlignment="Top" Width="521.76"/>
         <Label Content="Alt+F4 - fullscreen mode for view editor" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25.96" Width="255.908" Margin="281.092,0,0,0"/>
         <Button x:Name="btn_read_XML" Content="Read XML file" HorizontalAlignment="Left" Margin="414.797,660.415,0,0" VerticalAlignment="Top" Width="116.963" Click="btn_read_XML_Click" Height="19.96"/>
         <TextBox x:Name="tb_themefolder" HorizontalAlignment="Left" Height="23" Margin="281.092,76.452,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="222.668" TextChanged="tb_themefolder_TextChanged"/>
         <Button Content="..." HorizontalAlignment="Left" Margin="507.76,76.452,0,0" VerticalAlignment="Top" Width="24" Height="23" Click="Button_Click"/>
         <Label Content="Theme folder" HorizontalAlignment="Left" Margin="281.092,45.492,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="cbx_gameplatformtheme" HorizontalAlignment="Left" Margin="281.092,104.452,0,0" VerticalAlignment="Top" Width="250.668" SelectionChanged="cbx_gameplatformtheme_SelectionChanged"/>
-        <!--<Button Content="Bring to front" HorizontalAlignment="Left" Margin="145.369,635.455,0,0" VerticalAlignment="Top" Width="116.963" Click="Button_Click_1"/>-->
-        <!--<Button Content="Button" HorizontalAlignment="Left" Margin="145.723,631.554,0,0" VerticalAlignment="Top" Width="130.369" Click="Button_Click_2" Visibility="Visible" Height="19.96"/>-->
     </Grid>
 </Window>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Media;
+using System.Windows;
 
 namespace es_theme_editor
 {
@@ -58,6 +59,14 @@ namespace es_theme_editor
                 filligFromProperties(Properties, Width, Height, item_fill);
         }
 
+        public Element(string name, types typeOfElement, double Width, double Height, Brush item_fill)
+        {
+            _typeOfElement = typeOfElement;
+            this.name = name;
+            if (Properties != null)
+                filligFromProperties(Properties, Width, Height, item_fill);
+        }
+
         //We will fill values from Properties
         public void filligFromProperties(SortedList<string, string> Properties, double Width, double Height, Brush item_fill)
         {
@@ -85,8 +94,8 @@ namespace es_theme_editor
                 substrings = val.Split(delimiter);
                 _pos_x_NORMALIZED = double.Parse(substrings[0].Trim().Replace(".", ","));
                 _pos_y_NORMALIZED = double.Parse(substrings[1].Trim().Replace(".", ","));
-                _pos_x = _pos_x_NORMALIZED * Width;
-                _pos_y = _pos_y_NORMALIZED * Height;
+                _pos_x = _pos_x_NORMALIZED * ((App)Application.Current).Width;
+                _pos_y = _pos_y_NORMALIZED * ((App)Application.Current).Height;
             }
             val = Properties.FirstOrDefault(x => x.Key == "size").Value;
             if (val != null)
@@ -94,8 +103,8 @@ namespace es_theme_editor
                 substrings = val.Split(delimiter);
                 size_width_NORMALIZED = double.Parse(substrings[0].Trim().Replace(".", ","));
                 size_height_NORMALIZED = double.Parse(substrings[1].Trim().Replace(".", ","));
-                _size_width = size_width_NORMALIZED * Width;
-                _size_height = size_height_NORMALIZED * Height;
+                _size_width = size_width_NORMALIZED * ((App)Application.Current).Width;
+                _size_height = size_height_NORMALIZED * ((App)Application.Current).Height;
             }
             val = Properties.FirstOrDefault(x => x.Key == "origin").Value;
             if (val != null)
@@ -115,8 +124,8 @@ namespace es_theme_editor
                 substrings = val.Split(delimiter);
                 size_width_NORMALIZED = double.Parse(substrings[0].Trim().Replace(".", ","));
                 size_height_NORMALIZED = double.Parse(substrings[1].Trim().Replace(".", ","));
-                _size_width = size_width_NORMALIZED * Width;
-                _size_height = size_height_NORMALIZED * Height;
+                _size_width = size_width_NORMALIZED * ((App)Application.Current).Width;
+                _size_height = size_height_NORMALIZED * ((App)Application.Current).Height;
             }
             this._item_fill = item_fill;
             opacity = 1;
@@ -126,7 +135,6 @@ namespace es_theme_editor
         {
             get 
             {
-                //If the fill of our element is not any, fill it with a random color
                 if (_item_fill == null)
                 {
                     _item_fill = GetRandomColor();
@@ -135,8 +143,6 @@ namespace es_theme_editor
             }
             set
             {
-                //if (_item_fill == value)
-                //    return;
                 _item_fill = value;
             }
         }
@@ -144,32 +150,14 @@ namespace es_theme_editor
         //We get random color
         public static Brush GetRandomColor() 
         {
-            ////string[] brushArray = typeof(Brushes).GetProperties().
-            ////                Select(c => c.Name).ToArray();
-
-            ////Random randomGen = new Random();
-            ////string randomColorName = brushArray[randomGen.Next(brushArray.Length)];
-            ////return (SolidColorBrush)new BrushConverter().ConvertFromString(randomColorName);
-
-            ////int numColors = 10;
-            ////var colors = new List<string>();
-            //var random = new Random(); // Make sure this is out of the loop!
-            ////for (int i = 0; i < numColors; i++)
-            ////{
-            ////    colors.Add(String.Format("#{0:X6}", random.Next(0x1000000)));
-            ////}
-            //return SomeUtilities.GetBrushFromHex(String.Format("#{0:X6}", random.Next(0x1000000)));
-
             Random random = new Random();
             byte[] buffer = new byte[8 / 2];
             random.NextBytes(buffer);
             string result = String.Concat(buffer.Select(x => x.ToString("X2")).ToArray());
             if (8 % 2 == 0)
                 return SomeUtilities.GetBrushFromHex("#" + result);
-            return SomeUtilities.GetBrushFromHex(result + random.Next(16).ToString("X"));
-
+            //return SomeUtilities.GetBrushFromHex(result + random.Next(16).ToString("X"));
         }
-
 
         public string path
         {
@@ -188,6 +176,10 @@ namespace es_theme_editor
         public SortedList<string, string> Properties
         {
             get 
+            {
+                return _properties; 
+            }
+            set
             {
                 _properties.Remove("pos");
                 _properties.Remove("size");
@@ -225,11 +217,11 @@ namespace es_theme_editor
                     case types.image:
                     case types.video:
                         //if (pos_x_NORMALIZED != 0 && pos_y_NORMALIZED != 0)
-                            _properties.Add("pos", (pos_x_NORMALIZED + " " + pos_y_NORMALIZED).Replace(",", "."));
+                        _properties.Add("pos", (pos_x_NORMALIZED + " " + pos_y_NORMALIZED).Replace(",", "."));
                         if (size_width_NORMALIZED != 0 && size_height_NORMALIZED != 0)
                             _properties.Add("maxSize", (size_width_NORMALIZED + " " + size_height_NORMALIZED).Replace(",", "."));
                         //if (_origin_w != 0 && _origin_h != 0)
-                            _properties.Add("origin", (_origin_w + " " + _origin_h).Replace(",", "."));
+                        _properties.Add("origin", (_origin_w + " " + _origin_h).Replace(",", "."));
                         break;
                     case types.rating:// only one indicator is used to determine the size (in this case we use only the height)
                         _properties.Add("pos", (pos_x_NORMALIZED + " " + pos_y_NORMALIZED).Replace(",", "."));
@@ -237,11 +229,6 @@ namespace es_theme_editor
                         //size - Only one value is actually used. The other value should be zero. (e.g. specify width OR height, but not both. This is done to maintain the aspect ratio.)
                         break;
                 }
-
-                return _properties; 
-            }
-            set
-            {
                 //Filling the values from the properties
                 _properties = value;
             }

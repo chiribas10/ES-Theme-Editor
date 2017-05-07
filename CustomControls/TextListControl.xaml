@@ -1,0 +1,14 @@
+﻿<Grid x:Class="es_theme_editor.TextListControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d"
+             Name="canvas" Height="500.923" Width="507.668" OpacityMask="Black">
+    <ListBox x:Name="lb_gamelist" Canvas.Left="158" Canvas.Top="10" Background="{x:Null}" 
+                     ScrollViewer.CanContentScroll="True"
+                     ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                     ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderBrush="#00ABADB3">
+    </ListBox>
+    <Rectangle Width="{Binding ActualWidth, ElementName=canvas}" Height="{Binding ActualHeight, ElementName=canvas}" Fill="#00000000" Stroke="#00000000"/>
+</Grid>

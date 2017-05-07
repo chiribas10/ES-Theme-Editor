@@ -1,0 +1,24 @@
+﻿<Canvas x:Class="es_theme_editor.RectangleNamed"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local  = "clr-namespace:es_theme_editor" 
+             mc:Ignorable="d"
+             Name="canvas" Height="92" Width="132">
+        <Rectangle Name="rectangle" Width="{Binding ActualWidth, ElementName=canvas}" Stroke="Black" Height="{Binding ActualHeight, ElementName=canvas}" Canvas.Left="0" Canvas.Top="0">
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <LinearGradientBrush.GradientStops>
+                        <GradientStop Color="White" Offset="0"/>
+                        <GradientStop Color="Blue" Offset="1"/>
+                    </LinearGradientBrush.GradientStops>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    <TextBlock Name="desc" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Center" Canvas.Left="10" Canvas.Top="10">
+    </TextBlock>
+    <local:ImageControl x:Name="imageControl" Width="{Binding ActualWidth, ElementName=canvas}" Height="{Binding ActualHeight, ElementName=canvas}" Visibility="Hidden"/>
+    <local:TextListControl x:Name="textListControl" Width="{Binding ActualWidth, ElementName=canvas}" Height="{Binding ActualHeight, ElementName=canvas}" Visibility="Hidden"/>
+    <!--<Image Name="image" Canvas.Left="0" Width="{Binding ActualWidth, ElementName=canvas}" Height="{Binding ActualHeight, ElementName=canvas}"/>-->
+</Canvas>
