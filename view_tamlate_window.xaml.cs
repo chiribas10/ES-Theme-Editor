@@ -868,9 +868,10 @@ namespace es_theme_editor
             //Canvas.SetLeft(rect, x);
             //Canvas.SetTop(rect, y);
             //Panel.SetZIndex(rect, 1);
+            SaveItem(rect, typeOfElement);
             rect.fillProperties(propertiesbox.getPropertiesByType(typeOfElement));
             canvas1.Children.Add(rect);
-            SaveItem(rect, typeOfElement);
+            
         }
 
         //public static void BringToFront(FrameworkElement element)
@@ -919,7 +920,8 @@ namespace es_theme_editor
                     item.pos_y_NORMALIZED = Canvas.GetTop(rect) / canvas1.Height;
                     item.size_height_NORMALIZED = rect.Height / canvas1.Height;
                     item.size_width_NORMALIZED = rect.Width / canvas1.Width;
-                }
+                    item.saveProperties();
+                }                
             //}
             toolbox.currentView.addItem = item;
         }
@@ -1014,18 +1016,30 @@ namespace es_theme_editor
         private void btn_setBackground_Click(object sender, RoutedEventArgs e)
         {
             string filename = SomeUtilities.MakeAbsolutePath(((App)Application.Current).themefolder + ((App)Application.Current).gameplatformtheme + "\\theme.xml", ((App)Application.Current).backgroundSystemImagePath);
-            BitmapImage bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.UriSource = new Uri(filename);
-            bitmap.EndInit();
+            Image image = SomeUtilities.FindChild<Image>(canvas, "image");
+            if (image != null)
+            {
+                if (image.Visibility == System.Windows.Visibility.Visible)
+                    image.Visibility = System.Windows.Visibility.Hidden;
+                else
+                    image.Visibility = System.Windows.Visibility.Visible;
+            }
+            else
+            {
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(filename);
+                bitmap.EndInit();
 
-            Image image = new Image();
-            image.Source = bitmap;
-            image.Width = canvas1.Width;
-            image.Height = canvas1.Height;
-            image.MouseDown += canvas1_MouseDown;
-            Panel.SetZIndex(image, 0);
-            canvas1.Children.Add(image);
+                image = new Image();
+                image.Name = "image";
+                image.Source = bitmap;
+                image.Width = canvas1.Width;
+                image.Height = canvas1.Height;
+                image.MouseDown += canvas1_MouseDown;
+                Panel.SetZIndex(image, 0);
+                canvas1.Children.Add(image);
+            }
         }
     }
 }

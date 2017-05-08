@@ -77,6 +77,7 @@ namespace es_theme_editor
 
         }
 
+
         //We will fill values from Properties
         public void filligFromProperties(SortedList<string, string> Properties, double Width, double Height, Brush item_fill)
         {
@@ -181,60 +182,79 @@ namespace es_theme_editor
             }
         }
 
+        public void saveProperties() 
+        {
+            _properties.Remove("pos");
+            _properties.Remove("size");
+            _properties.Remove("maxSize");
+            _properties.Remove("origin");
+            ////Add to our array the properties that are set in view_tamlate_window
+            switch (_typeOfElement)
+            {
+                case types.helpsystem:
+                    //if (_properties.IndexOfKey("pos") < 0)
+                        _properties.Add("pos", (pos_x_NORMALIZED + " " + pos_y_NORMALIZED).Replace(",", "."));
+                    break;
+                case types.datetime:
+                    //if (_properties.IndexOfKey("pos") < 0)
+                        _properties.Add("pos", (pos_x_NORMALIZED + " " + pos_y_NORMALIZED).Replace(",", "."));
+                    //size - You should probably not set this. Leave it to fontSize.
+                    //_properties.Add("size", (pos_x_NORMALIZED + " " + 0).Replace(",", "."));
+                    break;
+                case types.text:
+                    //if (_properties.IndexOfKey("pos") < 0)
+                        _properties.Add("pos", (pos_x_NORMALIZED + " " + pos_y_NORMALIZED).Replace(",", "."));
+                    if (name == "md_description")
+                    {
+                       // if (_properties.IndexOfKey("size") < 0)
+                            _properties.Add("size", (size_width_NORMALIZED + " " + size_height_NORMALIZED).Replace(",", "."));
+                    }
+                    //size - type: NORMALIZED_PAIR.
+                    //Possible combinations:
+                    //0 0 - automatically size so text fits on one line (expanding horizontally).
+                    //w 0 - automatically wrap text so it doesn't go beyond w (expanding vertically).
+                    //w h - works like a "text box." If h is non-zero and h <= fontSize (implying it should be a single line of text), text that goes beyond w will be truncated with an elipses (...).
+                    break;
+                case types.textlist:
+                    //if (_properties.IndexOfKey("pos") < 0)
+                        _properties.Add("pos", (pos_x_NORMALIZED + " " + pos_y_NORMALIZED).Replace(",", "."));
+                    //if (_properties.IndexOfKey("size") < 0)
+                        _properties.Add("size", (size_width_NORMALIZED + " " + size_height_NORMALIZED).Replace(",", "."));
+                    break;
+                case types.image:
+                case types.video:
+                    //if (pos_x_NORMALIZED != 0 && pos_y_NORMALIZED != 0)
+                    //if (_properties.IndexOfKey("pos") < 0)
+                        _properties.Add("pos", (pos_x_NORMALIZED + " " + pos_y_NORMALIZED).Replace(",", "."));
+                    //if (_properties.IndexOfKey("maxSize") < 0)
+                        if (size_width_NORMALIZED != 0 && size_height_NORMALIZED != 0)
+                            _properties.Add("maxSize", (size_width_NORMALIZED + " " + size_height_NORMALIZED).Replace(",", "."));
+                    //if (_origin_w != 0 && _origin_h != 0)
+                    //if (_properties.IndexOfKey("origin") < 0)
+                        _properties.Add("origin", (_origin_w + " " + _origin_h).Replace(",", "."));
+                    break;
+                case types.rating:// only one indicator is used to determine the size (in this case we use only the height)
+                    //if (_properties.IndexOfKey("pos") < 0)
+                        _properties.Add("pos", (pos_x_NORMALIZED + " " + pos_y_NORMALIZED).Replace(",", "."));
+                    //if (_properties.IndexOfKey("size") < 0)
+                        _properties.Add("size", (0 + " " + size_height_NORMALIZED).Replace(",", "."));
+                    //size - Only one value is actually used. The other value should be zero. (e.g. specify width OR height, but not both. This is done to maintain the aspect ratio.)
+                    break;
+            }
+        }
+
         // When assigning a property, we supplement those that are filled on the main form with the size and position that are assigned to this element in dependence
         // from the position and size of the element on the form view_tamlate_window
         public SortedList<string, string> Properties
         {
             get 
             {
-                _properties.Remove("pos");
-                _properties.Remove("size");
-                _properties.Remove("maxSize");
-                _properties.Remove("origin");
-
-                //Add to our array the properties that are set in view_tamlate_window
-                switch (_typeOfElement)
-                {
-                    case types.helpsystem:
-                        _properties.Add("pos", (pos_x_NORMALIZED + " " + pos_y_NORMALIZED).Replace(",", "."));
-                        break;
-                    case types.datetime:
-                        _properties.Add("pos", (pos_x_NORMALIZED + " " + pos_y_NORMALIZED).Replace(",", "."));
-                        //size - You should probably not set this. Leave it to fontSize.
-                        //_properties.Add("size", (pos_x_NORMALIZED + " " + 0).Replace(",", "."));
-                        break;
-                    case types.text:
-                        _properties.Add("pos", (pos_x_NORMALIZED + " " + pos_y_NORMALIZED).Replace(",", "."));
-                        if (name == "md_description")
-                        {
-                            _properties.Add("size", (size_width_NORMALIZED + " " + size_height_NORMALIZED).Replace(",", "."));
-                        }
-                        //size - type: NORMALIZED_PAIR.
-                        //Possible combinations:
-                        //0 0 - automatically size so text fits on one line (expanding horizontally).
-                        //w 0 - automatically wrap text so it doesn't go beyond w (expanding vertically).
-                        //w h - works like a "text box." If h is non-zero and h <= fontSize (implying it should be a single line of text), text that goes beyond w will be truncated with an elipses (...).
-                        break;
-                    case types.textlist:
-
-                        _properties.Add("pos", (pos_x_NORMALIZED + " " + pos_y_NORMALIZED).Replace(",", "."));
-                        _properties.Add("size", (size_width_NORMALIZED + " " + size_height_NORMALIZED).Replace(",", "."));
-                        break;
-                    case types.image:
-                    case types.video:
-                        //if (pos_x_NORMALIZED != 0 && pos_y_NORMALIZED != 0)
-                        _properties.Add("pos", (pos_x_NORMALIZED + " " + pos_y_NORMALIZED).Replace(",", "."));
-                        if (size_width_NORMALIZED != 0 && size_height_NORMALIZED != 0)
-                            _properties.Add("maxSize", (size_width_NORMALIZED + " " + size_height_NORMALIZED).Replace(",", "."));
-                        //if (_origin_w != 0 && _origin_h != 0)
-                        _properties.Add("origin", (_origin_w + " " + _origin_h).Replace(",", "."));
-                        break;
-                    case types.rating:// only one indicator is used to determine the size (in this case we use only the height)
-                        _properties.Add("pos", (pos_x_NORMALIZED + " " + pos_y_NORMALIZED).Replace(",", "."));
-                        _properties.Add("size", (0 + " " + size_height_NORMALIZED).Replace(",", "."));
-                        //size - Only one value is actually used. The other value should be zero. (e.g. specify width OR height, but not both. This is done to maintain the aspect ratio.)
-                        break;
-                }
+                if (_typeOfElement == types.text && name != "md_description")
+                    _properties.Remove("size");
+                //_properties.Remove("pos");
+                //_properties.Remove("size");
+                //_properties.Remove("maxSize");
+                //_properties.Remove("origin");
 
                 return _properties; 
             }
