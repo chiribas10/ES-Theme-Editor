@@ -77,7 +77,15 @@ namespace es_theme_editor
             get
             {
                 SortedList<string, string> _properties = new SortedList<string, string>();
-
+                double Width, Height;
+                if (double.TryParse(tb_pos_w.Text, out Width) && double.TryParse(tb_pos_h.Text, out Height))
+                    _properties.Add("pos", (Width / ((App)Application.Current).Width).ToString() + " " + (Height / ((App)Application.Current).Height).ToString());
+                if (double.TryParse(tb_size_w.Text, out Width) && double.TryParse(tb_size_h.Text, out Height))
+                    _properties.Add("size", (Width / ((App)Application.Current).Width).ToString() + " " + (Height / ((App)Application.Current).Height).ToString());
+                if (double.TryParse(tb_origin_w.Text, out Width) && double.TryParse(tb_origin_h.Text, out Height))
+                    _properties.Add("origin", (Width / ((App)Application.Current).Width).ToString() + " " + (Height / ((App)Application.Current).Height).ToString());
+                if (double.TryParse(tb_maxSize_w.Text, out Width) && double.TryParse(tb_maxSize_h.Text, out Height))
+                    _properties.Add("maxSize", (Width / ((App)Application.Current).Width).ToString() + " " + (Height / ((App)Application.Current).Height).ToString());
                 _properties.Add(btn_color.Name.Replace("btn_", ""), SomeUtilities.GetHexFromBrush(btn_color.Background));
                 _properties.Add(tb_path.Name.Replace("tb_", ""), tb_path.Text.ToString());
                 if (cb_tile.IsChecked == true)
@@ -90,9 +98,45 @@ namespace es_theme_editor
             set
             {
                 string val;
+                Char delimiter = ' ';
+                String[] substrings;
                 if (value.Count > 0)
                 {
                     Clear("");
+
+                    val = value.FirstOrDefault(x => x.Key == "pos").Value;
+                    if (val != null)
+                    {
+                        substrings = val.Split(delimiter);
+                        tb_pos_w.Text = (double.Parse(substrings[0].Trim().Replace(".", ",")) * ((App)Application.Current).Width).ToString();
+                        tb_pos_h.Text = (double.Parse(substrings[1].Trim().Replace(".", ",")) * ((App)Application.Current).Height).ToString();
+                    }
+                    val = value.FirstOrDefault(x => x.Key == "size").Value;
+                    if (val != null)
+                    {
+                        substrings = val.Split(delimiter);
+                        tb_size_w.Text = (double.Parse(substrings[0].Trim().Replace(".", ",")) * ((App)Application.Current).Width).ToString();
+                        tb_size_h.Text = (double.Parse(substrings[1].Trim().Replace(".", ",")) * ((App)Application.Current).Height).ToString();
+                    }
+                    val = value.FirstOrDefault(x => x.Key == "origin").Value;
+                    if (val != null)
+                    {
+                        substrings = val.Split(delimiter);
+                        tb_origin_w.Text = (double.Parse(substrings[0].Trim().Replace(".", ","))).ToString();
+                        tb_origin_h.Text = (double.Parse(substrings[1].Trim().Replace(".", ","))).ToString();
+                    }
+                    else
+                    {
+                        tb_origin_w.Text = "0";
+                        tb_origin_h.Text = "0";
+                    }
+                    val = value.FirstOrDefault(x => x.Key == "maxSize").Value;
+                    if (val != null)
+                    {
+                        substrings = val.Split(delimiter);
+                        tb_maxSize_w.Text = (double.Parse(substrings[0].Trim().Replace(".", ",")) * ((App)Application.Current).Width).ToString();
+                        tb_maxSize_h.Text = (double.Parse(substrings[1].Trim().Replace(".", ",")) * ((App)Application.Current).Height).ToString();
+                    }
 
                     val = value.FirstOrDefault(x => x.Key == btn_color.Name.Replace("btn_", "")).Value;
                     if (val != null)

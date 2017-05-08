@@ -19,7 +19,7 @@ namespace es_theme_editor
     /// </summary>
     public partial class RatingPropertiesControl : Grid
     {
-
+        private bool manualClear = false;
         public RatingPropertiesControl()
         {
             InitializeComponent();
@@ -28,12 +28,14 @@ namespace es_theme_editor
 
         public void Clear()
         {
+            manualClear = true;
             tb_filledPath.Text = "./../SomeArt/rating_filled.png";
             tb_unfilledPath.Text = "./../SomeArt/rating_unfilled.png";
             tb_pos_h.Text = "";
             tb_pos_w.Text = "";
             tb_size_h.Text = "";
             tb_size_w.Text = "";
+            manualClear = false;
         }
 
         public string getImagePath()
@@ -49,7 +51,11 @@ namespace es_theme_editor
             get 
             {
                 SortedList<string, string> _properties = new SortedList<string, string>();
-
+                double Width, Height;
+                if (double.TryParse(tb_pos_w.Text, out Width) && double.TryParse(tb_pos_h.Text, out Height))
+                    _properties.Add("pos", (Width / ((App)Application.Current).Width).ToString() + " " + (Height / ((App)Application.Current).Height).ToString());
+                if (double.TryParse(tb_size_w.Text, out Width) && double.TryParse(tb_size_h.Text, out Height))
+                    _properties.Add("size", (Width / ((App)Application.Current).Width).ToString() + " " + (Height / ((App)Application.Current).Height).ToString());
                 _properties.Add(tb_filledPath.Name.Replace("tb_", ""), this.tb_filledPath.Text.ToString());
                 _properties.Add(tb_unfilledPath.Name.Replace("tb_", ""), this.tb_unfilledPath.Text.ToString());
                 return _properties; 
@@ -57,10 +63,26 @@ namespace es_theme_editor
             set
             {
                 string val;
+                Char delimiter = ' ';
+                String[] substrings;
                 if (value.Count > 0)
                 {
                     Clear();
 
+                    val = value.FirstOrDefault(x => x.Key == "pos").Value;
+                    if (val != null)
+                    {
+                        substrings = val.Split(delimiter);
+                        tb_pos_w.Text = (double.Parse(substrings[0].Trim().Replace(".", ",")) * ((App)Application.Current).Width).ToString();
+                        tb_pos_h.Text = (double.Parse(substrings[1].Trim().Replace(".", ",")) * ((App)Application.Current).Height).ToString();
+                    }
+                    val = value.FirstOrDefault(x => x.Key == "size").Value;
+                    if (val != null)
+                    {
+                        substrings = val.Split(delimiter);
+                        tb_size_w.Text = (double.Parse(substrings[0].Trim().Replace(".", ",")) * ((App)Application.Current).Width).ToString();
+                        tb_size_h.Text = (double.Parse(substrings[1].Trim().Replace(".", ",")) * ((App)Application.Current).Height).ToString();
+                    }
                     val = value.FirstOrDefault(x => x.Key == tb_filledPath.Name.Replace("tb_", "")).Value;
                     if (val != null)
                         tb_filledPath.Text = val;

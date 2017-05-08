@@ -19,7 +19,7 @@ namespace es_theme_editor
     /// </summary>
     public partial class HelpSystemPropertiesControl : Grid
     {
-
+        private bool manualClear = false;
         public HelpSystemPropertiesControl()
         {
             InitializeComponent();
@@ -28,10 +28,12 @@ namespace es_theme_editor
 
         public void Clear()
         {
+            manualClear = true;
             tb_fontPath.Text = "./../SomeArt/font.ttf";
             tb_fontSize.Text = "0.03";
             btn_iconColor.Foreground = SomeUtilities.GetBrushFromHex("#777777FF");
             btn_textColor.Foreground = SomeUtilities.GetBrushFromHex("#777777FF");
+            manualClear = false;
         }
 
         //We fill in the properties indicated here. Then they will be assigned to the element for which they were filled.
@@ -41,7 +43,9 @@ namespace es_theme_editor
             get 
             {
                 SortedList<string, string> _properties = new SortedList<string, string>();
-
+                double Width, Height;
+                if (double.TryParse(tb_pos_w.Text, out Width) && double.TryParse(tb_pos_h.Text, out Height))
+                    _properties.Add("pos", (Width / ((App)Application.Current).Width).ToString() + " " + (Height / ((App)Application.Current).Height).ToString());
                 _properties.Add(btn_iconColor.Name.Replace("btn_", ""), SomeUtilities.GetHexFromBrush(btn_iconColor.Foreground));
                 _properties.Add(btn_textColor.Name.Replace("btn_", ""), SomeUtilities.GetHexFromBrush(btn_textColor.Foreground));
                 _properties.Add(tb_fontPath.Name.Replace("tb_", ""), tb_fontPath.Text.ToString());
@@ -52,9 +56,19 @@ namespace es_theme_editor
             set
             {
                 string val;
-                if (value.Count>0)
+                Char delimiter = ' ';
+                String[] substrings;
+                if (value.Count > 0)
                 {
                     Clear();
+
+                    val = value.FirstOrDefault(x => x.Key == "pos").Value;
+                    if (val != null)
+                    {
+                        substrings = val.Split(delimiter);
+                        tb_pos_w.Text = (double.Parse(substrings[0].Trim().Replace(".", ",")) * ((App)Application.Current).Width).ToString();
+                        tb_pos_h.Text = (double.Parse(substrings[1].Trim().Replace(".", ",")) * ((App)Application.Current).Height).ToString();
+                    }
                     val = value.FirstOrDefault(x => x.Key == btn_iconColor.Name.Replace("btn_", "")).Value;
                     if (val != null)
                         btn_iconColor.Foreground = SomeUtilities.GetBrushFromHex(val);

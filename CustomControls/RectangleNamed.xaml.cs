@@ -179,14 +179,14 @@ namespace es_theme_editor
         
         public void addPropertie(string name, string value)
         {
-            if (element == null)
-                return;
+            //if (element == null)
+            //    return;
             if (name == "")
                 return;
-            if (element.Properties.IndexOfKey(name) >= 0)
-                element.Properties.Remove(name);
-            element.Properties.Add(name, value);
-
+            //if (element.Properties.IndexOfKey(name) >= 0)
+            //    element.Properties.Remove(name);
+            //element.Properties.Add(name, value);
+            element.addPropertie(name, value);
             switch (element.typeOfElement.ToString())
             {
                 case "text":

@@ -19,6 +19,7 @@ namespace es_theme_editor
     /// </summary>
     public partial class TextPropertiesControl : Grid
     {
+        private bool manualClear = false;
         public TextPropertiesControl()
         {
             InitializeComponent();
@@ -27,6 +28,7 @@ namespace es_theme_editor
 
         public void Clear()
         {
+            manualClear = true;
             tb_fontPath.Text = "./../SomeArt/font.ttf";
             tb_fontSize.Text = "0.03";
             cb_forceUppercase.IsChecked = false;
@@ -34,6 +36,7 @@ namespace es_theme_editor
             tb_lineSpacing.Text = "1.5";
             tb_text.Text = "";
             cbx_alignment.SelectedValue = "center";
+            manualClear = false;
         }
 
         //We fill in the properties indicated here. Then they will be assigned to the element for which they were filled.
@@ -43,7 +46,11 @@ namespace es_theme_editor
             get
             {
                 SortedList<string, string> _properties = new SortedList<string, string>();
-
+                double Width, Height;
+                if (double.TryParse(tb_pos_w.Text, out Width) && double.TryParse(tb_pos_h.Text, out Height))
+                    _properties.Add("pos", (Width / ((App)Application.Current).Width).ToString() + " " + (Height / ((App)Application.Current).Height).ToString());
+                if (double.TryParse(tb_size_w.Text, out Width) && double.TryParse(tb_size_h.Text, out Height))
+                    _properties.Add("size", (Width / ((App)Application.Current).Width).ToString() + " " + (Height / ((App)Application.Current).Height).ToString());
                 _properties.Add(btn_color.Name.Replace("btn_", ""), SomeUtilities.GetHexFromBrush(btn_color.Foreground));
                 _properties.Add(tb_fontPath.Name.Replace("tb_", ""), tb_fontPath.Text.ToString());
                 _properties.Add(tb_fontSize.Name.Replace("tb_", ""), tb_fontSize.Text.ToString());
@@ -60,10 +67,26 @@ namespace es_theme_editor
             set
             {
                 string val;
+                Char delimiter = ' ';
+                String[] substrings;
                 if (value.Count > 0)
                 {
                     Clear();
 
+                    val = value.FirstOrDefault(x => x.Key == "pos").Value;
+                    if (val != null)
+                    {
+                        substrings = val.Split(delimiter);
+                        tb_pos_w.Text = (double.Parse(substrings[0].Trim().Replace(".", ",")) * ((App)Application.Current).Width).ToString();
+                        tb_pos_h.Text = (double.Parse(substrings[1].Trim().Replace(".", ",")) * ((App)Application.Current).Height).ToString();
+                    }
+                    val = value.FirstOrDefault(x => x.Key == "size").Value;
+                    if (val != null)
+                    {
+                        substrings = val.Split(delimiter);
+                        tb_size_w.Text = (double.Parse(substrings[0].Trim().Replace(".", ",")) * ((App)Application.Current).Width).ToString();
+                        tb_size_h.Text = (double.Parse(substrings[1].Trim().Replace(".", ",")) * ((App)Application.Current).Height).ToString();
+                    }
                     val = value.FirstOrDefault(x => x.Key == btn_color.Name.Replace("btn_", "")).Value;
                     if (val != null)
                         btn_color.Foreground = SomeUtilities.GetBrushFromHex(val);
