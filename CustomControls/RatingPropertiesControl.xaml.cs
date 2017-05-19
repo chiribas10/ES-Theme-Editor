@@ -19,7 +19,11 @@ namespace es_theme_editor
     /// </summary>
     public partial class RatingPropertiesControl : Grid
     {
+        public delegate void PropertyElementChanget(string propertyName, string propertyValue);
+        public event PropertyElementChanget onPropertyElementChanget = delegate { };
+        //На случай если мы не захотим чтобы программа создавала событие при изменении полей
         private bool manualClear = false;
+
         public RatingPropertiesControl()
         {
             InitializeComponent();
@@ -38,6 +42,18 @@ namespace es_theme_editor
             manualClear = false;
         }
 
+        public void setPosition(double x, double y)
+        {
+            tb_pos_h.Text = y.ToString();
+            tb_pos_w.Text = x.ToString();
+        }
+
+        public void setSize(double width, double height)
+        {
+            tb_size_h.Text = height.ToString();
+            tb_size_w.Text = width.ToString();
+        }
+
         public string getImagePath()
         {
             if (tb_filledPath.Text == "")
@@ -46,8 +62,7 @@ namespace es_theme_editor
         }
 
         public SortedList<string, string> Properties
-        {
-            
+        {            
             get 
             {
                 SortedList<string, string> _properties = new SortedList<string, string>();
@@ -93,15 +108,6 @@ namespace es_theme_editor
             }
         }
 
-        //private void textColor_Click(object sender, RoutedEventArgs e)
-        //{
-        //    ColorPickerDialog cpd = new ColorPickerDialog();
-        //    if (cpd.ShowDialog() == true)
-        //    {
-        //        ((Button)sender).Foreground = cpd.SelectedColor;
-        //    }
-        //}
-
         private void btn_ImagePath_Click(object sender, RoutedEventArgs e)
         {
             string toollName = ((Button)sender).Name;
@@ -110,7 +116,24 @@ namespace es_theme_editor
             TextBox foundTextBox = SomeUtilities.FindChild<TextBox>(this, toollName);
             string filename = SomeUtilities.openFileDialog("Image files(*.png;*.jpg;*.svg)|*.png;*.jpg;*.svg" + "|Все файлы (*.*)|*.* ", foundTextBox.Text, themeFilename);
             if (filename != null)
+            {
+                manualClear = true;
                 foundTextBox.Text = filename;
+                manualClear = false;
+                onPropertyChanged(foundTextBox.Name.Replace("tb_", ""), foundTextBox.Text);
+                
+            }
+        }
+
+        private void tb_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            onPropertyChanged(((TextBox)sender).Name.Replace("tb_", ""), ((TextBox)sender).Text);
+        }
+
+        private void onPropertyChanged(string propertyName, string propertyValue)
+        {
+            if (!manualClear)
+                onPropertyElementChanget(propertyName, propertyValue);
         }
     }
 }

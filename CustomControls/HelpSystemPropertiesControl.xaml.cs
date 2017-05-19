@@ -88,6 +88,7 @@ namespace es_theme_editor
         private void textColor_Click(object sender, RoutedEventArgs e)
         {
             ColorPickerDialog cpd = new ColorPickerDialog();
+            cpd.ColorPicker.SelectedColor = ((System.Windows.Media.SolidColorBrush)(((Button)sender).Foreground)).Color;
             if (cpd.ShowDialog() == true)
             {
                 ((Button)sender).Foreground = cpd.SelectedColor;

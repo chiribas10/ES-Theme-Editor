@@ -16,12 +16,12 @@ namespace es_theme_editor
         //будем хранить путь к выбранной теме и выбранную платорму в глобальных переменных
         public string themefolder;
         public string gameplatformtheme;
-        public string backgroundSoundPath;
-        public string backgroundSystemImagePath;
-        public string backgroundImagePath;
-        public string logoPath;
-        public Brush helpIconColor;
-        public Brush helpTextColor;
+        //public string backgroundSoundPath;
+        //public string backgroundSystemImagePath;
+        //public string backgroundImagePath;
+        //public string logoPath;
+        //public Brush helpIconColor;
+        //public Brush helpTextColor;
         public double Width;
         public double Height;
     }

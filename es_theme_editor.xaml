@@ -1,9 +1,9 @@
 ﻿<Window x:Class="es_theme_editor.Es_theme_editor"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ES Theme Edithor" Height="725.375" Width="557" Closing="Window_Closing_1"
+        Title="ES Theme Edithor" Height="725.375" Width="549.5" Closing="Window_Closing_1"
         xmlns:local="clr-namespace:es_theme_editor" Closed="Window_Closed_1" Icon="ES_theme_editor.ico">
-    <Grid x:Name="grid1" Margin="0,0,2,0">
+    <Grid x:Name="grid1" HorizontalAlignment="Left" Width="547">
         <!--<local:ToolBox x:Name="toolBox"  Height="613.923" Margin="0,47.92,535.332,0" VerticalAlignment="Top" Width="259.668" Visibility="Visible"/>-->
         <!--<local:PropertiesBox x:Name="propertiesBox"  Height="613.923" Margin="16.424,76.452,518.908,0" VerticalAlignment="Top" Width="259.668" Visibility="Visible"/>-->
         <TextBox x:Name="tbwidth" HorizontalAlignment="Left" Height="23" Margin="284.877,23,0,0" TextWrapping="Wrap" Text="1280" VerticalAlignment="Top" Width="72" PreviewTextInput="NumberValidationTextBox"/>
@@ -11,13 +11,15 @@
         <Label Content="X" HorizontalAlignment="Left" Margin="356.605,21.52,0,0" VerticalAlignment="Top" Height="25.96" Width="17.077"/>
         <Button x:Name="btn_ApplyResolution" Content="Apply" HorizontalAlignment="Left" Margin="449.852,23,0,0" VerticalAlignment="Top" Width="68" Height="23" Click="btn_ApplyResolution_Click"/>
         <ComboBox x:Name="cbViewSelector" HorizontalAlignment="Left" Margin="16.424,23,0,0" VerticalAlignment="Top" Width="259.668" SelectionChanged="cbViewSelector_SelectionChanged" Height="21.96">
+            <ComboBoxItem  Name="cbiSystem">system</ComboBoxItem>
             <ComboBoxItem  Name="cbiBasic">basic</ComboBoxItem>
             <ComboBoxItem  Name="cbiDetailed">detailed</ComboBoxItem>
             <ComboBoxItem  Name="cbiVideo">video</ComboBoxItem>
         </ComboBox>
         <Label Content="View selector" HorizontalAlignment="Left" Margin="16.424,-0.44,0,0" VerticalAlignment="Top" Height="25.96" Width="79.963"/>
         <Button x:Name="btnOpenViewEditor" Content="Open view editor" HorizontalAlignment="Left" Margin="16.424,49.96,0,0" VerticalAlignment="Top" Width="124.299" Click="btnOpenViewEditor_Click" Height="19.96"/>
-        <Button x:Name="btn_generate_xml_file" Content="Generate XML file" HorizontalAlignment="Left" Margin="281.092,660.415,0,0" VerticalAlignment="Top" Width="119.963" Click="btn_generate_xml_file_Click" Height="19.96"/>
+        <Button x:Name="btn_generate_xml_file" Content="Generate XML file" HorizontalAlignment="Left" Margin="10,660.415,0,0" VerticalAlignment="Top" Width="119.963" Click="btn_generate_xml_file_Click" Height="19.96"/>
+        <Button x:Name="btn_save_xml_file" Content="Save XML file" HorizontalAlignment="Left" Margin="134.963,660.415,0,0" VerticalAlignment="Top" Width="119.963" Height="19.96" Click="btn_save_xml_file_Click"/>
         <TextBox x:Name="tb_log" HorizontalAlignment="Left" Height="523.963" Margin="10,131.452,0,0" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" AcceptsReturn="True" VerticalAlignment="Top" Width="521.76"/>
         <Label Content="Alt+F4 - fullscreen mode for view editor" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25.96" Width="255.908" Margin="281.092,0,0,0"/>
         <Button x:Name="btn_read_XML" Content="Read XML file" HorizontalAlignment="Left" Margin="414.797,660.415,0,0" VerticalAlignment="Top" Width="116.963" Click="btn_read_XML_Click" Height="19.96"/>
@@ -25,5 +27,6 @@
         <Button Content="..." HorizontalAlignment="Left" Margin="507.76,76.452,0,0" VerticalAlignment="Top" Width="24" Height="23" Click="Button_Click"/>
         <Label Content="Theme folder" HorizontalAlignment="Left" Margin="281.092,45.492,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="cbx_gameplatformtheme" HorizontalAlignment="Left" Margin="281.092,104.452,0,0" VerticalAlignment="Top" Width="250.668" SelectionChanged="cbx_gameplatformtheme_SelectionChanged"/>
+        <Button Content="Optimizing XML" HorizontalAlignment="Left" Margin="284.877,660.415,0,0" VerticalAlignment="Top" Width="111.115" Click="Button_Click_1"/>
     </Grid>
 </Window>

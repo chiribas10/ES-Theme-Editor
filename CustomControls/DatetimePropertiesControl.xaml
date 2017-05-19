@@ -6,20 +6,20 @@
              mc:Ignorable="d"
              Name="canvas" Height="554.923" Width="259.668" OpacityMask="Black">
     <Label x:Name="lbl_fontSize" Content="fontSize (% of screen height)" HorizontalAlignment="Left" Margin="10,115.846,0,414.154"/>
-    <TextBox x:Name="tb_fontSize" Height="23" TextWrapping="Wrap" Margin="10,140.769,24,391.154"  Text="0.03"/>
+    <TextBox x:Name="tb_fontSize" Height="23" TextWrapping="Wrap" Margin="10,140.769,24,391.154"  Text="0.03" TextChanged="tb_TextChanged"/>
     <Label x:Name="lbl_pos_w" Content="pos__w" HorizontalAlignment="Left" Margin="10,10,0,520"/>
-    <TextBox x:Name="tb_pos_w" Height="23" TextWrapping="Wrap" Margin="10,34.923,139.668,497"/>
+    <TextBox x:Name="tb_pos_w" Height="23" TextWrapping="Wrap" Margin="10,34.923,139.668,497" IsEnabled="False"/>
     <Label x:Name="lbl_pos_h" Content="pos__h" HorizontalAlignment="Left" Margin="116,10,0,520"/>
-    <TextBox x:Name="tb_pos_h" Height="23" TextWrapping="Wrap" Margin="125,34.923,24,497"/>
+    <TextBox x:Name="tb_pos_h" Height="23" TextWrapping="Wrap" Margin="125,34.923,24,497" IsEnabled="False"/>
     <Label x:Name="lbl_fontPath" Content="fontPath path" HorizontalAlignment="Left" Margin="10,62.923,0,467.077"/>
-    <TextBox x:Name="tb_fontPath" Height="23" TextWrapping="Wrap" Margin="10,87.846,56,444.077" Text="./../SomeArt/font.ttf"/>
+    <TextBox x:Name="tb_fontPath" Height="23" TextWrapping="Wrap" Margin="10,87.846,56,444.077" Text="./../SomeArt/font.ttf" TextChanged="tb_TextChanged"/>
     <Button x:Name="btn_fontPath" Content="..." HorizontalAlignment="Left" Margin="208.668,87.846,0,0" VerticalAlignment="Top" Width="27" Height="23" Background="#FFB8B8B8" Click="btn_fontPath_Click"/>
     <Button x:Name="btn_color" Content="textColor" HorizontalAlignment="Left" Margin="10,168.769,0,0" VerticalAlignment="Top" Width="225.668" Height="23" Click="textColor_Click" Background="#FFB8B8B8" BorderBrush="Black" ClickMode="Press"/>
     <Label x:Name="lbl_size_w" Content="size__w" HorizontalAlignment="Left" Margin="10,196.769,0,333.231"/>
-    <TextBox x:Name="tb_size_w" Height="23" TextWrapping="Wrap" Margin="10,221.692,139.668,310.231"/>
+    <TextBox x:Name="tb_size_w" Height="23" TextWrapping="Wrap" Margin="10,221.692,139.668,310.231" IsEnabled="False"/>
     <Label x:Name="lbl_size_h" Content="size__h" HorizontalAlignment="Left" Margin="116,196.769,0,333.231"/>
-    <TextBox x:Name="tb_size_h" Height="23" TextWrapping="Wrap" Margin="125,221.692,24,310.231"/>
-    <CheckBox x:Name="cb_forceUppercase" Content="forceUppercase" HorizontalAlignment="Left" Margin="10,249.692,0,0" VerticalAlignment="Top"/>
-    <Label x:Name="lbl_lineSpacing" Content="lineSpacing (Default is 1.5)" HorizontalAlignment="Left" Margin="10,264.79,0,261.21"/>
-    <TextBox x:Name="tb_lineSpacing" Height="23" TextWrapping="Wrap" Margin="10,293.713,24,238.21" Text="1.5"/>
+    <TextBox x:Name="tb_size_h" Height="23" TextWrapping="Wrap" Margin="125,221.692,24,310.231" IsEnabled="False"/>
+    <CheckBox x:Name="cb_forceUppercase" Content="forceUppercase" HorizontalAlignment="Left" Margin="10,249.692,0,0" VerticalAlignment="Top" Checked="cb_forceUppercase_Checked" Unchecked="cb_forceUppercase_Unchecked"/>
+    <!--<Label x:Name="lbl_lineSpacing" Content="lineSpacing (Default is 1.5)" HorizontalAlignment="Left" Margin="10,264.79,0,261.21"/>
+    <TextBox x:Name="tb_lineSpacing" Height="23" TextWrapping="Wrap" Margin="10,293.713,24,238.21" Text="1.5"/>-->
 </Grid>

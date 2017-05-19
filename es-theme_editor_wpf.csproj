@@ -91,6 +91,12 @@
     <Compile Include="ColorPickerDialog.xaml.cs">
       <DependentUpon>ColorPickerDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\CarouselPropertiesControl.xaml.cs">
+      <DependentUpon>CarouselPropertiesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\TextControl.xaml.cs">
+      <DependentUpon>TextControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\PropertiesBox.xaml.cs">
       <DependentUpon>PropertiesBox.xaml</DependentUpon>
     </Compile>
@@ -116,9 +122,18 @@
     <Compile Include="es_theme_editor.xaml.cs">
       <DependentUpon>es_theme_editor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="XMLWorker.cs" />
     <Page Include="ColorPickerDialog.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CustomControls\CarouselPropertiesControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CustomControls\TextControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="CustomControls\PropertiesBox.xaml">
       <Generator>MSBuild:Compile</Generator>

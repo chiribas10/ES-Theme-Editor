@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d"
-             Name="grid1" Height="617.923" Width="245.668" OpacityMask="Black">
+             Name="grid1" Height="617.923" Width="253.668" OpacityMask="Black">
     <Label Content="Custom element" HorizontalAlignment="Left" Margin="10,44.452,0,0" VerticalAlignment="Top"/>
     <Button x:Name="btn_addCustomelement" Content="+" HorizontalAlignment="Left" Margin="211.594,79.751,0,0" VerticalAlignment="Top" Width="34.074" Click="btn_addCustomelement_Click"/>
     <Button x:Name="delCustomelement" Content="-" HorizontalAlignment="Left" Margin="211.594,105.532,-0.323,0" VerticalAlignment="Top" Width="34.397" Click="delCustomelement_Click"/>
@@ -23,15 +23,20 @@
     </ComboBox>
     <ComboBox x:Name="cb_SelectCreatedelement" HorizontalAlignment="Left" Margin="11.785,25.96,0,0" VerticalAlignment="Top" Width="231.198" SelectedValuePath="Content" SelectionChanged="cb_SelectCreatedelement_SelectionChanged"/>
     <Label Content="Select Element" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="25.96" Width="232.983"/>
-    <Canvas x:Name="c_basic" HorizontalAlignment="Left" Height="77.098" Margin="8.265,131.317,0,0" VerticalAlignment="Top" Width="235.24" RenderTransformOrigin="0.5,0.5">
-        <Canvas.RenderTransform>
-            <TransformGroup>
-                <ScaleTransform/>
-                <SkewTransform AngleX="0.59"/>
-                <RotateTransform/>
-                <TranslateTransform X="0.49"/>
-            </TransformGroup>
-        </Canvas.RenderTransform>
+    <Canvas x:Name="c_system" HorizontalAlignment="Left" Height="53.726" Margin="14.008,150.492,0,0" VerticalAlignment="Top" Width="227.76">
+        <Rectangle x:Name="rctngl_systemcarousel" HorizontalAlignment="Left" Height="19" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FFFBBD51" Canvas.Left="-0.769" Canvas.Top="-2"/>
+        <Label x:Name="tb_systemcarousel" Content="systemcarousel" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.458,0.489" Height="25.96" Width="94.037" Canvas.Left="63.231" Canvas.Top="-7.96" />
+        <CheckBox x:Name="cb_systemcarousel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Height="15.098" Width="19.975" Unchecked="cbLogo_Unchecked" Canvas.Left="214.231"/>
+        <Rectangle x:Name="rctngl_systemInfo" HorizontalAlignment="Left" Height="19" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FFF3FB51" Canvas.Top="18" Canvas.Left="-1"/>
+        <Label x:Name="tb_systemInfo" Content="systemInfo" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.458,0.489" Height="25.96" Width="94.037" Canvas.Left="74.231" Canvas.Top="14.04" />
+        <CheckBox x:Name="cb_systemInfo" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Height="15.098" Width="19.975" Unchecked="cbLogo_Unchecked" Canvas.Left="214.231" Canvas.Top="20.098"/>
+    </Canvas>
+    <Canvas x:Name="c_all" HorizontalAlignment="Left" Height="16" Margin="9.785,130.492,0,0" VerticalAlignment="Top" Width="230.983">
+        <Rectangle x:Name="rctngl_help" Fill="#FFF4F6F9" HorizontalAlignment="Left" Height="19" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Canvas.Left="3.265" Canvas.Top="-2"/>
+        <Label x:Name="lblhelp" Content="help" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="36.777" Canvas.Left="96.265" Canvas.Top="-5"/>
+        <CheckBox x:Name="cb_help" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Unchecked="cbLogo_Unchecked" Height="15.098" Width="19.975" Canvas.Left="218.265"/>
+    </Canvas>
+    <Canvas x:Name="c_basic" HorizontalAlignment="Left" Height="79.784" Margin="9.265,130.631,0,0" VerticalAlignment="Top" Width="235.24" RenderTransformOrigin="0.5,0.5" Visibility="Visible">
         <Rectangle x:Name="rctngl_logo" Fill="#FF3FA2E6" HorizontalAlignment="Left" Height="19" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Canvas.Left="3.265" Canvas.Top="18"/>
         <Label x:Name="Logo" Content="logo" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="36.777" Canvas.Left="96.265" Canvas.Top="15"/>
         <CheckBox x:Name="cb_logo" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Unchecked="cbLogo_Unchecked" Height="15.098" Width="19.975" Canvas.Left="218.265" Canvas.Top="20"/>
@@ -41,11 +46,8 @@
         <Rectangle x:Name="rctngl_logoText" Fill="#FFCB5555" HorizontalAlignment="Left" Height="19" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Canvas.Left="3.265" Canvas.Top="38"/>
         <Label x:Name="Logo_text" Content="logoText" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="64.037" Canvas.Left="82.265" Canvas.Top="35"/>
         <CheckBox x:Name="cb_logoText" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Unchecked="cbLogo_Unchecked" Height="15.098" Width="19.975" Canvas.Left="218.265" Canvas.Top="40"/>
-        <Rectangle x:Name="rctngl_help" Fill="#FFF4F6F9" HorizontalAlignment="Left" Height="19" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Canvas.Left="3.265" Canvas.Top="-2"/>
-        <Label x:Name="lblhelp" Content="help" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="36.777" Canvas.Left="96.265" Canvas.Top="-5"/>
-        <CheckBox x:Name="cb_help" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Unchecked="cbLogo_Unchecked" Height="15.098" Width="19.975" Canvas.Left="218.265"/>
     </Canvas>
-    <Canvas x:Name="c_detailed" HorizontalAlignment="Left" Height="380" Margin="11.008,209.218,0,0" VerticalAlignment="Top" Width="233.983">
+    <Canvas x:Name="c_detailed" HorizontalAlignment="Left" Height="380" Margin="13.008,209.218,0,0" VerticalAlignment="Top" Width="233.983">
         <Rectangle x:Name="rctngl_md_image" HorizontalAlignment="Left" Height="19" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FF9B80E2"/>
         <Label x:Name="lbl_md_image" Content="md__image" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="63.823" Canvas.Left="79" Canvas.Top="-3"/>
         <CheckBox x:Name="cb_md_image" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Unchecked="cbLogo_Unchecked" Height="15.098" Width="19.975" Canvas.Left="215" Canvas.Top="2"/>
@@ -104,7 +106,7 @@
         <Label x:Name="lbl_md_marquee" Content="md__marquee" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="90.037" Canvas.Left="66" Canvas.Top="37"/>
         <CheckBox x:Name="cb_md_marquee" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Unchecked="cbLogo_Unchecked" Height="15.098" Width="19.975" Canvas.Left="215" Canvas.Top="42"/>
     </Canvas>
-    <Canvas x:Name="c_video" HorizontalAlignment="Left" Height="19" Margin="12.008,596.218,-0.323,-3.295" VerticalAlignment="Top" Width="233.983">
+    <Canvas x:Name="c_video" HorizontalAlignment="Left" Height="19" Margin="14.008,596.218,0,0" VerticalAlignment="Top" Width="233.983">
         <Rectangle x:Name="rctngl_md_video" HorizontalAlignment="Left" Height="19" Stroke="Black" VerticalAlignment="Top" Width="211" Opacity="0.5" Fill="#FFFBBD51" Canvas.Left="-0.769" Canvas.Top="-2"/>
         <Label x:Name="tb_md_video" Content="md__video" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="2.067,0.578" Height="25.96" Width="62.037" Canvas.Left="79.231" Canvas.Top="-6"/>
         <CheckBox x:Name="cb_md_video" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="CheckBox_Checked_1" Height="15.098" Width="19.975" Unchecked="cbLogo_Unchecked" Canvas.Left="214.231"/>

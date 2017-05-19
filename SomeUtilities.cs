@@ -21,12 +21,12 @@ namespace es_theme_editor
     {
         public static string getComboBoxValue(ComboBox cb)
         {
-            //Get the value from the ComboBox and check if such view exists
-            ComboBoxItem typeItem = (ComboBoxItem)cb.SelectedItem;
-            string comboBoxItemvalue = "";
-            if (typeItem != null)
-                comboBoxItemvalue = typeItem.Content.ToString();
-            return comboBoxItemvalue;
+                //Get the value from the ComboBox and check if such view exists
+                ComboBoxItem typeItem = (ComboBoxItem)cb.SelectedItem;
+                string comboBoxItemvalue = "";
+                if (typeItem != null)
+                    comboBoxItemvalue = typeItem.Content.ToString();
+                return comboBoxItemvalue;
         }
 
         //public static IEnumerable<string> GetRelativeFolderContents(string folder, string searchPattern = "*")
@@ -76,6 +76,24 @@ namespace es_theme_editor
         //    }
         //    return result;
         //}
+
+        //Function to get random number
+        private static readonly Random random = new Random();
+        private static readonly object syncLock = new object();
+        public static int RandomNumber(int min, int max)
+        {
+            lock (syncLock)
+            { // synchronize
+                return random.Next(min, max);
+            }
+        }
+
+        //We get random color
+        public static Brush GetRandomColor()
+        {
+            return new SolidColorBrush(Color.FromRgb((byte)RandomNumber(1, 255),
+              (byte)RandomNumber(1, 255), (byte)RandomNumber(1, 233)));
+        }
 
         public static string GetHexFromBrush(Brush brush) 
         {

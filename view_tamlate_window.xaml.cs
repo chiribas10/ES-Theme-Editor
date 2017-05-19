@@ -24,48 +24,36 @@ namespace es_theme_editor
         Es_theme_editor _parent;
 
         public bool isOpened = false;
-
-        //To tell the parent window that the selected object has changed
-        //public event NotifySelectRectangleChanging OnSelectinChanged;
-        //public event NotifyPositionRectangleChanging OnPositionChanged;
-        //public bool RectangleNamedMouseLeave = true;
-        //public View view;
         //On/off transparency for Rectangle
         private bool transperentRectangle = false;
 
-        //Inicialize window
-        //public view_tamlate_window()
-        //{
-        //    InitializeComponent();            
-        //}
+        //Initialize window
+        public view_tamlate_window()
+        {
+            InitializeComponent();            
+        }
 
         public view_tamlate_window(Es_theme_editor parent, string name, View view)
         {
             InitializeComponent();
             isOpened = true;
-            //this.view = view;
 
             toolbox.setCurrentView(view);
             toolbox.onElementCreate += this.CreateRect;
             toolbox.onElementRemove += this.RemoveRect;
             toolbox.onElementSelect += this.SelectRect;
-            propertiesbox.onPropertyChanget += this.propertySave;
-            //toolbox.onCurrentElementChanget += propertiesbox.setElementProperties;
+            //флаг по которому будем определять какие поля показывать в редакторе форм для 
+            //задания обоев, фоновой музыки, лого.
+            if (name == "system")
+                propertiesbox.isSystem = true;
+            propertiesbox.setViewProperties(toolbox.currentView.bgsound, toolbox.currentView.background, toolbox.currentView.logo);
+            propertiesbox.onPropertyChanget += this.elementPropertySave;
+            propertiesbox.onPropertyViewChanget += viewPropertiesSave;
             this.Title = name;
             fillItem();
             _parent = parent;
             SetCanvasResolution(((App)Application.Current).Width, ((App)Application.Current).Height);
         }
-
-        //private void RemoveRect(string name)
-        //{
-        //    RemoveRect(name);
-        //}
-
-        //private void SelectRect(string name)
-        //{
-        //    SelectRect(name);
-        //}
 
         //Closing window
         private void Window_Closing_1(object sender, System.ComponentModel.CancelEventArgs e)
@@ -73,100 +61,21 @@ namespace es_theme_editor
             if (selected_rectangle != null)
             {
                 selected_rectangle.Unselect();
-                //NotifySelectinChanged(selected_rectangle.description, selected_rectangle.isSelected);
-                //selected_rectangle = null;
             }
 
             _parent.addView(toolbox.currentView);
             isOpened = false;
         }
 
-        ////Return selected rectengl
-        //public string GetSelectedRectengleName 
-        //{
-        //    get 
-        //    {
-        //        return selected_rectangle.Name;
-        //    }
-        //}
-
-        //We notify the parent window about changing the selected Rectangle
-        //public void NotifySelectinChanged(string name, bool isSelected)
-        //{
-        //    rectangleSelectChanget(name, isSelected);
-        //    //if (OnSelectinChanged != null)
-        //    //{               
-        //    //    //Raise Event. All the listeners of this event will get a call.               
-        //    //    OnSelectinChanged(name, isSelected);
-        //    //}
-        //}
-
-        //We notify the parent window about changing the location of the selected Rectangle
-        //public void NotifyPositionChanged(string name)
-        //{
-        //    rectanglePositionChanget(name);
-        //    //if (OnPositionChanged != null)
-        //    //{
-        //    //    //Raise Event. All the listeners of this event will get a call.               
-        //    //    OnPositionChanged(name);
-        //    //}
-        //}
-
         //When changing the position of the current Renctengl (it's our Element)
         void rectanglePositionChanget(string name)
         {
-            //Canvas.SetLeft(rectangle, new_x);
-            //Canvas.SetTop(rectangle, new_y);
             try
             {
                 propertiesbox.setPosition(Canvas.GetLeft(selected_rectangle), Canvas.GetTop(selected_rectangle), toolbox.currentView.elements[name].typeOfElement);
                 propertiesbox.setSize(selected_rectangle.ActualWidth, selected_rectangle.ActualHeight, toolbox.currentView.elements[name].typeOfElement);
                 propertiesbox.setMaxSize(selected_rectangle.ActualWidth, selected_rectangle.ActualHeight, toolbox.currentView.elements[name].typeOfElement);
                 propertiesbox.setOrigin(0, 0, toolbox.currentView.elements[name].typeOfElement);
-                //switch (toolbox.currentView.elements[name].typeOfElement.ToString())
-                //{
-                //    case "text":
-                //        propertiesbox.text.tb_pos_h.Text = Canvas.GetTop(selected_rectangle).ToString();
-                //        propertiesbox.text.tb_pos_w.Text = Canvas.GetLeft(selected_rectangle).ToString();
-                //        if (name == "md_description")
-                //        {
-                //            propertiesbox.text.tb_size_h.Text = selected_rectangle.ActualHeight.ToString();
-                //            propertiesbox.text.tb_size_w.Text = selected_rectangle.ActualWidth.ToString();
-                //        }
-                //        break;
-                //    case "image":
-                //        propertiesbox.image.setPosition(Canvas.GetLeft(selected_rectangle), Canvas.GetTop(selected_rectangle));
-                //        propertiesbox.image.setMaxSize(selected_rectangle.ActualWidth, selected_rectangle.ActualHeight);
-                //        propertiesbox.image.setOrigin(0, 0);
-                //        break;
-                //    case "textlist":
-                //        propertiesbox.textlist.tb_pos_h.Text = Canvas.GetTop(selected_rectangle).ToString();
-                //        propertiesbox.textlist.tb_pos_w.Text = Canvas.GetLeft(selected_rectangle).ToString();
-                //        propertiesbox.textlist.tb_size_h.Text = selected_rectangle.ActualHeight.ToString();
-                //        propertiesbox.textlist.tb_size_w.Text = selected_rectangle.ActualWidth.ToString();
-                //        break;
-                //    case "video":
-                //        propertiesbox.video.tb_pos_h.Text = Canvas.GetTop(selected_rectangle).ToString();
-                //        propertiesbox.video.tb_pos_w.Text = Canvas.GetLeft(selected_rectangle).ToString();
-                //        propertiesbox.video.tb_size_h.Text = selected_rectangle.ActualHeight.ToString();
-                //        propertiesbox.video.tb_size_w.Text = selected_rectangle.ActualWidth.ToString();
-                //        propertiesbox.video.tb_origin_w.Text = "0";
-                //        propertiesbox.video.tb_origin_h.Text = "0";
-                //        break;
-                //    case "rating":
-                //        propertiesbox.rating.tb_pos_h.Text = Canvas.GetTop(selected_rectangle).ToString();
-                //        propertiesbox.rating.tb_pos_w.Text = Canvas.GetLeft(selected_rectangle).ToString();
-                //        propertiesbox.rating.tb_size_h.Text = selected_rectangle.ActualHeight.ToString();
-                //        break;
-                //    case "datetime":
-                //        propertiesbox.datetime.tb_pos_h.Text = Canvas.GetTop(selected_rectangle).ToString();;
-                //        propertiesbox.datetime.tb_pos_w.Text = Canvas.GetLeft(selected_rectangle).ToString();;
-                //        break;
-                //    case "helpsystem":
-                //        propertiesbox.helpsystem.tb_pos_h.Text = Canvas.GetTop(selected_rectangle).ToString();;
-                //        propertiesbox.helpsystem.tb_pos_w.Text = Canvas.GetLeft(selected_rectangle).ToString();;
-                //        break;
-                //}
             }
             catch (Exception err)
             {
@@ -188,8 +97,6 @@ namespace es_theme_editor
         void rectangleSelectChanget(string name, bool isSelected)
         {
             //Before changing the rectengl, we process the fields if they are filled.
-            //string comboBoxItemvalue;
-            //comboBoxItemvalue = getComboBoxValue((ComboBoxItem)cbViewSelector.SelectedItem);
             hiddenAllGroupBox();
             //Save the values in the fields to the current view opened in the viewtmplatewindow window
             if (!isSelected)
@@ -204,9 +111,7 @@ namespace es_theme_editor
                     {
                         Logger.Write(err);
                     }
-
-                GroupBox foundGroupBox = SomeUtilities.FindChild<GroupBox>(propertiesbox, "gb_base");
-                foundGroupBox.Visibility = System.Windows.Visibility.Visible;
+                propertiesbox.propertiesTabVisibilityChange("base");
                 selected_rectangle = null;
                 return;
             }
@@ -214,13 +119,7 @@ namespace es_theme_editor
             //Save the values in the fields from the current view opened in the viewtmplatewindow window
             if (isSelected)
             {
-                //Save view to global variable
-                string elementType = toolbox.currentView.elements[name].typeOfElement.ToString();
-                if (isSelected)
-                {
-                    GroupBox foundGrid = SomeUtilities.FindChild<GroupBox>(propertiesbox, "gb_" + elementType);
-                    foundGrid.Visibility = System.Windows.Visibility.Visible;
-                }
+                propertiesbox.propertiesTabVisibilityChange(toolbox.currentView.elements[name].typeOfElement.ToString());
                 getPropertiesFromElement(name);
                 toolbox.cb_SelectCreatedelement.SelectedItem = selected_rectangle.Name;
             }
@@ -230,17 +129,37 @@ namespace es_theme_editor
         {
             if (isOpened)
             {
-                if (selected_rectangle!=null)
-                    addPropertiesToElement(selected_rectangle.description);
+                if (selected_rectangle != null)
+                    selected_rectangle.Unselect();
                 _parent.addView(toolbox.currentView);
             }
         }
 
-        private void propertySave(string name, string value) 
+        private void elementPropertySave(string name, string value) 
         {
             if (propertiesbox.Visibility != System.Windows.Visibility.Hidden)
                 if ((toolbox.currentView != null) && (toolbox.currentView.elements != null) && (toolbox.currentView.elements.Keys.Contains(selected_rectangle.description)))
                     selected_rectangle.addPropertie(name, value);
+        }
+
+        private void viewPropertiesSave(string name, string value)
+        {
+            if ((toolbox.currentView != null))
+            {
+                if (name != "")
+                switch (name)
+                {
+                    case "bgsound":
+                        toolbox.currentView.bgsound = value;
+                        break;
+                    case "background":
+                        toolbox.currentView.background = value;
+                        break;
+                    case "logo":
+                        toolbox.currentView.logo = value;
+                        break;
+                }
+            }
         }
 
         //Get Properties at the modified Rectangle
@@ -251,32 +170,7 @@ namespace es_theme_editor
                 Element.types typeOfElement = toolbox.currentView.elements[name].typeOfElement;
 
                 if (typeOfElement != Element.types.notexistsname)
-                    propertiesbox.setPropertiesByType(typeOfElement, toolbox.currentView.elements[name].Properties);
-                    //switch (elementType)
-                    //{
-                    //    case "text":
-                    //        propertiesbox.text.Properties = toolbox.currentView.elements[name].Properties;
-                    //        break;
-                    //    case "image":
-                    //        propertiesbox.image.Properties = toolbox.currentView.elements[name].Properties;
-                    //        //if (name == "logo")
-                    //        //    propertiesbox.image.Clear(propertiesbox.tb_logo_system.Text);
-                    //        //else
-                    //            //propertiesbox.image.Clear("");
-                    //        break;
-                    //    case "textlist":
-                    //        propertiesbox.textlist.Properties = toolbox.currentView.elements[name].Properties;
-                    //        break;
-                    //    case "rating":
-                    //        propertiesbox.rating.Properties = toolbox.currentView.elements[name].Properties;
-                    //        break;
-                    //    case "datetime":
-                    //        propertiesbox.datetime.Properties = toolbox.currentView.elements[name].Properties;
-                    //        break;
-                    //    case "helpsystem":
-                    //        propertiesbox.helpsystem.Properties = toolbox.currentView.elements[name].Properties;
-                    //        break;
-                    //}
+                    propertiesbox.setPropertiesByType(typeOfElement, toolbox.currentView.elements[name].Properties, toolbox.currentView.elements[name].extra);
             }
         }
 
@@ -289,44 +183,6 @@ namespace es_theme_editor
                     toolbox.currentView.elements[name].Properties = propertiesbox.getPropertiesByType(toolbox.currentView.elements[name].typeOfElement);
                     propertiesbox.Clear(toolbox.currentView.elements[name].typeOfElement);
                 }
-                //switch (toolbox.currentView.elements[name].typeOfElement.ToString())
-                //{
-                //    case "text":
-                //        toolbox.currentView.elements[name].Properties = propertiesbox.text.Properties;
-                //        propertiesbox.text.Clear();
-                //        break;
-                //    case "image":
-                //        toolbox.currentView.elements[name].Properties = propertiesbox.image.Properties;
-                //        propertiesbox.image.Clear("");
-                //        break;
-                //    case "textlist":
-                //        toolbox.currentView.elements[name].Properties = propertiesbox.textlist.Properties;
-                //        propertiesbox.textlist.Clear();
-                //        break;
-                //    case "rating":
-                //        toolbox.currentView.elements[name].Properties = propertiesbox.rating.Properties;
-                //        //if (!File.Exists(propertiesbox.rating.getImagePath()))
-                //        //    selected_rectangle.setImage(null);
-                //        //else
-                //        //{
-                //        //    BitmapImage bitmap = new BitmapImage();
-                //        //    bitmap.BeginInit();
-                //        //    bitmap.UriSource = new Uri(propertiesbox.rating.getImagePath());
-                //        //    bitmap.EndInit();
-
-                //        //    selected_rectangle.setImage(bitmap);
-                //        //}
-                //        propertiesbox.rating.Clear();
-                //        break;
-                //    case "datetime":
-                //        toolbox.currentView.elements[name].Properties = propertiesbox.datetime.Properties;
-                //        propertiesbox.datetime.Clear();
-                //        break;
-                //    case "helpsystem":
-                //        toolbox.currentView.elements[name].Properties = propertiesbox.helpsystem.Properties;
-                //        propertiesbox.helpsystem.Clear();
-                //        break;
-                //}
         }
 
         private void fillItem() 
@@ -365,6 +221,101 @@ namespace es_theme_editor
                     this.WindowState = WindowState.Normal;
                     this.WindowStyle = WindowStyle.SingleBorderWindow;
                 }
+            }
+        }
+
+        private void btn_ToolBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (dp_toolbox.Visibility != System.Windows.Visibility.Visible)
+                dp_toolbox.Visibility = System.Windows.Visibility.Visible;
+            else
+                dp_toolbox.Visibility = System.Windows.Visibility.Hidden;
+        }
+
+        private void dp_PropertiesBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (dp_propertiesbox.Visibility != System.Windows.Visibility.Visible)
+                dp_propertiesbox.Visibility = System.Windows.Visibility.Visible;
+            else
+                dp_propertiesbox.Visibility = System.Windows.Visibility.Hidden;
+        }
+
+        private void Grid_SizeChanged_1(object sender, SizeChangedEventArgs e)
+        {
+            double left = (canvas.ActualWidth - canvas1.ActualWidth) / 2;
+            Canvas.SetLeft(canvas1, left);
+
+            double top = (canvas.ActualHeight - canvas1.ActualHeight) / 2;
+            Canvas.SetTop(canvas1, top);
+        }
+
+        private void btn_BringToFront_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (selected_rectangle != null)
+                {
+                    RectangleNamed pToMove = SomeUtilities.FindChild<RectangleNamed>(canvas1, selected_rectangle.Name);
+                    canvas1.Children.Remove(pToMove);
+                    canvas1.Children.Add(pToMove);
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void btn_setBackground_Click(object sender, RoutedEventArgs e)
+        {
+            string filename;
+            filename = toolbox.currentView.background;
+            if (filename == "")
+                return;
+            //if (this.Title.ToLower() == "system")
+            //    filename = ((App)Application.Current).backgroundImagePath;
+            //else
+            //    filename = ((App)Application.Current).backgroundSystemImagePath;
+            filename = SomeUtilities.MakeAbsolutePath(((App)Application.Current).themefolder + ((App)Application.Current).gameplatformtheme + "\\theme.xml", filename);
+            if (!File.Exists(filename))
+                return;
+            Image image = SomeUtilities.FindChild<Image>(canvas, "Backgroundimage");
+            if (image != null)
+            {
+                if (image.Visibility == System.Windows.Visibility.Visible)
+                    image.Visibility = System.Windows.Visibility.Hidden;
+                else
+                {
+                    image.Visibility = System.Windows.Visibility.Visible;
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(filename);
+                    bitmap.EndInit();
+
+                    //image = new Image();
+                    image.Name = "Backgroundimage";
+                    image.Source = bitmap;
+                    image.Width = canvas1.Width;
+                    image.Height = canvas1.Height;
+                    image.MouseDown += canvas1_MouseDown;
+                    //Panel.SetZIndex(image, 0);
+                    //canvas1.Children.Add(image);
+                }
+            }
+            else
+            {
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(filename);
+                bitmap.EndInit();
+
+                image = new Image();
+                image.Name = "Backgroundimage";
+                image.Source = bitmap;
+                image.Width = canvas1.Width;
+                image.Height = canvas1.Height;
+                image.MouseDown += canvas1_MouseDown;
+                Panel.SetZIndex(image, 0);
+                canvas1.Children.Add(image);
             }
         }
 
@@ -416,23 +367,28 @@ namespace es_theme_editor
             if (point.Y > bottom) return HitType.None;
 
             const double GAP = 10;
-            if (point.X - left < GAP)
+            if (point.X - left < GAP && rectangle.horizontalResizing)
             {
                 // Left edge.
-                if (point.Y - top < GAP) return HitType.UL;
-                if (bottom - point.Y < GAP) return HitType.LL;
+                if (point.Y - top < GAP && rectangle.verticallResizing) return HitType.UL;
+                if (bottom - point.Y < GAP && rectangle.verticallResizing) return HitType.LL;
                 return HitType.L;
             }
-            if (right - point.X < GAP)
+            if (right - point.X < GAP && rectangle.horizontalResizing)
             {
                 // Right edge.
-                if (point.Y - top < GAP) return HitType.UR;
-                if (bottom - point.Y < GAP) return HitType.LR;
+                if (point.Y - top < GAP && rectangle.verticallResizing) return HitType.UR;
+                if (bottom - point.Y < GAP && rectangle.verticallResizing) return HitType.LR;
                 return HitType.R;
             }
-            if (point.Y - top < GAP) return HitType.T;
-            if (bottom - point.Y < GAP) return HitType.B;
+            //if (rectangle.verticallResizing)
+            //{
+            if (point.Y - top < GAP && rectangle.verticallResizing) return HitType.T;
+            if (bottom - point.Y < GAP && rectangle.verticallResizing) return HitType.B;
             return HitType.Body;
+            //}
+
+            //return HitType.None;
         }
 
         // Set a mouse cursor appropriate for the current hit type.
@@ -457,12 +413,12 @@ namespace es_theme_editor
                     desired_cursor = Cursors.SizeNESW;
                     break;
                 case HitType.T:
-                case HitType.B:
-                    desired_cursor = Cursors.SizeNS;
+                case HitType.B:                    
+                        desired_cursor = Cursors.SizeNS;
                     break;
                 case HitType.L:
-                case HitType.R:
-                    desired_cursor = Cursors.SizeWE;
+                case HitType.R:                    
+                        desired_cursor = Cursors.SizeWE;
                     break;
             }
 
@@ -470,38 +426,17 @@ namespace es_theme_editor
             if (Cursor != desired_cursor) Cursor = desired_cursor;
         }
 
-        //private RectangleNamed getRectangleNamed(object obj)
-        //{
-        //    RectangleNamed rectangle = null;
-        //    if (obj is Rectangle)
-        //        rectangle = (RectangleNamed)((Rectangle)obj).Parent;
-        //    if (obj is TextBlock)
-        //        rectangle = (RectangleNamed)((TextBlock)obj).Parent;
-        //    if (obj is Image)
-        //        rectangle = (RectangleNamed)((Image)obj).Parent;
-
-        //    return rectangle;
-        //}
-
         // Start dragging.
         public void canvas1_MouseDown(object sender, MouseButtonEventArgs e)
         {
             MouseHitType = SetHitType(rectangle, Mouse.GetPosition(canvas1));
             SetMouseCursor();
             if (selected_rectangle != null)
-            //if (e.OriginalSource is Canvas)
-            //{
-            //    selected_rectangle.Unselect();
-            //    //NotifySelectinChanged(selected_rectangle.description, selected_rectangle.isSelected);
-            //    //selected_rectangle = null;
-            //    return;
-            //}
             if (MouseHitType == HitType.None)
             {
                 if (selected_rectangle != null)
                 {
                     selected_rectangle.Unselect();
-                    //NotifySelectinChanged(selected_rectangle.description, selected_rectangle.isSelected);
                     selected_rectangle = null;
                 }
                 return;
@@ -509,60 +444,23 @@ namespace es_theme_editor
 
             LastPoint = Mouse.GetPosition(canvas1);
             DragInProgress = true;
-
-
-            //try
-            //{
-            //    if (selected_rectangle != null)
-            //    {
-            //        selected_rectangle.Unselect();
-            //        //NotifySelectinChanged(selected_rectangle.description, selected_rectangle.isSelected);
-            //        //selected_rectangle = null;
-            //    }
-            //    //We check that one of the elements on RectangleNamed was pressed
-            //    //if (e.OriginalSource is Rectangle)
-            //    //    selected_rectangle = (RectangleNamed)((Rectangle)e.OriginalSource).Parent;
-            //    //if (e.OriginalSource is TextBlock)
-            //    //    selected_rectangle = (RectangleNamed)((TextBlock)e.OriginalSource).Parent;
-            //    //if (e.OriginalSource is Image)
-            //    //    selected_rectangle = (RectangleNamed)((Image)e.OriginalSource).Parent;
-            //    //selected_rectangle = getRectangleNamed(e.OriginalSource);
-            //    //selected_rectangle.Select();
-            //    //toolbox.cb_SelectCreatedelement.SelectedItem = selected_rectangle.Name;
-            //    //NotifySelectinChanged(selected_rectangle.Name, selected_rectangle.isSelected);
-            //}
-            //catch (Exception err) 
-            //{
-            //    Logger.Write(err);
-            //}
-
         }
 
         // If a drag is in progress, continue the drag.
         // Otherwise display the correct cursor.
         private void canvas1_MouseMove(object sender, MouseEventArgs e)
         {
+            //if (MouseHitType == HitType.None)
+            //{
+            //    DragInProgress = false;
+            //    return;
+            //}
             if (rectangle == null)
                 return;
             if (!DragInProgress)
             {
                 MouseHitType = SetHitType(rectangle, Mouse.GetPosition(canvas1));
                 SetMouseCursor();
-                try
-                {
-                    //rectangle = getRectangleNamed(e.OriginalSource);
-                    //if (e.OriginalSource is Rectangle)
-                    //    rectangle = (RectangleNamed)((Rectangle)e.OriginalSource).Parent;
-                    //if (e.OriginalSource is TextBlock)
-                    //    rectangle = (RectangleNamed)((TextBlock)e.OriginalSource).Parent;
-                    //if (e.OriginalSource is Image)
-                    //    rectangle = (RectangleNamed)((Image)e.OriginalSource).Parent;
-                    //rectangle = (RectangleNamed)((Rectangle)e.OriginalSource).Parent;
-                }
-                catch (Exception err) 
-                {
-                    Logger.Write(err);
-                }
             }
             else
             {
@@ -626,21 +524,10 @@ namespace es_theme_editor
                     // Update the rectangle.
 
                     //Check that the new coordinates do not go beyond our Canvas.
-                    double xc = Canvas.GetLeft(canvas1);
-                    //if (double.IsNaN(Canvas.GetLeft(canvas1)))
-                    //{
-                        xc = 0;
-                    //}
-                    //else
-                    //    xc = Canvas.GetLeft(canvas1);
-
-                    double yc = Canvas.GetTop(canvas1);
-                    //if (double.IsNaN(Canvas.GetTop(canvas1)))
-                    //{
-                        yc = 0;
-                    //}
-                    //else
-                    //    yc = Canvas.GetTop(canvas1);
+                    //double xc = Canvas.GetLeft(canvas1);
+                    double xc = 0;
+                    //double yc = Canvas.GetTop(canvas1);
+                    double yc = 0;
 
                     if (new_x < xc)
                         new_x = xc;
@@ -674,37 +561,12 @@ namespace es_theme_editor
         private void canvas1_MouseUp(object sender, MouseButtonEventArgs e)
         {
             DragInProgress = false;
-
-            //if (!DragInProgress && RectangleNamedMouseLeave)
-            //if ((e.OriginalSource is RectangleNamed) || (e.OriginalSource is Rectangle) || (e.OriginalSource is TextBlock))
-            //{
-            //    //NotifyPositionChanged(selected_rectangle.description);
-            //    if (selected_rectangle != null)
-            //    {
-            //        //if (e.OriginalSource is Rectangle)
-            //        //    selected_rectangle = (RectangleNamed)((Rectangle)e.OriginalSource).Parent;
-            //        //if (e.OriginalSource is TextBlock)
-            //        //    selected_rectangle = (RectangleNamed)((TextBlock)e.OriginalSource).Parent;
-            //        //if (e.OriginalSource is Image)
-            //        //    selected_rectangle = (RectangleNamed)((Image)e.OriginalSource).Parent;
-            //        //selected_rectangle = getRectangleNamed(e.OriginalSource);
-            //        //selected_rectangle.Select();
-            //        //toolbox.cb_SelectCreatedelement.SelectedItem = selected_rectangle.Name;
-            //        //NotifySelectinChanged(selected_rectangle.Name, selected_rectangle.isSelected);
-            //    }
-            //    else 
-            //    {
-            //        rectangleSelectChanget("None", false);
-            //    }
-            //}
         }
 
         // Stop dragging.
         private void canvas1_MouseLeave(object sender, MouseEventArgs e)
         {
             DragInProgress = false;
-            //if (selected_rectangle!=null)
-                //NotifyPositionChanged(selected_rectangle.description);
             MouseHitType = SetHitType(rectangle, Mouse.GetPosition(canvas1));
             SetMouseCursor();
         }
@@ -713,15 +575,9 @@ namespace es_theme_editor
         //отслеживаем чтобы мышь когда выходит за границу нашего ректенгла не активировала ректенгл над которым может оказаться в этот момент
         private void RectangleNamed_MouseLeave(object sender, MouseEventArgs e)
         {
-
-            //RectangleNamedMouseLeave = true;
-            //if (sender is RectangleNamed)
-            //{
-            //    rectangle = (RectangleNamed)sender;
-            //}
-            //SaveItem(rectangle);
             SetMouseCursor();
         }
+
         //We track that the mouse when going abroad our rectengla did not activate the rectengle over which it may be at this moment
         //отслеживаем чтобы мышь когда выходит за границу нашего ректенгла не активировала ректенгл над которым может оказаться в этот момент
         private void RectangleNamed_MouseMove(object sender, MouseEventArgs e)
@@ -731,7 +587,6 @@ namespace es_theme_editor
                 {
                     rectangle = (RectangleNamed)sender;
                 }
-            //RectangleNamedMouseLeave = false;
         }
 
         public void RectangleNamed_MouseDown(object sender, MouseButtonEventArgs e)
@@ -754,78 +609,57 @@ namespace es_theme_editor
 
         #region Rectangle work
 
+        //        static int GCD(int a, int b)
+        //{
+        //    int Remainder;
+
+        //    while( b != 0 )
+        //    {
+        //        Remainder = a % b;
+        //        a = b;
+        //        b = Remainder;
+        //    }
+
+        //    return a;
+        //}
+
+        //return string.Format("{0}:{1}",x/GCD(x,y), y/GCD(x,y));
+
         //We pass the view_tamlate_window task to create a new rectengl
         private void CreateRect(string name, Element.types typeOfElement, Brush fill, double opacity)
         {
             if (!transperentRectangle)
                 opacity = 1;
-
-            //if (_viewtmplatewindow != null)
-            //{
+            //0,2291666666666667
             //For rating stars, we set the template size smaller than the rest
-            if (name != "md_rating" && name != "help")
-                CreateRect(name, typeOfElement, fill, opacity, 200, 200);
-            else if (name == "help")
-                CreateRect(name, typeOfElement, fill, opacity, canvas1.ActualWidth, canvas1.ActualHeight * 0.0648148148148148, 0, canvas1.ActualHeight - (canvas1.ActualHeight * 0.0648148148148148));//для 1920х1080 - Height * 0.0648148148148148 = 70
+            if (typeOfElement == Element.types.text || typeOfElement == Element.types.datetime)
+                CreateRect(name, typeOfElement, fill, opacity, 200, 40); //200, 40
             else
-                CreateRect(name, typeOfElement, fill, opacity, 30, 30);
+            switch (name)
+            {
+                case "md_rating":
+                    CreateRect(name, typeOfElement, fill, opacity, 30, 30);
+                    break;
+                case "help":
+                    CreateRect(name, typeOfElement, fill, opacity, canvas1.ActualWidth, canvas1.ActualHeight * 0.0648148148148148, 0, canvas1.ActualHeight - (canvas1.ActualHeight * 0.0648148148148148), false, false);//для 1920х1080 - Height * 0.0648148148148148 = 70
+                    break;
+                case "systemcarousel":
+                    CreateRect(name, typeOfElement, fill, opacity, canvas1.ActualWidth, canvas1.ActualHeight * 0.2291666666666667, 0, canvas1.ActualHeight/2 - (canvas1.ActualHeight * 0.2291666666666667)/2, false);
+                    break;
+                default:
+                    CreateRect(name, typeOfElement, fill, opacity, 200, 200);
+                    break;
+            }
 
             toolbox.addCreatedelement(name);
             if (toolbox.currentView.elements.ContainsKey(name))
-                if (toolbox.currentView.elements[name].Properties.Count == 0)
-                    toolbox.currentView.elements[name].Properties = propertiesbox.getPropertiesByType(typeOfElement);
-                else
-                    propertiesbox.setPropertiesByType(typeOfElement, toolbox.currentView.elements[name].Properties);
-                //switch (toolbox.currentView.elements[name].typeOfElement.ToString())
-                //{
-                //    case "text":
-                //        if (toolbox.currentView.elements[name].Properties.Count == 0)
-                //            toolbox.currentView.elements[name].Properties = propertiesbox.text.Properties;
-                //        else
-                //            propertiesbox.text.Properties = toolbox.currentView.elements[name].Properties;
-                //        break;
-                //    case "image":
-                //        if (toolbox.currentView.elements[name].Properties.Count == 0)
-                //            toolbox.currentView.elements[name].Properties = propertiesbox.image.Properties;
-                //        else
-                //            propertiesbox.image.Properties = toolbox.currentView.elements[name].Properties;
-                //        break;
-                //    case "textlist":
-                //        if (toolbox.currentView.elements[name].Properties.Count == 0)
-                //            toolbox.currentView.elements[name].Properties = propertiesbox.textlist.Properties;
-                //        else
-                //            propertiesbox.textlist.Properties = toolbox.currentView.elements[name].Properties;
-                //        break;
-                //    case "rating":
-                //        if (toolbox.currentView.elements[name].Properties.Count == 0)
-                //            toolbox.currentView.elements[name].Properties = propertiesbox.rating.Properties;
-                //        else
-                //            propertiesbox.rating.Properties = toolbox.currentView.elements[name].Properties;
-                //        break;
-                //    case "datetime":
-                //        if (toolbox.currentView.elements[name].Properties.Count == 0)
-                //            toolbox.currentView.elements[name].Properties = propertiesbox.datetime.Properties;
-                //        else
-                //            propertiesbox.datetime.Properties = toolbox.currentView.elements[name].Properties;
-                //        break;
-                //    case "helpsystem":
-                //        if (toolbox.currentView.elements[name].Properties.Count == 0)
-                //            toolbox.currentView.elements[name].Properties = propertiesbox.helpsystem.Properties;
-                //        else
-                //            propertiesbox.helpsystem.Properties = toolbox.currentView.elements[name].Properties;
-                //        break;
-                //}
-            //}
-            //else
-            //{
-            //    //Turn on the manual switch mode CheckBox so that the program does not react to changing their states
-            //    //Enable or disable CheckBox if they have already been marked previously for the selected view
-            //    toolBox.cbManualChangeState = true;
-
-            //    uncheckAllCheckboxes();
-
-            //    toolBox.cbManualChangeState = false;
-            //}
+            {
+                //if (toolbox.currentView.elements[name].Properties.Count == 0)
+                propertiesbox.setPropertiesByType(typeOfElement, toolbox.currentView.elements[name].Properties, toolbox.currentView.elements[name].extra);
+                toolbox.currentView.elements[name].Properties = propertiesbox.getPropertiesByType(typeOfElement);
+                //else
+                //    propertiesbox.setPropertiesByType(typeOfElement, toolbox.currentView.elements[name].Properties, toolbox.currentView.elements[name].extra);
+            }
         }
 
         public void CreateRect(Element element)
@@ -844,7 +678,7 @@ namespace es_theme_editor
             CreateRect(rectname, typeOfElement, rectcolor, rectopacity, width, height, 0, 0);
         }
 
-        public void CreateRect(string rectname, Element.types typeOfElement, Brush rectcolor, double rectopacity, double width, double height, double x, double y) 
+        public void CreateRect(string rectname, Element.types typeOfElement, Brush rectcolor, double rectopacity, double width, double height, double x, double y, bool horizontalResizing = true, bool verticallResizing = true) 
         {
             List<RectangleNamed> rctngl = SomeUtilities.GetLogicalChildCollection<RectangleNamed>(canvas1);
             for (int i = 0; i < rctngl.Count; i++)
@@ -854,44 +688,17 @@ namespace es_theme_editor
             }
             RectangleNamed rect;
             rect = new RectangleNamed(rectname, typeOfElement, rectcolor, rectopacity, width, height, x, y);
-            //rect.description = rectname;
             rect.MouseMove += RectangleNamed_MouseMove;
             rect.MouseLeave += RectangleNamed_MouseLeave;
             rect.MouseDown += RectangleNamed_MouseDown;
-            //rect += RectangleNamed_MouseLeave;
             rect.onRectangleNamedSelectedChange += rectangleSelectChanget;
-            //rect.Stroke = new SolidColorBrush(Colors.Black);
-            //rect.Fill = rectcolor;
-            //rect.Width = width;
-            //rect.Height = height;
-            //rect.Opacity = rectopacity;
-            //Canvas.SetLeft(rect, x);
-            //Canvas.SetTop(rect, y);
-            //Panel.SetZIndex(rect, 1);
+            rect.horizontalResizing = horizontalResizing;
+            rect.verticallResizing = verticallResizing;
             SaveItem(rect, typeOfElement);
             rect.fillProperties(propertiesbox.getPropertiesByType(typeOfElement));
             canvas1.Children.Add(rect);
             
         }
-
-        //public static void BringToFront(FrameworkElement element)
-        //{
-        //    if (element == null) return;
-
-        //    Canvas parent = element.Parent as Canvas;
-        //    if (parent == null) return;
-
-        //    var maxZ = parent.Children.OfType<UIElement>()
-        //      .Where(x => x != element)
-        //      .Select(x => Panel.GetZIndex(x))
-        //      .Max();
-        //    Panel.SetZIndex(element, maxZ + 1);
-        //}
-
-        //private int GetMaxZindex() 
-        //{
-        //    return  canvas1.Children.OfType<UIElement>().Select(x => Panel.GetZIndex(x)).Max();
-        //}
 
          private void SaveItem(RectangleNamed rect) 
         {
@@ -903,26 +710,10 @@ namespace es_theme_editor
         private void SaveItem(RectangleNamed rect, Element.types typeOfElement) 
         {
             Element item = toolbox.currentView.getItem(rect.description);
-
-            //if (selected_rectangle != null)
-            //{
-                if (item == null)
-                    item = new Element(rect.description, typeOfElement, null, rect.Width, rect.Height, rect.Fill);
-                //NotifyPositionChanged(selected_rectangle.description);
-                {
-                    item.opacity = rect.Opacity;
-                    item.item_fill = rect.Fill;
-                    item.size_width = rect.Width;
-                    item.size_height = rect.Height;
-                    item.pos_x = Canvas.GetLeft(rect);
-                    item.pos_y = Canvas.GetTop(rect);
-                    item.pos_x_NORMALIZED = Canvas.GetLeft(rect) / canvas1.Width;
-                    item.pos_y_NORMALIZED = Canvas.GetTop(rect) / canvas1.Height;
-                    item.size_height_NORMALIZED = rect.Height / canvas1.Height;
-                    item.size_width_NORMALIZED = rect.Width / canvas1.Width;
-                    item.saveProperties();
-                }                
-            //}
+            if (item == null)
+                item = new Element(rect.description, typeOfElement, null, rect.Width, rect.Height, rect.Fill);
+            item.applyChanges(rect.Opacity, rect.Fill, rect.Width, rect.Height, Canvas.GetLeft(rect), Canvas.GetTop(rect), rect.getExtra);
+            
             toolbox.currentView.addItem = item;
         }
 
@@ -936,7 +727,6 @@ namespace es_theme_editor
                     if (rctngl[i].isSelected)
                     {
                         rctngl[i].Unselect();
-                        //NotifySelectinChanged(rctngl[i].Name, rctngl[i].isSelected);
                     }
                     canvas1.Children.Remove(rctngl[i]);
                     toolbox.currentView.removeItem(rectname);
@@ -950,96 +740,11 @@ namespace es_theme_editor
             if (selected_rectangle != null)
             {
                 selected_rectangle.Unselect();
-                //NotifySelectinChanged(selected_rectangle.description, selected_rectangle.isSelected);
-                //selected_rectangle = null;
             }
             selected_rectangle = SomeUtilities.FindChild<RectangleNamed>(canvas1, rectname);
             selected_rectangle.Select();
-            //toolbox.cb_SelectCreatedelement.SelectedItem = selected_rectangle.Name;
-            //NotifySelectinChanged(selected_rectangle.Name, selected_rectangle.isSelected);
         }
         #endregion Rectangle work
         
-        //static public void BringToFront(Canvas pParent, string pToMoveName)
-        //{
-        //    try
-        //    {
-        //        RectangleNamed pToMove = SomeUtilities.FindChild<RectangleNamed>(pParent, pToMoveName);
-        //        pParent.Children.Remove(pToMove);
-        //        pParent.Children.Add(pToMove);
-        //    }
-        //    catch (Exception)
-        //    {
-        //    }
-        //}
-
-        private void btn_ToolBox_Click(object sender, RoutedEventArgs e)
-        {
-            if (dp_toolbox.Visibility != System.Windows.Visibility.Visible)
-                dp_toolbox.Visibility = System.Windows.Visibility.Visible;
-            else
-                dp_toolbox.Visibility = System.Windows.Visibility.Hidden;
-        }
-
-        private void dp_PropertiesBox_Click(object sender, RoutedEventArgs e)
-        {
-            if (dp_propertiesbox.Visibility != System.Windows.Visibility.Visible)
-                dp_propertiesbox.Visibility = System.Windows.Visibility.Visible;
-            else
-                dp_propertiesbox.Visibility = System.Windows.Visibility.Hidden;
-        }
-        private void Grid_SizeChanged_1(object sender, SizeChangedEventArgs e)
-        {
-            double left = (canvas.ActualWidth - canvas1.ActualWidth) / 2;
-            Canvas.SetLeft(canvas1, left);
-
-            double top = (canvas.ActualHeight - canvas1.ActualHeight) / 2;
-            Canvas.SetTop(canvas1, top);
-        }
-
-        private void btn_BringToFront_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (selected_rectangle != null)
-                {
-                    RectangleNamed pToMove = SomeUtilities.FindChild<RectangleNamed>(canvas1, selected_rectangle.Name);
-                    canvas1.Children.Remove(pToMove);
-                    canvas1.Children.Add(pToMove);
-                }
-            }
-            catch (Exception)
-            {
-            }
-        }
-
-        private void btn_setBackground_Click(object sender, RoutedEventArgs e)
-        {
-            string filename = SomeUtilities.MakeAbsolutePath(((App)Application.Current).themefolder + ((App)Application.Current).gameplatformtheme + "\\theme.xml", ((App)Application.Current).backgroundSystemImagePath);
-            Image image = SomeUtilities.FindChild<Image>(canvas, "image");
-            if (image != null)
-            {
-                if (image.Visibility == System.Windows.Visibility.Visible)
-                    image.Visibility = System.Windows.Visibility.Hidden;
-                else
-                    image.Visibility = System.Windows.Visibility.Visible;
-            }
-            else
-            {
-                BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(filename);
-                bitmap.EndInit();
-
-                image = new Image();
-                image.Name = "image";
-                image.Source = bitmap;
-                image.Width = canvas1.Width;
-                image.Height = canvas1.Height;
-                image.MouseDown += canvas1_MouseDown;
-                Panel.SetZIndex(image, 0);
-                canvas1.Children.Add(image);
-            }
-        }
     }
 }

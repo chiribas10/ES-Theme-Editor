@@ -20,5 +20,6 @@
     </TextBlock>
     <local:ImageControl x:Name="imageControl" Width="{Binding ActualWidth, ElementName=canvas}" Height="{Binding ActualHeight, ElementName=canvas}" Visibility="Hidden"/>
     <local:TextListControl x:Name="textListControl" Width="{Binding ActualWidth, ElementName=canvas}" Height="{Binding ActualHeight, ElementName=canvas}" Visibility="Hidden"/>
+    <local:TextControl x:Name="textControl" Width="{Binding ActualWidth, ElementName=canvas}" Height="{Binding ActualHeight, ElementName=canvas}" Visibility="Hidden"/>
     <!--<Image Name="image" Canvas.Left="0" Width="{Binding ActualWidth, ElementName=canvas}" Height="{Binding ActualHeight, ElementName=canvas}"/>-->
 </Canvas>

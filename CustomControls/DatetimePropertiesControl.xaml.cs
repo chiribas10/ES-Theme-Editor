@@ -19,7 +19,11 @@ namespace es_theme_editor
     /// </summary>
     public partial class DatetimePropertiesControl : Grid
     {
+        public delegate void PropertyElementChanget(string propertyName, string propertyValue);
+        public event PropertyElementChanget onPropertyElementChanget;
+        //На случай если мы не захотим чтобы программа создавала событие при изменении полей
         private bool manualClear = false;
+
         public DatetimePropertiesControl()
         {
             InitializeComponent();
@@ -32,7 +36,7 @@ namespace es_theme_editor
             btn_color.Foreground = SomeUtilities.GetBrushFromHex("#777777FF");
             tb_fontPath.Text = "./../SomeArt/font.ttf";
             tb_fontSize.Text = "0.03";
-            tb_lineSpacing.Text = "1.5";
+            //tb_lineSpacing.Text = "1.5";
             manualClear = false;
         }
 
@@ -49,7 +53,7 @@ namespace es_theme_editor
                 _properties.Add(btn_color.Name.Replace("btn_", ""), SomeUtilities.GetHexFromBrush(btn_color.Foreground));
                 _properties.Add(tb_fontPath.Name.Replace("tb_", ""), tb_fontPath.Text.ToString());
                 _properties.Add(tb_fontSize.Name.Replace("tb_", ""), tb_fontSize.Text.ToString());
-                _properties.Add(tb_lineSpacing.Name.Replace("tb_", ""), tb_lineSpacing.Text.ToString());
+                //_properties.Add(tb_lineSpacing.Name.Replace("tb_", ""), tb_lineSpacing.Text.ToString());
                 return _properties; 
             }
             set
@@ -77,9 +81,9 @@ namespace es_theme_editor
                     val = value.FirstOrDefault(x => x.Key == tb_fontSize.Name.Replace("tb_", "")).Value;
                     if (val != null)
                         tb_fontSize.Text = val;
-                    val = value.FirstOrDefault(x => x.Key == tb_lineSpacing.Name.Replace("tb_", "")).Value;
-                    if (val != null)
-                        tb_lineSpacing.Text = val;
+                    //val = value.FirstOrDefault(x => x.Key == tb_lineSpacing.Name.Replace("tb_", "")).Value;
+                    //if (val != null)
+                    //    tb_lineSpacing.Text = val;
                 }
             }
         }
@@ -87,9 +91,11 @@ namespace es_theme_editor
         private void textColor_Click(object sender, RoutedEventArgs e)
         {
             ColorPickerDialog cpd = new ColorPickerDialog();
+            cpd.ColorPicker.SelectedColor = ((System.Windows.Media.SolidColorBrush)(((Button)sender).Foreground)).Color;
             if (cpd.ShowDialog() == true)
             {
                 ((Button)sender).Foreground = cpd.SelectedColor;
+                onPropertyChanged(((Button)sender).Name.Replace("btn_", ""), SomeUtilities.GetHexFromBrush(((Button)sender).Foreground));
             }
         }
 
@@ -102,6 +108,31 @@ namespace es_theme_editor
             string filename = SomeUtilities.openFileDialog("Font files(*.ttf)|*.ttf" + "|Все файлы (*.*)|*.* ", foundTextBox.Text, themeFilename);
             if (filename != null)
                 foundTextBox.Text = filename;
+        }
+
+        private void tb_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            onPropertyChanged(((TextBox)sender).Name.Replace("tb_", ""), ((TextBox)sender).Text);
+        }
+
+        private void cb_forceUppercase_Checked(object sender, RoutedEventArgs e)
+        {
+            onPropertyChanged("forceUppercase", "1");
+        }
+
+        private void cb_forceUppercase_Unchecked(object sender, RoutedEventArgs e)
+        {
+            onPropertyChanged("forceUppercase", "0");
+        }
+
+        private void onPropertyChanged(string propertyName, string propertyValue)
+        {
+            if (!manualClear)
+                try
+                {
+                    onPropertyElementChanget(propertyName, propertyValue);
+                }
+                catch (Exception) { }
         }
     }
 }

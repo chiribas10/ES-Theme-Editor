@@ -28,33 +28,53 @@ namespace es_theme_editor
             InitializeComponent();
         }
 
+        public bool setImage(string filename) 
+        {
+            if (!File.Exists(filename))
+            {
+                filename = SomeUtilities.MakeAbsolutePath(((App)Application.Current).themefolder + ((App)Application.Current).gameplatformtheme + "\\theme.xml", filename);
+                if (!File.Exists(filename))
+                    return false;
+            }
+
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(filename);
+            bitmap.EndInit();
+            image.Source = bitmap;
+            if (bitmap != null)
+                return true;
+
+            return false;
+        }
+
         public void setProperty(string name, string value) 
         {
-            if (name == "")
-                return;
+            //if (name == "")
+            //    return;
 
             switch (name)
             {
                 case "path":
-                    if (name == "path")
-                    {
-                        if (value != "")
+                case "filledPath"://сюда же будем показывать и рейтинг
+                case "unfilledPath"://сюда же будем показывать и рейтинг
+                    if (value != "")
                         value = SomeUtilities.MakeAbsolutePath(((App)Application.Current).themefolder + ((App)Application.Current).gameplatformtheme + "\\theme.xml", value);
-                        if (File.Exists(value))
+                        if (setImage(value))
                         {
-                            BitmapImage bitmap = new BitmapImage();
-                            bitmap.BeginInit();
-                            bitmap.UriSource = new Uri(value);
-                            bitmap.EndInit();
-                            image.Source = bitmap;
                             this.Visibility = System.Windows.Visibility.Visible;
                         }
                         else
                             this.Visibility = System.Windows.Visibility.Hidden;
-                    }
                     break;
                 case "color":
                     image.Opacity = SomeUtilities.getOpacityFromHex(value);
+                    break;
+                case "tile":
+                    if (value == "1")
+                        image.Stretch = Stretch.Fill;
+                    if (value == "0")
+                        image.Stretch = Stretch.Uniform;
                     break;
             }
         }

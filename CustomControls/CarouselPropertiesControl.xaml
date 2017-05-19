@@ -1,0 +1,30 @@
+﻿<Grid x:Class="es_theme_editor.CarouselPropertiesControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d"
+             Name="canvas" Height="554.923" Width="259.668" OpacityMask="Black">
+    <Label x:Name="lbl_pos_w" Content="pos__w" HorizontalAlignment="Left" Margin="10,7,0,521"/>
+    <TextBox x:Name="tb_pos_w" Height="23" TextWrapping="Wrap" Margin="10,33.923,139.668,498" IsEnabled="False"/>
+    <Label x:Name="lbl_pos_h" Content="pos__h" HorizontalAlignment="Left" Margin="116,7,0,521"/>
+    <TextBox x:Name="tb_pos_h" Height="23" TextWrapping="Wrap" Margin="125,33.923,24.668,498" IsEnabled="False"/>
+    <Label x:Name="lbl_size_w" Content="size__w" HorizontalAlignment="Left" Margin="9.292,61.889,0,468.111"/>
+    <TextBox x:Name="tb_size_w" Height="23" TextWrapping="Wrap" Margin="9.819,86.812,139.849,445.111" IsEnabled="False"/>
+    <Label x:Name="lbl_size_h" Content="size__h" HorizontalAlignment="Left" Margin="115.292,61.889,0,468.111"/>
+    <TextBox x:Name="tb_size_h" Height="23" TextWrapping="Wrap" Margin="124.819,86.812,24.849,445.111" IsEnabled="False"/>
+    <ComboBox x:Name="cbx_type" SelectedValuePath="Content" HorizontalAlignment="Left" Margin="9.292,135.812,0,0" VerticalAlignment="Top" Width="224.819" SelectedIndex="0" SelectionChanged="cbx_alignment_SelectionChanged">
+        <ComboBoxItem  Name="cbi_left">vertical</ComboBoxItem>
+        <ComboBoxItem  Name="cbi_centered">horizontal</ComboBoxItem>
+    </ComboBox>
+    <Label Content="type" HorizontalAlignment="Left" Margin="9.292,109.812,0,0" VerticalAlignment="Top" Height="26"/>
+    <Label x:Name="lbl_logoScale" Content="logoScale" HorizontalAlignment="Left" Margin="10,185.772,0,343.228"/>
+    <TextBox x:Name="tb_logoScale" Text="1.2" Height="23" TextWrapping="Wrap" Margin="10,211.695,24.668,320.228" TextChanged="tb_TextChanged"/>
+    <Button x:Name="btn_color" Content="color" HorizontalAlignment="Left" Margin="9.292,162.772,0,0" VerticalAlignment="Top" Width="225.708" Height="23" Click="textColor_Click" Background="#FFB8B8B8" BorderBrush="Black" ClickMode="Press"/>
+    <Label x:Name="lbl_maxLogoCount" Content="maxLogoCount" HorizontalAlignment="Left" Margin="10,282.618,0,246.382"/>
+    <TextBox x:Name="tb_maxLogoCount" Text="5" Height="23" TextWrapping="Wrap" Margin="9.292,308.541,25.376,223.382" TextChanged="tb_TextChanged"/>
+    <Label x:Name="lbl_logoSize_w" Content="logoSize__w" HorizontalAlignment="Left" Margin="9.292,234.695,0,277.305"/>
+    <TextBox x:Name="tb_logoSize_w" Height="23" TextWrapping="Wrap" Margin="9.292,259.618,140.376,272.305" TextChanged="tb_logoSize_TextChanged"/>
+    <Label x:Name="lbl_logoSize_h" Content="logoSize__h" HorizontalAlignment="Left" Margin="115.292,234.695,0,277.305"/>
+    <TextBox x:Name="tb_logoSize_h" Height="23" TextWrapping="Wrap" Margin="124.111,259.618,25.557,272.305" TextChanged="tb_logoSize_TextChanged"/>
+</Grid>

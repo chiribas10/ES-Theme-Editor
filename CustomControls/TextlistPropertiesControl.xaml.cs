@@ -32,16 +32,16 @@ namespace es_theme_editor
         public void Clear()
         {
             manualClear = true;
+            cbx_alignment.SelectedValue = "center";
             tb_fontPath.Text = "./../SomeArt/font.ttf";
             tb_scrollSound.Text = "./../SomeArt/scrollsound.ogg";
             tb_fontSize.Text = "0.03";
             cb_forceUppercase.IsChecked = false;
-            btn_secondaryColor.Foreground = SomeUtilities.GetBrushFromHex("#777777FF");
-            btn_selectedColor.Foreground = SomeUtilities.GetBrushFromHex("#777777FF");
-            btn_selectorColor.Foreground = SomeUtilities.GetBrushFromHex("#777777FF");
-            btn_primaryColor.Foreground = SomeUtilities.GetBrushFromHex("#777777FF");
+            btn_secondaryColor.Foreground = SomeUtilities.GetBrushFromHex("#FF777777");
+            btn_selectedColor.Foreground = SomeUtilities.GetBrushFromHex("#FFe2ead9");
+            btn_selectorColor.Foreground = SomeUtilities.GetBrushFromHex("#77ffa500");
+            btn_primaryColor.Foreground = SomeUtilities.GetBrushFromHex("#FF440040");
             tb_lineSpacing.Text = "1.5";
-            cbx_alignment.SelectedValue = "center";
             manualClear = false;
         }
 
@@ -64,7 +64,8 @@ namespace es_theme_editor
                 _properties.Add(tb_fontSize.Name.Replace("tb_", ""), tb_fontSize.Text.ToString());
                 _properties.Add(tb_lineSpacing.Name.Replace("tb_", ""), tb_lineSpacing.Text.ToString());
                 _properties.Add(tb_scrollSound.Name.Replace("tb_", ""), tb_scrollSound.Text.ToString());
-                _properties.Add(cbx_alignment.Name.Replace("cbx_", ""), SomeUtilities.getComboBoxValue(cbx_alignment));
+                if (cbx_alignment.SelectedValue!=null)
+                _properties.Add(cbx_alignment.Name.Replace("cbx_", ""), cbx_alignment.SelectedValue.ToString());
                 if (cb_forceUppercase.IsChecked == true)
                     _properties.Add(cb_forceUppercase.Name.Replace("cb_", ""), "1");
                 else
@@ -121,7 +122,10 @@ namespace es_theme_editor
                         tb_scrollSound.Text = val;
                     val = value.FirstOrDefault(x => x.Key == cbx_alignment.Name.Replace("cbx_", "")).Value;
                     if (val != null)
+                    {
                         cbx_alignment.SelectedValue = val;
+                    }
+                        //cbx_alignment.SelectedValue = val;
                     val = value.FirstOrDefault(x => x.Key == cb_forceUppercase.Name.Replace("cb_", "")).Value;
                     if (val != null)
                         if (val == "1")
@@ -136,9 +140,11 @@ namespace es_theme_editor
         private void textColor_Click(object sender, RoutedEventArgs e)
         {
             ColorPickerDialog cpd = new ColorPickerDialog();
+            cpd.ColorPicker.SelectedColor = ((System.Windows.Media.SolidColorBrush)(((Button)sender).Foreground)).Color;
             if (cpd.ShowDialog() == true)
             {
                 ((Button)sender).Foreground = cpd.SelectedColor;
+                onPropertyChanged(((Button)sender).Name.Replace("btn_", ""), SomeUtilities.GetHexFromBrush(((Button)sender).Foreground));
             }
         }
 
@@ -179,6 +185,26 @@ namespace es_theme_editor
                     onPropertyElementChanget(propertyName, propertyValue);
                 }
                 catch (Exception) { }
+        }
+
+        private void cbx_alignment_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            if (cbx_alignment.SelectedValue != null)
+            {
+                string text = ((sender as ComboBox).SelectedItem as ComboBoxItem).Content as string;
+                onPropertyChanged("alignment", text);
+            }
+        }
+
+        private void cb_forceUppercase_Checked(object sender, RoutedEventArgs e)
+        {
+            onPropertyChanged("forceUppercase", "1");
+        }
+
+        private void cb_forceUppercase_Unchecked(object sender, RoutedEventArgs e)
+        {
+            onPropertyChanged("forceUppercase", "0");
         }
     }
 }

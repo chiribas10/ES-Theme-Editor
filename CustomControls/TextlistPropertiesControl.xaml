@@ -8,32 +8,32 @@
     <Label x:Name="lbl_fontSize" Content="fontSize (% of screen height)" HorizontalAlignment="Left" Margin="10,114.846,0,413.134"/>
     <TextBox x:Name="tb_fontSize" Height="23" TextWrapping="Wrap" Margin="10,141.789,24.668,390.134" TextChanged="tb_TextChanged"/>
     <Label x:Name="lbl_pos_w" Content="pos__w" HorizontalAlignment="Left" Margin="10,7,0,521"/>
-    <TextBox x:Name="tb_pos_w" Height="23" TextWrapping="Wrap" Margin="10,33.923,139.668,498" IsEnabled="False"/>
+    <TextBox x:Name="tb_pos_w" Height="23" TextWrapping="Wrap" Margin="10,33.923,139.668,498"/>
     <Label x:Name="lbl_pos_h" Content="pos__h" HorizontalAlignment="Left" Margin="116,7,0,521"/>
-    <TextBox x:Name="tb_pos_h" Height="23" TextWrapping="Wrap" Margin="125,33.923,24.668,498" IsEnabled="False"/>
+    <TextBox x:Name="tb_pos_h" Height="23" TextWrapping="Wrap" Margin="125,33.923,24.668,498"/>
     <Label x:Name="lbl_fontPath" Content="fontPath path" HorizontalAlignment="Left" Margin="10,61.923,0,468.077"/>
     <TextBox x:Name="tb_fontPath" Height="23" TextWrapping="Wrap" Margin="10,86.846,56.668,445.077" Text="./../SomeArt/font.ttf" TextChanged="tb_TextChanged"/>
     <Button x:Name="btn_fontPath" Content="..." HorizontalAlignment="Left" Margin="208,86.846,0,0" VerticalAlignment="Top" Width="27" Height="23" Background="#FFB8B8B8" Click="btn_fontPath_Click"/>
     <Label x:Name="lbl_size_w" Content="size__w" HorizontalAlignment="Left" Margin="9.473,173.889,0,356.111"/>
-    <TextBox x:Name="tb_size_w" Height="23" TextWrapping="Wrap" Margin="10,198.812,139.668,333.111" IsEnabled="False"/>
+    <TextBox x:Name="tb_size_w" Height="23" TextWrapping="Wrap" Margin="10,198.812,139.668,333.111"/>
     <Label x:Name="lbl_size_h" Content="size__h" HorizontalAlignment="Left" Margin="115.473,173.889,0,356.111"/>
-    <TextBox x:Name="tb_size_h" Height="23" TextWrapping="Wrap" Margin="125,198.812,24.668,333.111" IsEnabled="False"/>
-    <ComboBox x:Name="cbx_alignment" HorizontalAlignment="Left" Margin="10,252.812,0,0" VerticalAlignment="Top" Width="224.819" SelectedValuePath="Content">
+    <TextBox x:Name="tb_size_h" Height="23" TextWrapping="Wrap" Margin="125,198.812,24.668,333.111"/>
+    <ComboBox x:Name="cbx_alignment" SelectedValuePath="Content" HorizontalAlignment="Left" Margin="10,252.812,0,0" VerticalAlignment="Top" Width="224.819" SelectedIndex="0" SelectionChanged="cbx_alignment_SelectionChanged" ToolTip="Valid values are &quot;left&quot;, &quot;center&quot;, or &quot;right&quot;. Controls alignment on the X axis.">
         <ComboBoxItem  Name="cbi_left">left</ComboBoxItem>
         <ComboBoxItem  Name="cbi_centered">center</ComboBoxItem>
         <ComboBoxItem  Name="cbi_right">right</ComboBoxItem>
     </ComboBox>
     <Label Content="alignment" HorizontalAlignment="Left" Margin="9.473,226.812,0,0" VerticalAlignment="Top" Height="26"/>
-    <CheckBox x:Name="cb_forceUppercase" Content="forceUppercase" HorizontalAlignment="Left" Margin="10,279.771,0,0" VerticalAlignment="Top"/>
+    <CheckBox x:Name="cb_forceUppercase" Content="forceUppercase" HorizontalAlignment="Left" Margin="10,279.771,0,0" VerticalAlignment="Top" Checked="cb_forceUppercase_Checked" Unchecked="cb_forceUppercase_Unchecked" ToolTip="Draw text in uppercase."/>
     <Label x:Name="lbl_lineSpacing" Content="lineSpacing (Default is 1.5)" HorizontalAlignment="Left" Margin="10,294.869,0,234.131"/>
-    <TextBox x:Name="tb_lineSpacing" Height="23" TextWrapping="Wrap" Margin="10,320.792,24.668,211.131" TextChanged="tb_TextChanged"/>
-    <Button x:Name="btn_selectorColor" Content="selectorColor" HorizontalAlignment="Left" Margin="10,348.833,0,0" VerticalAlignment="Top" Width="110" Height="23" Click="textColor_Click" Background="#FFB8B8B8" BorderBrush="Black" ClickMode="Press"/>
-    <Button x:Name="btn_selectedColor" Content="selectedColor" HorizontalAlignment="Left" Margin="125,348.833,0,0" VerticalAlignment="Top" Width="110" Height="23" Click="textColor_Click" Background="#FFB8B8B8" BorderBrush="Black" ClickMode="Press"/>
-    <Button x:Name="btn_primaryColor" Content="primaryColor" HorizontalAlignment="Left" Margin="10,376.833,0,0" VerticalAlignment="Top" Width="110" Height="23" Click="textColor_Click" Background="#FFB8B8B8" BorderBrush="Black" ClickMode="Press"/>
-    <Button x:Name="btn_secondaryColor" Content="secondaryColor" HorizontalAlignment="Left" Margin="125,376.833,0,0" VerticalAlignment="Top" Width="110" Height="23" Click="textColor_Click" Background="#FFB8B8B8" BorderBrush="Black" ClickMode="Press"/>
+    <TextBox x:Name="tb_lineSpacing" Height="23" TextWrapping="Wrap" Margin="10,320.792,24.668,211.131" TextChanged="tb_TextChanged" ToolTip="Controls the space between lines .5.1 si tluafeD .﴿thgieh tnof fo elpitlum a sa﴾"/>
+    <Button x:Name="btn_selectorColor" Content="selectorColor" HorizontalAlignment="Left" Margin="10,348.833,0,0" VerticalAlignment="Top" Width="110" Height="23" Click="textColor_Click" Background="#FFB8B8B8" BorderBrush="Black" ClickMode="Press" ToolTip="Color of the &quot;selector bar.&quot;"/>
+    <Button x:Name="btn_selectedColor" Content="selectedColor" HorizontalAlignment="Left" Margin="125,348.833,0,0" VerticalAlignment="Top" Width="110" Height="23" Click="textColor_Click" Background="#FFB8B8B8" BorderBrush="Black" ClickMode="Press" ToolTip="Color of the highlighted entry text."/>
+    <Button x:Name="btn_primaryColor" Content="primaryColor" HorizontalAlignment="Left" Margin="10,376.833,0,0" VerticalAlignment="Top" Width="110" Height="23" Click="textColor_Click" Background="#FFB8B8B8" BorderBrush="Black" ClickMode="Press" ToolTip="Primary color; what this means depends on the text list. For example, for game lists, it is the color of a game."/>
+    <Button x:Name="btn_secondaryColor" Content="secondaryColor" HorizontalAlignment="Left" Margin="125,376.833,0,0" VerticalAlignment="Top" Width="110" Height="23" Click="textColor_Click" Background="#FFB8B8B8" BorderBrush="Black" ClickMode="Press" ToolTip="Secondary color; what this means depends on the text list. For example, for game lists, it is the color of a folder."/>
     <Label x:Name="lbl_scrollSound" Content="scrollSound path" HorizontalAlignment="Left" Margin="10,401.873,0,127.127"/>
-    <TextBox x:Name="tb_scrollSound" Height="23" TextWrapping="Wrap" Margin="9.473,427.796,56.668,104.127" Text="./../SomeArt/scrollsound.ogg"/>
+    <TextBox x:Name="tb_scrollSound" Height="23" TextWrapping="Wrap" Margin="9.473,427.796,56.668,104.127" Text="./../SomeArt/scrollsound.ogg" ToolTip="Sound that is played when the list is scrolled."/>
     <Button x:Name="btn_scrollSound" Content="..." HorizontalAlignment="Left" Margin="208,427.796,0,0" VerticalAlignment="Top" Width="27" Height="23" Background="#FFB8B8B8" Click="btn_scrollSound_Click"/>
     <Label x:Name="lbl_horizontalMargin" Content="horizontalMargin" HorizontalAlignment="Left" Margin="9.473,452.796,0,76.204"/>
-    <TextBox x:Name="tb_horizontalMargin" Height="23" TextWrapping="Wrap" Margin="9.473,478.719,24.668,53.204"/>
+    <TextBox x:Name="tb_horizontalMargin" Height="23" TextWrapping="Wrap" Margin="9.473,478.719,24.668,53.204" ToolTip="Horizontal offset for text from the alignment point. If  alignment  is &quot;left&quot;, offsets the text to the right. If  alignment  is &quot;right&quot;, offsets text to"/>
 </Grid>

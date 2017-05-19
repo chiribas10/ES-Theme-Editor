@@ -24,12 +24,19 @@ namespace es_theme_editor
         public event RectangleNamedSelected onRectangleNamedSelectedChange;
         private bool _isSelected = false;
         private bool _imageSetted;
-        private Element element;
+        public Element element;
+        public bool horizontalResizing = true;
+        public bool verticallResizing = true;
 
         #region Getters and Setters
         public bool isSelected
         {
             get { return _isSelected; }
+        }
+
+        public string getExtra 
+        {
+            get { return element.extra; }
         }
 
         public Brush Stroke
@@ -55,32 +62,22 @@ namespace es_theme_editor
             }
         }
 
-        public void setImage(bool setted)
+        private void showVisual(bool setted)
         {
-            //image.Source = bitmap;
             if (setted)
             {
                 rectangle.Fill = Brushes.Transparent;
-                if (!isSelected)
-                    rectangle.Stroke = new SolidColorBrush(Colors.Transparent);
+
+                //if (!isSelected)
+                //    rectangle.Stroke = new SolidColorBrush(Colors.Transparent);
                 _imageSetted = true;
-                //rectangle.Stroke = Brushes.Transparent;
                 this.desc.Visibility = System.Windows.Visibility.Hidden;
             }
             else
             {
                 rectangle.Fill = rectangleFill;
-                //if (_isSelected)
-                //{
                     rectangle.Stroke = new SolidColorBrush(Colors.Black);
                     rectangle.StrokeThickness = 1;
-                //}
-                //else
-                //{
-                //    rectangle.Stroke = new SolidColorBrush(Colors.Red);
-                //    rectangle.StrokeThickness = 3;
-                //}
-                //this.desc.Visibility = System.Windows.Visibility.Visible;
                 _imageSetted = false;
             }
         }
@@ -121,7 +118,7 @@ namespace es_theme_editor
             InitializeComponent();
 
             element = originalElement;
-            this.description = element.name;
+            this.description = element.name;// +element.item_fill.ToString().Replace("#", "_");
             this.Stroke = new SolidColorBrush(Colors.Black);
             this.Fill = element.item_fill;
             this.Width = element.size_width;
@@ -137,6 +134,8 @@ namespace es_theme_editor
 
         public void fillProperties(SortedList<string, string> Properties) 
         {
+            if (Properties == null)
+                return;
             for (int i = 0; i < Properties.Count; i++)
             {
                 addPropertie(Properties.Keys[i], Properties.Values[i]);
@@ -179,36 +178,73 @@ namespace es_theme_editor
         
         public void addPropertie(string name, string value)
         {
-            //if (element == null)
-            //    return;
+
             if (name == "")
                 return;
-            //if (element.Properties.IndexOfKey(name) >= 0)
-            //    element.Properties.Remove(name);
-            //element.Properties.Add(name, value);
             element.addPropertie(name, value);
+            if (name == "extra")
+                element.extra = value;
+            else
             switch (element.typeOfElement.ToString())
             {
                 case "text":
+                    if (string.IsNullOrEmpty(textControl.somestring))
+                        textControl.somestring = description;
+                    textControl.setProperty(name, value);
+                    if (textControl.Visibility == System.Windows.Visibility.Visible)
+                        showVisual(true);
                     break;
                 case "image":
+                case "rating":
                     imageControl.setProperty(name, value);
                     if (imageControl.Visibility == System.Windows.Visibility.Visible)
-                        setImage(true);
+                        showVisual(true);
                     break;
                 case "textlist":
                     textListControl.setProperty(name, value);
                     if (textListControl.Visibility == System.Windows.Visibility.Visible)
-                        setImage(true);
-                    break;
-                case "rating":
+                        showVisual(true);
                     break;
                 case "datetime":
+                    if (string.IsNullOrEmpty(textControl.somestring))
+                    {
+                        DateTime dt = DateTime.Now;
+                        textControl.somestring = dt.ToString();
+                    }
+                    textControl.setProperty(name, value);
+                    if (textControl.Visibility == System.Windows.Visibility.Visible)
+                        showVisual(true);
+                    break;
+                case "carousel":
+                    if (name == "type")
+                    {
+                        if (value == "vertical")
+                        {
+                            this.Width = ((App)Application.Current).Width * 0.2291666666666667;
+                            this.Height = ((App)Application.Current).Height;
+                            Canvas.SetLeft(this, 0);
+                            Canvas.SetTop(this, 0);
+                            horizontalResizing = true;
+                            verticallResizing = false;
+                        }
+                        else
+                        {
+                            this.Width = ((App)Application.Current).Width;
+                            this.Height = ((App)Application.Current).Height * 0.2291666666666667;
+                            Canvas.SetLeft(this, 0);
+                            Canvas.SetTop(this, ((App)Application.Current).Height / 2 - (((App)Application.Current).Height * 0.2291666666666667) / 2);
+                            horizontalResizing = false;
+                            verticallResizing = true;
+                        }
+                    }
+                    if (name == "color")
+                    {
+                        rectangle.Fill = SomeUtilities.GetBrushFromHex(value);
+                    }
                     break;
                 case "helpsystem":
                     break;
             }
-
         }
 
         public void Unselect()
@@ -216,10 +252,11 @@ namespace es_theme_editor
             if (Name != "canvas")
             {
                 _isSelected = false;
-                if (!_imageSetted)
-                    rectangle.Stroke = new SolidColorBrush(Colors.Black);
-                else
-                    rectangle.Stroke = new SolidColorBrush(Colors.Transparent);
+                //if (!_imageSetted)
+                //    rectangle.Stroke = new SolidColorBrush(Colors.Black);
+                //else
+                //    rectangle.Stroke = new SolidColorBrush(Colors.Transparent);
+                rectangle.Stroke = new SolidColorBrush(Colors.Black);
                 rectangle.StrokeThickness = 1;
                 onRectangleNamedSelectedChange(this.description, false);
             }

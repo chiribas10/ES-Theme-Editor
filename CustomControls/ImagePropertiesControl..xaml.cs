@@ -55,13 +55,6 @@ namespace es_theme_editor
             tb_origin_w.Text = x.ToString();
         }
 
-        //public string getImagePath()
-        //{
-        //    if (tb_path.Text == "")
-        //        return "";
-        //    return SomeUtilities.MakeAbsolutePath(((App)Application.Current).themefolder + ((App)Application.Current).gameplatformtheme + "\\theme.xml", tb_path.Text);
-        //}
-
         public void Clear(string defaultimage)
         {
             manualClear = true;
@@ -92,7 +85,6 @@ namespace es_theme_editor
                     _properties.Add(cb_tile.Name.Replace("cb_", ""), "1");
                 else
                     _properties.Add(cb_tile.Name.Replace("cb_", ""), "0");
-                //_properties.Add(btn_color.Name.Replace("btn_", ""), SomeUtilities.getOpacityFromBrush(btn_color.Background).ToString());
                 return _properties;
             }
             set
@@ -158,16 +150,15 @@ namespace es_theme_editor
         private void btn_image_color_Click(object sender, RoutedEventArgs e)
         {
             ColorPickerDialog cpd = new ColorPickerDialog();
+            cpd.ColorPicker.SelectedColor = ((System.Windows.Media.SolidColorBrush)(((Button)sender).Background)).Color;
             if (cpd.ShowDialog() == true)
             {
-                //((Button)sender).Background = cpd.SelectedColor;
                 Color myColor = ((System.Windows.Media.SolidColorBrush)(cpd.SelectedColor)).Color;
                 myColor.B = 255;
                 myColor.G = 255;
                 myColor.R = 255;
                 System.Windows.Media.SolidColorBrush scb = new SolidColorBrush(myColor);
                 ((Button)sender).Background = scb;
-                //string theHexColor = "#" + myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2") + myColor.A.ToString("X2");
                 onPropertyChanged(((Button)sender).Name.Replace("btn_", ""), SomeUtilities.GetHexFromBrush(((Button)sender).Background));
             }
         }
@@ -181,7 +172,9 @@ namespace es_theme_editor
             string filename = SomeUtilities.openFileDialog("Image files(*.png;*.jpg;*.svg)|*.png;*.jpg;*.svg" + "|Все файлы (*.*)|*.* ", foundTextBox.Text, themeFilename);
             if (filename != null)
             {
+                manualClear = true;
                 foundTextBox.Text = filename;
+                manualClear = false;
                 onPropertyChanged(((Button)sender).Name.Replace("btn_", ""), filename);
             }
         }
@@ -198,9 +191,9 @@ namespace es_theme_editor
 
         private void tb_path_TargetUpdated(object sender, TextChangedEventArgs e)
         {
-            //string themeFilename = ((App)Application.Current).themefolder + ((App)Application.Current).gameplatformtheme + "\\theme.xml";
             onPropertyChanged(((TextBox)sender).Name.Replace("tb_", ""), ((TextBox)sender).Text);
         }
+
         private void onPropertyChanged(string propertyName, string propertyValue) 
         {
             if (!manualClear)

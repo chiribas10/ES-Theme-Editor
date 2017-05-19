@@ -17,9 +17,13 @@ namespace es_theme_editor
     /// <summary>
     /// Interaction logic for RectangleNamed.xaml
     /// </summary>
-    public partial class VideoPropertiesControl : Grid
+   public partial class VideoPropertiesControl : Grid
     {
-        public VideoPropertiesControl()
+        public delegate void PropertyElementChanget(string propertyName, string propertyValue);
+        public event PropertyElementChanget onPropertyElementChanget;
+        //На случай если мы не захотим чтобы программа создавала событие при изменении полей
+        private bool manualClear = false;
+       public VideoPropertiesControl()
         {
             InitializeComponent();
             Clear();
@@ -27,9 +31,12 @@ namespace es_theme_editor
 
         public void Clear()
         {
-            //cb_tile.IsChecked = true;
-            //btn_color.Foreground = SomeUtilities.GetHexFromBrush("#000000FF");
-
+            manualClear = true;
+            cb_showSnapshotDelay.IsChecked = true;
+            cb_showSnapshotNoVideo.IsChecked = true;
+            tb_default.Text = "./../SomeArt/default.mp4";
+            tb_delay.Text = "0";
+            manualClear = false;
         }
 
         //We fill in the properties indicated here. Then they will be assigned to the element for which they were filled.
@@ -48,7 +55,16 @@ namespace es_theme_editor
                     _properties.Add("origin", (Width / ((App)Application.Current).Width).ToString() + " " + (Height / ((App)Application.Current).Height).ToString());
                 if (double.TryParse(tb_maxSize_w.Text, out Width) && double.TryParse(tb_maxSize_h.Text, out Height))
                     _properties.Add("maxSize", (Width / ((App)Application.Current).Width).ToString() + " " + (Height / ((App)Application.Current).Height).ToString());
-
+                if (cb_showSnapshotDelay.IsChecked == true)
+                    _properties.Add(cb_showSnapshotDelay.Name.Replace("cb_", ""), "1");
+                else
+                    _properties.Add(cb_showSnapshotDelay.Name.Replace("cb_", ""), "0");
+                if (cb_showSnapshotNoVideo.IsChecked == true)
+                    _properties.Add(cb_showSnapshotNoVideo.Name.Replace("cb_", ""), "1");
+                else
+                    _properties.Add(cb_showSnapshotNoVideo.Name.Replace("cb_", ""), "0");
+                _properties.Add(tb_default.Name.Replace("tb_", ""), tb_default.Text.ToString());
+                _properties.Add(tb_delay.Name.Replace("tb_", ""), tb_delay.Text.ToString());
                 return _properties;
             }
             set
@@ -93,26 +109,62 @@ namespace es_theme_editor
                         tb_maxSize_w.Text = (double.Parse(substrings[0].Trim().Replace(".", ",")) * ((App)Application.Current).Width).ToString();
                         tb_maxSize_h.Text = (double.Parse(substrings[1].Trim().Replace(".", ",")) * ((App)Application.Current).Height).ToString();
                     }
+                    val = value.FirstOrDefault(x => x.Key == cb_showSnapshotDelay.Name.Replace("cb_", "")).Value;
+                    if (val != null)
+                        if (val == "1")
+                            cb_showSnapshotDelay.IsChecked = true;
+                        else
+                            cb_showSnapshotDelay.IsChecked = false;
+                    val = value.FirstOrDefault(x => x.Key == cb_showSnapshotNoVideo.Name.Replace("cb_", "")).Value;
+                    if (val != null)
+                        if (val == "1")
+                            cb_showSnapshotNoVideo.IsChecked = true;
+                        else
+                            cb_showSnapshotNoVideo.IsChecked = false;
+                    val = value.FirstOrDefault(x => x.Key == tb_default.Name.Replace("tb_", "")).Value;
+                    if (val != null)
+                        tb_default.Text = val;
+                    val = value.FirstOrDefault(x => x.Key == tb_delay.Name.Replace("tb_", "")).Value;
+                    if (val != null)
+                        tb_delay.Text = val;
                 }
             }
         }
+        private void btn_path_Click(object sender, RoutedEventArgs e)
+        {
+            string toollName = ((Button)sender).Name;
+            toollName = toollName.Replace("btn", "tb");
+            string themeFilename = ((App)Application.Current).themefolder + ((App)Application.Current).gameplatformtheme + "\\theme.xml";
+            TextBox foundTextBox = SomeUtilities.FindChild<TextBox>(this, toollName);
+            string filename = SomeUtilities.openFileDialog("Image files(*.png;*.jpg;*.svg)|*.png;*.jpg;*.svg" + "|Все файлы (*.*)|*.* ", foundTextBox.Text, themeFilename);
+            if (filename != null)
+            {
+                manualClear = true;
+                foundTextBox.Text = filename;
+                manualClear = false;
+                onPropertyChanged(((Button)sender).Name.Replace("btn_", ""), filename);
+            }
+        }
 
-        //For element image, the color property sets only the alpha channel, and the other parameters 255
-        //private void btn_image_color_Click(object sender, RoutedEventArgs e)
-        //{
-        //    ColorPickerDialog cpd = new ColorPickerDialog();
-        //    if (cpd.ShowDialog() == true)
-        //    {
-        //        ((Button)sender).Background = cpd.SelectedColor;
-        //        Color myColor = ((System.Windows.Media.SolidColorBrush)(cpd.SelectedColor)).Color;
-        //        myColor.B = 255;
-        //        myColor.G = 255;
-        //        myColor.R = 255;
-        //        System.Windows.Media.SolidColorBrush scb = new SolidColorBrush(myColor);
+        private void cb_Checked(object sender, RoutedEventArgs e)
+        {
+            onPropertyChanged(((CheckBox)sender).Name.Replace("cb_", ""), "1");
+        }
 
-        //        //string theHexColor = "#" + myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2") + myColor.A.ToString("X2");
+        private void cb_Unchecked(object sender, RoutedEventArgs e)
+        {
+            onPropertyChanged(((CheckBox)sender).Name.Replace("cb_", ""), "0");
+        }
 
-        //    }
-        //}
+        private void tb_TextChanget(object sender, TextChangedEventArgs e)
+        {
+            onPropertyChanged(((TextBox)sender).Name.Replace("tb_", ""), ((TextBox)sender).Text);
+        }
+
+        private void onPropertyChanged(string propertyName, string propertyValue)
+        {
+            if (!manualClear)
+                onPropertyElementChanget(propertyName, propertyValue);
+        }
     }
 }

@@ -23,38 +23,89 @@ namespace es_theme_editor
     /// </summary>
     public partial class TextListControl : Grid
     {
+        string primaryColor = "#FF440040";
+        string selectedColor = "#e2ead9";
+        string selectorColor = "#ffa500";
+        string alignment = "Left";//Center, Right//"Stretch";
+
         public TextListControl()
         {
             InitializeComponent();
-            for (int i = 0; i < 120; i++)
-                lb_gamelist.Items.Add("Some name of Some game №" + (i+1).ToString());
+            fillCBX();
 
-            setStyle("#ffa500", "Stretch");
+            setStyle();
+        }
+
+        private void fillCBX(bool forceUppercase = false)
+        {
+            string somenameofsomegame = "Some name of Some game №";
+            
+            if (forceUppercase)
+                somenameofsomegame = somenameofsomegame.ToUpper();
+            lb_gamelist.Items.Clear();
+            for (int i = 0; i < 100; i++)
+            {
+                lb_gamelist.Items.Add(somenameofsomegame + (i + 1).ToString());
+            }
+            ScrollToLastItem();
+        }
+
+        public void ScrollToLastItem()
+        {
+            Random random = new Random();
+            int randomNumber = random.Next(1, lb_gamelist.Items.Count);
+            lb_gamelist.SelectedIndex = randomNumber;
+            lb_gamelist.SelectedItem = lb_gamelist.Items.GetItemAt(randomNumber);
+            lb_gamelist.ScrollIntoView(lb_gamelist.SelectedItem);
+            ListViewItem item = lb_gamelist.ItemContainerGenerator.ContainerFromItem(lb_gamelist.SelectedItem) as ListViewItem;
+            lb_gamelist.ScrollIntoView(lb_gamelist.SelectedItem);
         }
 
         public void setProperty(string name, string value)
         {
             if (name == "")
                 return;
-
             switch (name)
             {
+                case "alignment":
+                    if (value.ToLower() == "center")
+                        alignment = "Center";
+                    if (value.ToLower() == "right")
+                        alignment = "Right";
+                    if (value.ToLower() == "left")
+                        alignment = "Left";
+                    setStyle();
+                    break;
+                case "primaryColor":
+                    if (primaryColor != value)
+                    {
+                        primaryColor = value;
+                        setStyle();
+                    }
+                    break;
+                case "selectedColor":
+                    if (selectedColor != value)
+                    {
+                        selectedColor = value;
+                        setStyle();
+                    }
+                    break;
+                case "selectorColor":
+                    if (selectorColor != value)
+                    {
+                        selectorColor = value;
+                        setStyle();
+                    }
+                    break;
                 case "fontSize":
-
-                   double fontsize;
-                   if (!double.TryParse(value.Replace(".", ","), out fontsize))
-                       return;
-                   if (fontsize > 0)
-                   {
-                       Random random = new Random();
-                       int randomNumber = random.Next(1, lb_gamelist.Items.Count);
+                    double fontsize;
+                    if (!double.TryParse(value.Replace(".", ","), out fontsize))
+                        return;
+                    if (fontsize > 0)
+                    {
                         fontsize = ((App)Application.Current).Height * fontsize;
-                        //lb_gamelist.SelectedItems.Clear();
                         lb_gamelist.FontSize = fontsize;
-                        lb_gamelist.SelectedIndex = randomNumber;
-                        ScrollToLastItem(randomNumber);
-                        //if (lb_gamelist.SelectedItems.Count==0)
-                        //lb_gamelist.SelectedItems.Add(lb_gamelist.Items[randomNumber]);
+                        ScrollToLastItem();
                         this.Visibility = System.Windows.Visibility.Visible;
                     }
                     else
@@ -74,30 +125,46 @@ namespace es_theme_editor
                     else
                         this.Visibility = System.Windows.Visibility.Hidden;
                     break;
+                case "forceUppercase":
+                    if (value == "1")
+                        fillCBX(true);
+                    if (value == "0")
+                        fillCBX();
+                    break;
             }
         }
 
-        public void ScrollToLastItem(int index)
-        {
-            lb_gamelist.SelectedItem = lb_gamelist.Items.GetItemAt(index);
-            lb_gamelist.ScrollIntoView(lb_gamelist.SelectedItem);
-            ListViewItem item = lb_gamelist.ItemContainerGenerator.ContainerFromItem(lb_gamelist.SelectedItem) as ListViewItem;
-            lb_gamelist.ScrollIntoView(lb_gamelist.SelectedItem);
-        }
-
-        private void setStyle(string HexColor, string HorizontalAlignment) 
+        private void setStyle() 
         {
             //Проверяем чтобы строка цвета была норм
             try
             {
-                Color color = (Color)ColorConverter.ConvertFromString(HexColor);
+                Color color = (Color)ColorConverter.ConvertFromString(selectorColor);
             }
             catch (Exception)
             {
-                HexColor = "#f0f8ff";
+                selectorColor = "#f0f8ff";
             }
-            if (HorizontalAlignment == "")
-                HorizontalAlignment = "Stretch";
+            try
+            {
+                Color color = (Color)ColorConverter.ConvertFromString(selectedColor);
+            }
+            catch (Exception)
+            {
+                selectedColor = "#e2ead9";
+            }
+
+            try
+            {
+                Color color = (Color)ColorConverter.ConvertFromString(primaryColor);
+            }
+            catch (Exception)
+            {
+                primaryColor = "#440040";
+            }
+
+            if (alignment == "")
+                alignment = "Stretch";
 
             Style style = new Style();
 
@@ -111,7 +178,7 @@ namespace es_theme_editor
                                                 Background=""{TemplateBinding Background}""
                                                 Padding=""{TemplateBinding Padding}""
                                                 SnapsToDevicePixels=""true"">
-                                                <ContentPresenter HorizontalAlignment=""" + HorizontalAlignment + @"""
+                                                <ContentPresenter HorizontalAlignment=""" + alignment + @"""
                                                     SnapsToDevicePixels=""{TemplateBinding SnapsToDevicePixels}""
                                                     VerticalAlignment=""{TemplateBinding VerticalContentAlignment}"" />
                                             </Border>
@@ -119,26 +186,33 @@ namespace es_theme_editor
                                                 <MultiTrigger>
                                                     <MultiTrigger.Conditions>
                                                         <Condition Property=""Selector.IsSelectionActive""
-                                                    Value=""False"" />
+                                                                    Value=""False"" />
                                                         <Condition Property=""IsSelected""
-                                                    Value=""True"" />
+                                                                    Value=""True"" />
                                                     </MultiTrigger.Conditions>
                                                     <Setter Property=""Background""
-                                            TargetName=""Bd""
-                                            Value=""" + HexColor + @""" />
+                                                            TargetName=""Bd""
+                                                            Value=""" + selectorColor + @""" />
                                                 </MultiTrigger>
                                                 <MultiTrigger>
                                                     <MultiTrigger.Conditions>
                                                         <Condition Property=""Selector.IsSelectionActive""
-                                                    Value=""True"" />
+                                                                    Value=""True"" />
                                                         <Condition Property=""IsSelected""
-                                                    Value=""True"" />
+                                                                    Value=""True"" />
                                                     </MultiTrigger.Conditions>
                                                     <Setter Property=""Background""
-                                            TargetName=""Bd""
-                                            Value=""" + HexColor + @""" />
+                                                            TargetName=""Bd""
+                                                            Value=""" + selectorColor + @""" />
                                                 </MultiTrigger>
+                                                <Trigger Property=""IsSelected"" Value=""true"">
+                                                    <Setter Property=""Foreground"" Value=""" + selectedColor + @""" />
+                                                </Trigger>
+                                                <Trigger Property=""IsSelected"" Value=""false"">
+                                                    <Setter Property=""Foreground"" Value=""" + primaryColor + @""" />
+                                                </Trigger>
                                             </ControlTemplate.Triggers>
+
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>

@@ -25,8 +25,6 @@ namespace es_theme_editor
         public event ElementRemoved onElementRemove;
         public delegate void ElementSelected(string elementName);
         public event ElementSelected onElementSelect;
-        //public delegate void CurrentElementChanget(string elementName, SortedList<string, string> Properties, Element.types typeOfElement);
-        //public event CurrentElementChanget onCurrentElementChanget;
         //Flag to ensure that the program does not react to changing the checkboxes when we do not need it
         public bool cbManualChangeState = false;
         //Collection of created not standart element
@@ -65,23 +63,35 @@ namespace es_theme_editor
 
             switch (View.GetType(currentView.name))
             {
+                case View.types.system:
+                    c_system.Visibility = System.Windows.Visibility.Visible;
+                    if (!checCheckedCheckboxes(c_detailed))
+                        c_basic.Visibility = System.Windows.Visibility.Hidden;
+                    if (!checCheckedCheckboxes(c_detailed))
+                        c_detailed.Visibility = System.Windows.Visibility.Hidden;
+                    if (!checCheckedCheckboxes(c_video))
+                        c_video.Visibility = System.Windows.Visibility.Hidden;
+                    break;
                 case View.types.basic:
                     c_basic.Visibility = System.Windows.Visibility.Visible;
                     if (!checCheckedCheckboxes(c_detailed))
                         c_detailed.Visibility = System.Windows.Visibility.Hidden;
                     if (!checCheckedCheckboxes(c_video))
                         c_video.Visibility = System.Windows.Visibility.Hidden;
+                    c_system.Visibility = System.Windows.Visibility.Hidden;
                     break;
                 case View.types.detailed:
                     c_basic.Visibility = System.Windows.Visibility.Visible;
                     c_detailed.Visibility = System.Windows.Visibility.Visible;
                     if (!checCheckedCheckboxes(c_video))
                         c_video.Visibility = System.Windows.Visibility.Hidden;
+                    c_system.Visibility = System.Windows.Visibility.Hidden;
                     break;
                 case View.types.video:
                     c_basic.Visibility = System.Windows.Visibility.Visible;
                     c_detailed.Visibility = System.Windows.Visibility.Visible;
                     c_video.Visibility = System.Windows.Visibility.Visible;
+                    c_system.Visibility = System.Windows.Visibility.Hidden;
                     break;
             }
 
@@ -136,7 +146,6 @@ namespace es_theme_editor
             {
                 typeOfElement = Element.GetType(str.Replace("cb_", ""));
                 onElementCreate(str.Replace("cb_", ""), typeOfElement, foundRectangle.Fill, 0.5);
-                //cb_SelectCreatedelement.Items.Add(str.Replace("cb_", ""));
             }
         }
 
@@ -165,18 +174,14 @@ namespace es_theme_editor
 
         private void btn_addCustomelement_Click(object sender, RoutedEventArgs e)
         {
-            //if (getComboBoxValue((ComboBoxItem)cbViewSelector.SelectedItem) != "")
-            //{
-                customElements.Add(tb_customelementName.Text, cb_customelementType.SelectedValue.ToString());
-                onElementCreate(tb_customelementName.Text, (Element.types)System.Enum.Parse(typeof(Element.types), cb_customelementType.SelectedValue.ToString()), Element.GetRandomColor(), 1);
-                cb_CustomeItem.Items.Add(tb_customelementName.Text);
-                cb_SelectCreatedelement.Items.Add(tb_customelementName.Text);
-            //}
+            customElements.Add(tb_customelementName.Text, cb_customelementType.SelectedValue.ToString());
+            onElementCreate(tb_customelementName.Text, (Element.types)System.Enum.Parse(typeof(Element.types), cb_customelementType.SelectedValue.ToString()), SomeUtilities.GetRandomColor(), 1);
+            cb_CustomeItem.Items.Add(tb_customelementName.Text);
+            cb_SelectCreatedelement.Items.Add(tb_customelementName.Text);
         }
 
         private void delCustomelement_Click(object sender, RoutedEventArgs e)
         {
-            //string comboBoxItemvalue = getComboBoxValue((ComboBoxItem)cbViewSelector.SelectedItem);
                 if (MessageBox.Show("Do you want delete this item?", "Question", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     onElementRemove(tb_customelementName.Text);
@@ -196,9 +201,6 @@ namespace es_theme_editor
                 if (((ComboBox)sender).SelectedItem != null && ((ComboBox)sender).SelectedItem.ToString() != "")
                 {
                     onElementSelect(((ComboBox)sender).SelectedItem.ToString());
-                    //onCurrentElementChanget(currentView.elements[((ComboBox)sender).SelectedItem.ToString()].name,
-                    //                        currentView.elements[((ComboBox)sender).SelectedItem.ToString()].Properties,
-                    //                        currentView.elements[((ComboBox)sender).SelectedItem.ToString()].typeOfElement);
                 }
             }
         }

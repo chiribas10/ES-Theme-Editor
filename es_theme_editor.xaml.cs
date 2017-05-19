@@ -135,11 +135,8 @@ namespace es_theme_editor
         private void readXML()
         {
             XmlDocument doc = new XmlDocument();
-            //int x;
             XmlNode viewNode, themeNode;
             
-            
-            //String[] elementNames;
             try
             {
                 doc.LoadXml(tb_log.Text.ToString());
@@ -150,13 +147,11 @@ namespace es_theme_editor
                 Logger.Write(err);
                 return;
             }
-            //x = doc.ChildNodes.Count;
             //We get the main element. Theme
             if (doc.ChildNodes.Count == 0)
                 return;
             else
                 themeNode = doc.ChildNodes[0];
-            //string themeNodeName = "";
             int docChildNodeCounters = 1;
             while (docChildNodeCounters < doc.ChildNodes.Count)
             {
@@ -167,9 +162,7 @@ namespace es_theme_editor
                     docChildNodeCounters++;
             }
             if (themeNode.Name != "theme")
-                return;
-
-            
+                return;        
 
             for (int i = 0; i < themeNode.ChildNodes.Count; i++)
             {
@@ -200,40 +193,11 @@ namespace es_theme_editor
             View curentWorkingView = null;
             Char delimiter = ',';
             String[] substrings = viewNode.Attributes["name"].InnerText.Split(delimiter);
-            string path = "";
+            string propval, alpha, color;
+            Brush randomColor;
             //We go through all the names listed in the Name attribute
             foreach (var substring in substrings)
             {
-                //string viewname = substring.Trim();
-                // if the name of the received item contains the word "system", then this is the settings for the system selection window
-                // Fill out the form fields
-                if (substring.Trim().Contains("system"))
-                {
-                    for (int y = 0; y < viewNode.ChildNodes.Count; y++)
-                    {
-                        //Find the child element named "path" and take its value
-                        foreach (XmlNode childNodes in viewNode.ChildNodes[y].ChildNodes)
-                        {
-                            if (childNodes.Name == "path")
-                                path = childNodes.InnerText;
-                        }
-
-                        switch (viewNode.ChildNodes[y].Attributes["name"].InnerText)
-                        {
-                            case "bgsound":
-                                ((App)Application.Current).backgroundSoundPath = path;
-                                break;
-                            case "background":
-                                ((App)Application.Current).backgroundSystemImagePath = path;
-                                break;
-                            case "logo":
-                                ((App)Application.Current).logoPath = path;
-                                break;
-                        }
-                    }
-                }
-                else
-                {
                     //We check whether we have already created a view, if not created, create, if yes, take the existing
                     if (views.Keys.IndexOf(substring.Trim()) > -1)
                         curentWorkingView = views[substring.Trim()];
@@ -248,51 +212,77 @@ namespace es_theme_editor
 
                         for (int z = 0; z < itemNode.ChildNodes.Count; z++)
                         {
-                            Properties.Add(itemNode.ChildNodes[z].Name, itemNode.ChildNodes[z].InnerText);
+                            propval = ""; alpha = ""; color = "";
+                            propval = itemNode.ChildNodes[z].InnerText;
+                            if (itemNode.ChildNodes[z].Name.ToLower().Contains("color"))
+                            {
+                                if (propval.Length == 8)
+                                {
+                                    //переносим альфа канал в начало строки цвета
+                                    color = propval.Substring(0, 6);
+                                    alpha = propval.Substring(6, propval.Length - 6);
+                                    propval = "#" + alpha + color;
+                                }
+                            }
+                            Properties.Add(itemNode.ChildNodes[z].Name, propval);
                         }
                         //Fill the element with the properties obtained from the file or create a new element with the specified properties
                         elementNames = itemNode.Attributes["name"].InnerText.Split(delimiter);
+                        string bgsound = "", background = "", logo = "";
                         foreach (var elementName in elementNames)
                         {
-                            if (elementName.Trim() == "background")
+
+                            switch (viewNode.ChildNodes[y].Attributes["name"].InnerText)
                             {
-                                foreach (XmlNode childNodes in itemNode.ChildNodes)
-                                {
-                                    if (childNodes.Name == "path")
-                                        ((App)Application.Current).backgroundImagePath = childNodes.InnerText;
-                                }
-                            }
-                            else
-                            {
-                                Element.types type;
-                                try
-                                {
-                                    type = (Element.types)Enum.Parse(typeof(Element.types), itemNode.Name, true);
-                                }
-                                catch (Exception err)
-                                {
-                                    Logger.Write(err);
-                                    continue;
-                                }
-                                //Rectangle foundRectangle = SomeUtilities.FindChild<Rectangle>(grid1, "rctngl_" + elementName.Trim());
-                                //Brush brush;
-                                //if (foundRectangle != null)
-                                //    brush = foundRectangle.Fill;
-                                //else
-                                //{
-                                    //brush = Element.GetRandomColor();
-                                //}
-                                if (!curentWorkingView.elements.ContainsKey(elementName.Trim()))
-                                    curentWorkingView.elements.Add(elementName.Trim(), new Element(elementName.Trim(), type, Properties, parentCanvasWidth, parentCanvasHeight, Element.GetRandomColor()));
-                                else
-                                    curentWorkingView.elements[elementName.Trim()].filligFromProperties(Properties, parentCanvasWidth, parentCanvasHeight, Element.GetRandomColor());
-                                //brush = null;
+                                case "bgsound":
+                                    foreach (XmlNode childNodes in itemNode.ChildNodes)
+                                    {
+                                        if (childNodes.Name == "path")
+                                            bgsound = childNodes.InnerText;
+                                    }
+                                    curentWorkingView.bgsound = bgsound;
+                                    break;
+                                case "background":
+                                    foreach (XmlNode childNodes in itemNode.ChildNodes)
+                                    {
+                                        if (childNodes.Name == "path")
+                                            background = childNodes.InnerText;
+                                    }
+                                    curentWorkingView.background = background;
+                                    break;
+                                default:
+                                    if (viewNode.ChildNodes[y].Attributes["name"].InnerText == "logo")
+                                    {
+                                        foreach (XmlNode childNodes in itemNode.ChildNodes)
+                                        {
+                                            if (childNodes.Name == "path")
+                                                logo = childNodes.InnerText;
+                                        }
+                                        curentWorkingView.logo = logo;
+
+                                        //Для систем не создаем элемент лого.
+                                        if (substring == "system")
+                                            continue;
+                                    }
+                                    Element.types type;
+                                    try
+                                    {
+                                        type = (Element.types)Enum.Parse(typeof(Element.types), itemNode.Name, true);
+                                    }
+                                    catch (Exception err)
+                                    {
+                                        Logger.Write(err);
+                                        continue;
+                                    }
+                                    randomColor = SomeUtilities.GetRandomColor();
+                                    if (!curentWorkingView.elements.ContainsKey(elementName.Trim()))
+                                        curentWorkingView.elements.Add(elementName.Trim(), new Element(elementName.Trim(), type, Properties, parentCanvasWidth, parentCanvasHeight, randomColor));
+                                    else
+                                        curentWorkingView.elements[elementName.Trim()].filligFromProperties(Properties, parentCanvasWidth, parentCanvasHeight, randomColor);
+                                    break;
                             }
                         }
-                        //If this is a background image to save in textbox
-
                     }
-                }
                 //If the resulting view is not null, we save it
                 if (curentWorkingView != null)
                 {
@@ -315,17 +305,18 @@ namespace es_theme_editor
             }
         }
 
+        XmlDocument doc;
         private void generateXML()
         {
             if (_viewtmplatewindow != null && _viewtmplatewindow.isOpened)
-                _viewtmplatewindow.save(); //_viewtmplatewindow.addPropertiesToElement(_viewtmplatewindow.GetSelectedRectengleName); //saveLastChangedProp();
+                _viewtmplatewindow.save();
             if (views.Values.Count > 0)
             {
-                XmlDocument doc;
-                XmlNode docNode, viewNode, itemNode, subItemNode, themeNode;
-                string type;
-                List<string> selectedview = new List<string>();
-
+                
+                XmlNode docNode, viewNode, itemNode, subItemNode, themeNode, featureNode;
+                string type, propval, alpha, color;
+                //List<string> selectedview = new List<string>();
+                string nameOfElement;
                 //Create xml document
                 doc = new XmlDocument();
                 docNode = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
@@ -334,82 +325,96 @@ namespace es_theme_editor
                 //Create the main element for the theme
                 themeNode = doc.CreateElement("theme");
                 doc.AppendChild(themeNode);
-                themeNode.AppendChild(createXMLNode(doc, "formatVersion", "", "", "4"));
-
-                //Fill the section system (system selection)
-                viewNode = createXMLNode(doc, "view", "name", "system", "");
-                if (((App)Application.Current).backgroundSoundPath != "")
-                {
-                    itemNode = createXMLNode(doc, "sound", "name", "bgsound", "");
-                    subItemNode = createXMLNode(doc, "path", "", "", ((App)Application.Current).backgroundSoundPath);
-                    itemNode.AppendChild(subItemNode);
-                    viewNode.AppendChild(itemNode);
-                }
-                if (((App)Application.Current).backgroundSystemImagePath != "")
-                {
-                    itemNode = createXMLNode(doc, "image", "name", "background", "");
-                    createXmlAttribute(doc, itemNode, "extra", "true");
-                    subItemNode = createXMLNode(doc, "path", "", "", ((App)Application.Current).backgroundSystemImagePath);
-                    itemNode.AppendChild(subItemNode);
-                    viewNode.AppendChild(itemNode);
-                }
-                if (((App)Application.Current).logoPath != "")
-                {
-                    itemNode = createXMLNode(doc, "image", "name", "logo", "");
-                    subItemNode = createXMLNode(doc, "path", "", "", ((App)Application.Current).logoPath);
-                    itemNode.AppendChild(subItemNode);
-                    viewNode.AppendChild(itemNode);
-                }
-
-                themeNode.AppendChild(viewNode);
-                selectedview.Clear();
+                themeNode.AppendChild(XMLWorker.createXMLNode(doc, "formatVersion", "", "", "4"));
+                //selectedview.Clear();
                 for (int i = 0; i < views.Values.Count; i++)
                 {
                     //Create the main section of type view with the name selected in the ComboBox
-                    viewNode = createXMLNode(doc, "view", "name", views.Values[i].name, "");
+                    viewNode = XMLWorker.createXMLNode(doc, "view", "name", views.Values[i].name, "");
                     themeNode.AppendChild(viewNode);
 
-                    if (((App)Application.Current).backgroundImagePath != "")
+                    if (!string.IsNullOrEmpty(views.Values[i].background))
                     {
-                        itemNode = createXMLNode(doc, "image", "name", "background", "");
-                        createXmlAttribute(doc, itemNode, "extra", "false");
-                        subItemNode = createXMLNode(doc, "path", "", "", ((App)Application.Current).backgroundImagePath);
+                        itemNode = XMLWorker.createXMLNode(doc, "image", "name", "background", "");
+                        if (views.Values[i].name == "system")
+                            XMLWorker.createXmlAttribute(doc, itemNode, "extra", "true");
+                        else
+                            XMLWorker.createXmlAttribute(doc, itemNode, "extra", "false");
+                        subItemNode = XMLWorker.createXMLNode(doc, "path", "", "", views.Values[i].background);
                         itemNode.AppendChild(subItemNode);
-                        subItemNode = createXMLNode(doc, "pos", "", "", "0.0 0.0");
+                        subItemNode = XMLWorker.createXMLNode(doc, "pos", "", "", "0.0 0.0");
                         itemNode.AppendChild(subItemNode);
-                        subItemNode = createXMLNode(doc, "origin", "", "", "0.0 0.0");
+                        subItemNode = XMLWorker.createXMLNode(doc, "origin", "", "", "0.0 0.0");
                         itemNode.AppendChild(subItemNode);
-                        subItemNode = createXMLNode(doc, "size", "", "", "1.0 1.0");
+                        subItemNode = XMLWorker.createXMLNode(doc, "size", "", "", "1.0 1.0");
                         itemNode.AppendChild(subItemNode);
                         viewNode.AppendChild(itemNode);
+                    }
+                    if (views.Values[i].name == "system")
+                    {
+                        if (!string.IsNullOrEmpty(views.Values[i].bgsound))
+                        {
+                            itemNode = XMLWorker.createXMLNode(doc, "sound", "name", "bgsound", "");
+                            subItemNode = XMLWorker.createXMLNode(doc, "path", "", "", views.Values[i].bgsound);
+                            itemNode.AppendChild(subItemNode);
+                            viewNode.AppendChild(itemNode);
+                        }
+                        if (!string.IsNullOrEmpty(views.Values[i].logo))
+                        {
+                            itemNode = XMLWorker.createXMLNode(doc, "image", "name", "logo", "");
+                            subItemNode = XMLWorker.createXMLNode(doc, "path", "", "", views.Values[i].logo);
+                            itemNode.AppendChild(subItemNode);
+                            viewNode.AppendChild(itemNode);
+                        }
                     }
 
                     for (int j = 0; j < views.Values[i].elements.Count; j++)
                     {
-                        selectedview.Add(views.Values[i].elements.Values[j].name);
+                        //selectedview.Add(views.Values[i].elements.Values[j].name);
                         type = views.Values[i].elements.Values[j].typeOfElement.ToString();
 
-                        itemNode = createXMLNode(doc, type, "name", views.Values[i].elements.Values[j].name, "");
+                        itemNode = XMLWorker.createXMLNode(doc, type, "name", views.Values[i].elements.Values[j].name, "");
+
+                        if (views.Values[i].elements.Values[j].extra != "")
+                            XMLWorker.createXmlAttribute(doc, itemNode, "extra", views.Values[i].elements.Values[j].extra.ToString().ToLower());
+
                         if (views.Values[i].elements.Values[j].name.ToLower() == "logo" && views.Values[i].elements.Values[j].path == "")
                             continue;
                         else
                             for (int x = 0; x < views.Values[i].elements.Values[j].Properties.Count; x++)
                             {
-                                subItemNode = createXMLNode(doc, views.Values[i].elements.Values[j].Properties.Keys[x], "", "", views.Values[i].elements.Values[j].Properties.Values[x].Replace("#", ""));
+                                propval = ""; alpha = ""; color = "";
+                                propval = views.Values[i].elements.Values[j].Properties.Values[x];
+                                if (views.Values[i].elements.Values[j].Properties.Keys[x].ToLower().Contains("color"))
+                                {
+                                    //переносим альфа канал в конец строки цвета
+                                    propval = propval.Replace("#", "");
+                                    if (propval.Length == 8)
+                                    {
+                                        alpha = propval.Substring(0, 2);
+                                        color = propval.Substring(2, propval.Length - 2);
+                                        propval = color + alpha;
+                                    }
+                                }
+                                if (views.Values[i].elements.Values[j].Properties.Keys[x].ToLower().Contains("text") && propval == "")
+                                    continue;
+                                subItemNode = XMLWorker.createXMLNode(doc, views.Values[i].elements.Values[j].Properties.Keys[x], "", "", propval);
                                 itemNode.AppendChild(subItemNode);
                             }
                         viewNode.AppendChild(itemNode);
                     }
 
-                    for (int y = 0; y < Element.novisibleelement.Count; y++)
+                    if (!views.Values[i].name.Contains(","))
+                    for (int y = 0; y < views.Values[i].novisibleelement.Count; y++)
                     {
-                        //for basic view hide only help view.
-                        if (views.Values[i].name == View.types.basic.ToString() && y >= 1)
+                        nameOfElement = views.Values[i].novisibleelement[y];
+                        //for basic and system view hide only help view.
+                        if ((views.Values[i].name == View.types.basic.ToString() && views.Values[i].novisibleelement[y] != "help") || (views.Values[i].name == View.types.system.ToString() && views.Values[i].novisibleelement[y] != "help"))
                             break;
-                        if (!selectedview.Contains(Element.novisibleelement[y]))
+                        if (views.Values[i].elements.IndexOfKey(nameOfElement) < 0 )
                         {
-                            itemNode = createXMLNode(doc, (Element.GetType(Element.novisibleelement[y])).ToString(), "name", Element.novisibleelement[y], "");
-                            subItemNode = createXMLNode(doc, "pos ", "", "", "1.0 1.0");
+                            itemNode = XMLWorker.createXMLNode(doc, (Element.GetType(nameOfElement)).ToString(), "name", nameOfElement, "");
+                            subItemNode = XMLWorker.createXMLNode(doc, "pos ", "", "", "1.0 1.0");
                             itemNode.AppendChild(subItemNode);
                             viewNode.AppendChild(itemNode);
                         }
@@ -423,33 +428,7 @@ namespace es_theme_editor
             }
         }
 
-        private XmlNode createXMLNode(XmlDocument doc, string nodename, string attributename, string attributevalue, string childvalue)
-        {
 
-            XmlNode node;
-
-            node = doc.CreateElement(nodename.Replace(" ", ""));
-
-            createXmlAttribute(doc, node, attributename, attributevalue);
-
-            if (childvalue != "")
-                node.AppendChild(doc.CreateTextNode(childvalue));
-
-            return node;
-
-        }
-
-        private void createXmlAttribute(XmlDocument doc, XmlNode node, string attributename, string attributevalue)
-        {
-            XmlAttribute nodeAttribute;
-
-            if (attributevalue != "")
-            {
-                nodeAttribute = doc.CreateAttribute(attributename);
-                nodeAttribute.Value = attributevalue;
-                node.Attributes.Append(nodeAttribute);
-            }
-        }
         #endregion xmlWorker
 
         #region openTheme
@@ -552,9 +531,8 @@ namespace es_theme_editor
 
                 if (_viewtmplatewindow == null || !_viewtmplatewindow.isOpened)
                 {
-
                     _viewtmplatewindow = new view_tamlate_window(this, comboBoxItemvalue, currview);
-
+                    _viewtmplatewindow.WindowState = WindowState.Maximized;
                     _viewtmplatewindow.Show();
                     tbheight.IsEnabled = false;
                     tbwidth.IsEnabled = false;
@@ -562,12 +540,10 @@ namespace es_theme_editor
                     return true;
                 }
                 _viewtmplatewindow.Show();
+                _viewtmplatewindow.WindowState = WindowState.Maximized;
                 tbheight.IsEnabled = false;
                 tbwidth.IsEnabled = false;
                 btn_ApplyResolution.IsEnabled = false;
-
-
-                //return false;
             }
             return false;
         }
@@ -584,7 +560,6 @@ namespace es_theme_editor
             }
             ((App)Application.Current).Width = parentCanvasWidth;
             ((App)Application.Current).Height = parentCanvasHeight;
-            //_viewtmplatewindow.SetCanvasResolution(parentCanvasWidth, parentCanvasHeight);
         }
 
         //Open view_tamlate_window
@@ -592,5 +567,98 @@ namespace es_theme_editor
         {
             openViewEditor();
         }
+
+        private void btn_save_xml_file_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Generate XML before save?", "Question", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    generateXML();
+                }
+                catch (Exception err)
+                {
+                    Logger.Write(err);
+                }
+            }
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "XML file|*.xml";
+            saveFileDialog1.Title = "Save an XML File";
+            saveFileDialog1.ShowDialog();
+
+            // If the file name is not an empty string open it for saving.
+            if (saveFileDialog1.FileName != "")
+            {
+                System.IO.File.WriteAllText(saveFileDialog1.FileName, tb_log.Text);
+            }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (doc == null)
+                try
+                {
+                    generateXML();
+                }
+                catch (Exception err)
+                {
+                    Logger.Write(err);
+                }
+            doc = XMLWorker.XMLOptimazer(doc);
+            //doc = XMLWorker.XMLOptimazer(doc, true);
+            //doc = XMLWorker.XMLOptimazerByType(doc);
+            var stringBuilder = new StringBuilder();
+            var xmlWriterSettings = new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true };
+            doc.Save(XmlWriter.Create(stringBuilder, xmlWriterSettings));
+            tb_log.Text = stringBuilder.ToString();
+            //doc.ToString();
+        }
+
+        //private void Button_Click_1(object sender, RoutedEventArgs e)
+        //{
+        //    string nameofview = "";
+        //    View view;
+        //    int indx;
+        //    SortedList<string, View> Someviews = new SortedList<string, View>();
+        //    for (int i = 0; i < views.Count; i++)
+        //    {                
+        //        for (int y = 0; y < views.Values[i].elements.Count; y++)
+        //        {
+        //            for (int x = 0; x < views.Count; x++)
+        //            {
+        //                if (x != i)
+        //                {
+        //                    indx = views.Values[x].indexOfElement(views.Values[i].elements.Values[y]);
+        //                    if ( indx >= 0)
+        //                    {
+        //                        if (nameofview == "")
+        //                            nameofview = views.Values[i].name;
+        //                        nameofview += ", " + views.Values[x].name;
+        //                        tb_log.Text += nameofview + "\n";
+        //                        tb_log.Text += views.Values[i].name + " элемент " + views.Values[i].elements.Values[y].name + " содержится в " + views.Values[x].name + " под индексом " + indx.ToString() + "\n";
+        //                        views.Values[x].elements.Remove(views.Values[x].elements.Keys[indx]);
+        //                        views.Values[x].novisibleelement.Remove(views.Values[i].elements.Values[y].name);
+        //                        //break;
+        //                    }
+        //                }
+        //            }
+        //            if (nameofview != "")
+        //            {
+        //                view = new View(nameofview);
+        //                view.addItem = views.Values[i].elements.Values[y];
+        //                views.Values[i].novisibleelement.Remove(views.Values[i].elements.Values[y].name);
+        //                views.Values[i].elements.Remove(views.Values[i].elements.Keys[y]);
+        //                if (view.name != "")
+        //                    Someviews.Add(view.name, view);
+        //                //return;
+        //            }
+        //            nameofview = "";
+                    
+        //        }
+
+        //    }
+        //    for (int z = 0; z<Someviews.Count; z++)
+        //        views.Add(Someviews.Values[z].name, Someviews.Values[z]);
+        //}
     }
 }
