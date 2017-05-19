@@ -1,16 +1,5 @@
 <theme>
   <formatVersion>4</formatVersion>
-  <view name="system">
-    <sound name="bgsound">
-      <path>./sounds/system.ogg</path>
-    </sound>
-    <image name="background" extra="true">
-      <path>./art/art_blur.png</path>
-    </image>
-    <image name="logo">
-      <path>./art/logo.png</path>
-    </image>
-  </view>
   <view name="basic">
     <image name="background" extra="false">
       <path>./art/art_blur_whiten.png</path>
@@ -19,68 +8,44 @@
       <size>1.0 1.0</size>
     </image>
     <textlist name="gamelist">
-      <pos>0.1765625 0.147222222222222</pos>
-      <size>0.625 0.851388888888889</size>
+      <alignment>center</alignment>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.03</fontSize>
+      <forceUppercase>0</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.1859375 0</pos>
+      <primaryColor>000000FF</primaryColor>
+      <scrollSound>./../SomeArt/scrollsound.ogg</scrollSound>
+      <secondaryColor>777777FF</secondaryColor>
+      <selectedColor>EF4800FF</selectedColor>
+      <selectorColor>A9A9A977</selectorColor>
+      <size>0.62890625 0.934722222222222</size>
     </textlist>
     <helpsystem name="help">
-      <pos>1 1</pos>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.03</fontSize>
+      <iconColor>ACACACFF</iconColor>
+      <textColor>000000FF</textColor>
     </helpsystem>
     <image name="logo">
-      <color>000000FF</color>
-      <maxSize>0.57109375 0.163888888888889</maxSize>
+      <color>FFFFFFFF</color>
+      <maxSize>0.18671875 0.115277777777778</maxSize>
+      <origin>0 0</origin>
       <path>./art/logo.png</path>
-      <pos>0.2015625 0</pos>
+      <pos>0 0</pos>
       <tile>0</tile>
     </image>
-    <text name="md_developer">
-      <pos>1 1</pos>
+    <text name="logoText">
+      <alignment>center</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.03</fontSize>
+      <forceUppercase>0</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.8140625 0</pos>
+      <size>0.1859375 0.1125</size>
+      <text>Some game platform</text>
     </text>
-    <text name="md_genre">
-      <pos>1 1</pos>
-    </text>
-    <datetime name="md_lastplayed">
-      <pos>1 1</pos>
-    </datetime>
-    <text name="md_lbl_developer">
-      <pos>1 1</pos>
-    </text>
-    <text name="md_lbl_genre">
-      <pos>1 1</pos>
-    </text>
-    <text name="md_lbl_lastplayed">
-      <pos>1 1</pos>
-    </text>
-    <text name="md_lbl_playcount">
-      <pos>1 1</pos>
-    </text>
-    <text name="md_lbl_players">
-      <pos>1 1</pos>
-    </text>
-    <text name="md_lbl_publisher">
-      <pos>1 1</pos>
-    </text>
-    <text name="md_lbl_rating">
-      <pos>1 1</pos>
-    </text>
-    <text name="md_lbl_releasedate">
-      <pos>1 1</pos>
-    </text>
-    <text name="md_playcount">
-      <pos>1 1</pos>
-    </text>
-    <text name="md_players">
-      <pos>1 1</pos>
-    </text>
-    <text name="md_publisher">
-      <pos>1 1</pos>
-    </text>
-    <rating name="md_rating">
-      <pos>1 1</pos>
-      <size>0 1</size>
-    </rating>
-    <datetime name="md_releasedate">
-      <pos>1 1</pos>
-    </datetime>
   </view>
   <view name="detailed">
     <image name="background" extra="false">
@@ -92,94 +57,231 @@
     <textlist name="gamelist">
       <alignment>center</alignment>
       <fontPath>./../SomeArt/font.ttf</fontPath>
-      <fontSize>0.03</fontSize>
+      <fontSize>0.04</fontSize>
       <forceUppercase>0</forceUppercase>
       <lineSpacing>1.5</lineSpacing>
-      <pos>0 0.169444444444444</pos>
-      <primaryColor>777777FF</primaryColor>
+      <pos>0.02 0.25</pos>
+      <primaryColor>000000FF</primaryColor>
       <scrollSound>./../SomeArt/scrollsound.ogg</scrollSound>
       <secondaryColor>777777FF</secondaryColor>
-      <selectedColor>777777FF</selectedColor>
-      <selectorColor>777777FF</selectorColor>
-      <size>0.34140625 0.830555555555556</size>
+      <selectedColor>EF4800FF</selectedColor>
+      <selectorColor>A9A9A977</selectorColor>
+      <size>0.33 0.64</size>
     </textlist>
     <helpsystem name="help">
-      <pos>1 1</pos>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.03</fontSize>
+      <iconColor>ACACACFF</iconColor>
+      <textColor>000000FF</textColor>
     </helpsystem>
     <image name="logo">
-      <color>000000FF</color>
-      <maxSize>0.34296875 0.163888888888889</maxSize>
+      <color>FFFFFFFF</color>
+      <maxSize>0.33 0.19</maxSize>
+      <origin>0 0</origin>
       <path>./art/logo.png</path>
-      <pos>0 0</pos>
+      <pos>0.0188125 0.0219444444444445</pos>
       <tile>0</tile>
     </image>
     <text name="md_description">
+      <alignment>left</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.026</fontSize>
+      <forceUppercase>0</forceUppercase>
+      <lineSpacing>1.6</lineSpacing>
+      <pos>0.37765625 0.607777777777778</pos>
+      <size>0.6 0.283611111111111</size>
+    </text>
+    <text name="md_developer">
+      <alignment>left</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.024</fontSize>
+      <forceUppercase>0</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.85546875 0.157222222222222</pos>
+      <size>0.14453125 0.0486111111111113</size>
+    </text>
+    <text name="md_genre">
+      <alignment>left</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.024</fontSize>
+      <forceUppercase>0</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.85546875 0.109722222222222</pos>
+      <size>0.14453125 0.0444444444444447</size>
+    </text>
+    <image name="md_image">
+      <color>FFFFFFFF</color>
+      <maxSize>0.33 0.58</maxSize>
+      <origin>0 0</origin>
+      <path />
+      <pos>0.3778125 0.0216666666666667</pos>
+      <tile>0</tile>
+    </image>
+    <datetime name="md_lastplayed">
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.024</fontSize>
+      <pos>0.85546875 0.366666666666667</pos>
+    </datetime>
+    <text name="md_lbl_developer">
+      <alignment>left</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.02</fontSize>
+      <forceUppercase>1</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.70953125 0.158055555555556</pos>
+      <size>0.14453125 0.0472222222222225</size>
+    </text>
+    <text name="md_lbl_genre">
+      <alignment>left</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.02</fontSize>
+      <forceUppercase>1</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.70953125 0.109166666666667</pos>
+      <size>0.14453125 0.0458333333333336</size>
+    </text>
+    <datetime name="md_lbl_lastplayed">
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.024</fontSize>
+      <pos>0.70875 0.3675</pos>
+    </datetime>
+    <text name="md_lbl_playcount">
+      <alignment>left</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.02</fontSize>
+      <forceUppercase>1</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.70875 0.313055555555556</pos>
+      <size>0.14453125 0.0513888888888891</size>
+    </text>
+    <text name="md_lbl_players">
+      <alignment>left</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.02</fontSize>
+      <forceUppercase>1</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.70953125 0.0630555555555555</pos>
+      <size>0.14453125 0.0444444444444447</size>
+    </text>
+    <text name="md_lbl_publisher">
+      <alignment>left</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.02</fontSize>
+      <forceUppercase>1</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.70875 0.259722222222222</pos>
+      <size>0.14453125 0.0500000000000002</size>
+    </text>
+    <text name="md_lbl_rating">
+      <alignment>left</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.02</fontSize>
+      <forceUppercase>1</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.70953125 0.0177777777777778</pos>
+      <size>0.14453125 0.0416666666666667</size>
+    </text>
+    <text name="md_lbl_releasedate">
+      <alignment>left</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.02</fontSize>
+      <forceUppercase>1</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.70875 0.207222222222222</pos>
+      <size>0.14453125 0.0486111111111113</size>
+    </text>
+    <text name="md_playcount">
+      <alignment>left</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.024</fontSize>
+      <forceUppercase>0</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.8546875 0.312222222222222</pos>
+      <size>0.14453125 0.0513888888888891</size>
+    </text>
+    <text name="md_players">
+      <alignment>left</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.024</fontSize>
+      <forceUppercase>0</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.85546875 0.0636111111111111</pos>
+      <size>0.14375 0.0430555555555558</size>
+    </text>
+    <text name="md_publisher">
+      <alignment>left</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.024</fontSize>
+      <forceUppercase>0</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.85546875 0.208888888888888</pos>
+      <size>0.14453125 0.045833333333333</size>
+    </text>
+    <rating name="md_rating">
+      <filledPath>./../SomeArt/rating_filled.png</filledPath>
+      <pos>0.85625 0.0166666666666666</pos>
+      <size>0.0234375 0.0416666666666667</size>
+      <unfilledPath>./../SomeArt/rating_unfilled.png</unfilledPath>
+    </rating>
+    <datetime name="md_releasedate">
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.024</fontSize>
+      <pos>0.85546875 0.259166666666667</pos>
+    </datetime>
+  </view>
+  <view name="system">
+    <image name="background" extra="true">
+      <path>./art/art_blur.png</path>
+      <pos>0.0 0.0</pos>
+      <origin>0.0 0.0</origin>
+      <size>1.0 1.0</size>
+    </image>
+    <sound name="bgsound">
+      <path>./sounds/system.ogg</path>
+    </sound>
+    <image name="logo">
+      <path>./art/logo.png</path>
+    </image>
+    <helpsystem name="help">
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.03</fontSize>
+      <iconColor>ACACACFF</iconColor>
+      <textColor>000000FF</textColor>
+    </helpsystem>
+    <carousel name="systemcarousel">
+      <color>77777778</color>
+      <logoScale>1.2</logoScale>
+      <maxLogoCount>5</maxLogoCount>
+      <pos>0 0</pos>
+      <size>0.229166666666667 1</size>
+      <type>vertical</type>
+    </carousel>
+    <text name="systemInfo">
       <alignment>center</alignment>
-      <color>777777FF</color>
+      <color>000000FF</color>
       <fontPath>./../SomeArt/font.ttf</fontPath>
       <fontSize>0.03</fontSize>
       <forceUppercase>0</forceUppercase>
       <lineSpacing>1.5</lineSpacing>
-      <pos>0.678125 0</pos>
-      <size>0.321875 1</size>
-      <text />
+      <pos>0.2296875 0</pos>
+      <size>0.7703125 0.0555555555555556</size>
     </text>
-    <text name="md_developer">
-      <pos>1 1</pos>
-    </text>
-    <text name="md_genre">
-      <pos>1 1</pos>
-    </text>
-    <image name="md_image">
-      <color>000000FF</color>
-      <maxSize>0.3234375 0.997222222222222</maxSize>
-      <path />
-      <pos>0.346875 0.00138888888888889</pos>
-      <tile>0</tile>
-    </image>
-    <datetime name="md_lastplayed">
-      <pos>1 1</pos>
-    </datetime>
-    <text name="md_lbl_developer">
-      <pos>1 1</pos>
-    </text>
-    <text name="md_lbl_genre">
-      <pos>1 1</pos>
-    </text>
-    <text name="md_lbl_lastplayed">
-      <pos>1 1</pos>
-    </text>
-    <text name="md_lbl_playcount">
-      <pos>1 1</pos>
-    </text>
-    <text name="md_lbl_players">
-      <pos>1 1</pos>
-    </text>
-    <text name="md_lbl_publisher">
-      <pos>1 1</pos>
-    </text>
-    <text name="md_lbl_rating">
-      <pos>1 1</pos>
-    </text>
-    <text name="md_lbl_releasedate">
-      <pos>1 1</pos>
-    </text>
-    <text name="md_playcount">
-      <pos>1 1</pos>
-    </text>
-    <text name="md_players">
-      <pos>1 1</pos>
-    </text>
-    <text name="md_publisher">
-      <pos>1 1</pos>
-    </text>
-    <rating name="md_rating">
-      <pos>1 1</pos>
-      <size>0 1</size>
-    </rating>
-    <datetime name="md_releasedate">
-      <pos>1 1</pos>
-    </datetime>
   </view>
   <view name="video">
     <image name="background" extra="false">
@@ -191,97 +293,201 @@
     <textlist name="gamelist">
       <alignment>center</alignment>
       <fontPath>./../SomeArt/font.ttf</fontPath>
-      <fontSize>0.03</fontSize>
+      <fontSize>0.04</fontSize>
       <forceUppercase>0</forceUppercase>
       <lineSpacing>1.5</lineSpacing>
-      <pos>0.0015625 0.140277777777778</pos>
-      <primaryColor>777777FF</primaryColor>
+      <pos>0.02 0.25</pos>
+      <primaryColor>000000FF</primaryColor>
       <scrollSound>./../SomeArt/scrollsound.ogg</scrollSound>
       <secondaryColor>777777FF</secondaryColor>
-      <selectedColor>777777FF</selectedColor>
-      <selectorColor>777777FF</selectorColor>
-      <size>0.30234375 0.859722222222222</size>
+      <selectedColor>EF4800FF</selectedColor>
+      <selectorColor>A9A9A977</selectorColor>
+      <size>0.33 0.64</size>
     </textlist>
     <helpsystem name="help">
-      <pos>1 1</pos>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.03</fontSize>
+      <iconColor>ACACACFF</iconColor>
+      <textColor>000000FF</textColor>
     </helpsystem>
     <image name="logo">
-      <color>000000FF</color>
-      <maxSize>0.30859375 0.134722222222222</maxSize>
+      <color>FFFFFFFF</color>
+      <maxSize>0.33 0.19</maxSize>
+      <origin>0 0</origin>
       <path>./art/logo.png</path>
-      <pos>0 0</pos>
+      <pos>0.0188125 0.0219444444444445</pos>
       <tile>0</tile>
     </image>
     <text name="md_description">
-      <alignment>center</alignment>
-      <color>777777FF</color>
+      <alignment>left</alignment>
+      <color>000000FF</color>
       <fontPath>./../SomeArt/font.ttf</fontPath>
-      <fontSize>0.03</fontSize>
+      <fontSize>0.026</fontSize>
       <forceUppercase>0</forceUppercase>
-      <lineSpacing>1.5</lineSpacing>
-      <pos>0.64453125 0.0166666666666667</pos>
-      <size>0.35 0.95</size>
-      <text />
+      <lineSpacing>1.6</lineSpacing>
+      <pos>0.37765625 0.607777777777778</pos>
+      <size>0.6 0.283611111111111</size>
     </text>
     <text name="md_developer">
-      <pos>1 1</pos>
+      <alignment>left</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.024</fontSize>
+      <forceUppercase>0</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.85546875 0.157222222222222</pos>
+      <size>0.14453125 0.0486111111111113</size>
     </text>
     <text name="md_genre">
-      <pos>1 1</pos>
+      <alignment>left</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.024</fontSize>
+      <forceUppercase>0</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.85546875 0.109722222222222</pos>
+      <size>0.14453125 0.0444444444444447</size>
     </text>
     <image name="md_image">
-      <color>000000FF</color>
-      <maxSize>0.321875 0.454166666666667</maxSize>
+      <color>FFFFFFFF</color>
+      <maxSize>0.270625 0.173055555555556</maxSize>
+      <origin>0 0</origin>
       <path />
-      <pos>0.31328125 0.515277777777778</pos>
+      <pos>0.70984375 0.424444444444444</pos>
       <tile>0</tile>
     </image>
     <datetime name="md_lastplayed">
-      <pos>1 1</pos>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.024</fontSize>
+      <pos>0.85546875 0.366666666666667</pos>
     </datetime>
     <text name="md_lbl_developer">
-      <pos>1 1</pos>
+      <alignment>left</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.02</fontSize>
+      <forceUppercase>1</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.70953125 0.158055555555556</pos>
+      <size>0.14453125 0.0472222222222225</size>
     </text>
     <text name="md_lbl_genre">
-      <pos>1 1</pos>
+      <alignment>left</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.02</fontSize>
+      <forceUppercase>1</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.70953125 0.109166666666667</pos>
+      <size>0.14453125 0.0458333333333336</size>
     </text>
-    <text name="md_lbl_lastplayed">
-      <pos>1 1</pos>
-    </text>
+    <datetime name="md_lbl_lastplayed">
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.024</fontSize>
+      <pos>0.70875 0.3675</pos>
+    </datetime>
     <text name="md_lbl_playcount">
-      <pos>1 1</pos>
+      <alignment>left</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.02</fontSize>
+      <forceUppercase>1</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.70875 0.313055555555556</pos>
+      <size>0.14453125 0.0513888888888891</size>
     </text>
     <text name="md_lbl_players">
-      <pos>1 1</pos>
+      <alignment>left</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.02</fontSize>
+      <forceUppercase>1</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.70953125 0.0630555555555555</pos>
+      <size>0.14453125 0.0444444444444447</size>
     </text>
     <text name="md_lbl_publisher">
-      <pos>1 1</pos>
+      <alignment>left</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.02</fontSize>
+      <forceUppercase>1</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.70875 0.259722222222222</pos>
+      <size>0.14453125 0.0500000000000002</size>
     </text>
     <text name="md_lbl_rating">
-      <pos>1 1</pos>
+      <alignment>left</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.02</fontSize>
+      <forceUppercase>1</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.70953125 0.0177777777777778</pos>
+      <size>0.14453125 0.0416666666666667</size>
     </text>
     <text name="md_lbl_releasedate">
-      <pos>1 1</pos>
+      <alignment>left</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.02</fontSize>
+      <forceUppercase>1</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.70875 0.207222222222222</pos>
+      <size>0.14453125 0.0486111111111113</size>
     </text>
     <text name="md_playcount">
-      <pos>1 1</pos>
+      <alignment>left</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.024</fontSize>
+      <forceUppercase>0</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.8546875 0.312222222222222</pos>
+      <size>0.14453125 0.0513888888888891</size>
     </text>
     <text name="md_players">
-      <pos>1 1</pos>
+      <alignment>left</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.024</fontSize>
+      <forceUppercase>0</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.85546875 0.0636111111111111</pos>
+      <size>0.14375 0.0430555555555558</size>
     </text>
     <text name="md_publisher">
-      <pos>1 1</pos>
+      <alignment>left</alignment>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.024</fontSize>
+      <forceUppercase>0</forceUppercase>
+      <lineSpacing>1.5</lineSpacing>
+      <pos>0.85546875 0.208888888888888</pos>
+      <size>0.14453125 0.045833333333333</size>
     </text>
     <rating name="md_rating">
-      <pos>1 1</pos>
-      <size>0 1</size>
+      <filledPath>./../SomeArt/rating_filled.png</filledPath>
+      <pos>0.85625 0.0166666666666666</pos>
+      <size>0.0234375 0.0416666666666667</size>
+      <unfilledPath>./../SomeArt/rating_unfilled.png</unfilledPath>
     </rating>
     <datetime name="md_releasedate">
-      <pos>1 1</pos>
+      <color>000000FF</color>
+      <fontPath>./../SomeArt/font.ttf</fontPath>
+      <fontSize>0.024</fontSize>
+      <pos>0.85546875 0.259166666666667</pos>
     </datetime>
     <video name="md_video">
-      <maxSize>0.3203125 0.502777777777778</maxSize>
-      <pos>0.31484375 0.00833333333333333</pos>
+      <default>./../SomeArt/default.mp4</default>
+      <delay>0</delay>
+      <maxSize>0.3296875 0.579166666666667</maxSize>
+      <origin>0 0</origin>
+      <pos>0.37734375 0.0208333333333333</pos>
+      <showSnapshotDelay>1</showSnapshotDelay>
+      <showSnapshotNoVideo>1</showSnapshotNoVideo>
     </video>
   </view>
 </theme>
